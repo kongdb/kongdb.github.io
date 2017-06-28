@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | 飞翔的pig</title>
+    <title>Win10下py2和py3共存 | 飞翔的pig</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Kongdb">
     
 
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords" content="vi, nodejs, robotframework">
+    <meta name="description" content="安装Python2和Python3从官网分别下载Python2.x和Python3.x版本的程序进行安装。安装方法略。 并将分别将Python加入到环境变量中。安装正确的话，环境变量中应当存在以下值。  path\to\Python27 path\to\Python27\Scripts path\to\Python36 path\to\Python36\Scripts  将Python27根目录下">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/06/24/hello-world/index.html">
+<meta property="og:title" content="Win10下py2和py3共存">
+<meta property="og:url" content="http://yoursite.com/2017/06/28/Win10下py2和py3共存/index.html">
 <meta property="og:site_name" content="飞翔的pig">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-06-24T13:45:47.241Z">
+<meta property="og:description" content="安装Python2和Python3从官网分别下载Python2.x和Python3.x版本的程序进行安装。安装方法略。 并将分别将Python加入到环境变量中。安装正确的话，环境变量中应当存在以下值。  path\to\Python27 path\to\Python27\Scripts path\to\Python36 path\to\Python36\Scripts  将Python27根目录下">
+<meta property="og:updated_time" content="2017-06-28T11:57:47.982Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Win10下py2和py3共存">
+<meta name="twitter:description" content="安装Python2和Python3从官网分别下载Python2.x和Python3.x版本的程序进行安装。安装方法略。 并将分别将Python加入到环境变量中。安装正确的话，环境变量中应当存在以下值。  path\to\Python27 path\to\Python27\Scripts path\to\Python36 path\to\Python36\Scripts  将Python27根目录下">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/06/24/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2017/06/28/Win10下py2和py3共存/" title="Win10下py2和py3共存" itemprop="url">Win10下py2和py3共存</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
 		
   <p class="article-time">
-    <time datetime="2017-06-24T13:45:47.239Z" itemprop="datePublished"> 发表于 2017-06-24</time>
+    <time datetime="2017-06-28T11:40:53.000Z" itemprop="datePublished"> 发表于 2017-06-28</time>
     
   </p>
 </header>
@@ -97,24 +97,44 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Python2和Python3"><span class="toc-number">1.</span> <span class="toc-text">安装Python2和Python3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pip2和pip3设置"><span class="toc-number">2.</span> <span class="toc-text">pip2和pip3设置</span></a></li></ol>
 		
 		</div>
 		
-		<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+		<h1 id="安装Python2和Python3"><a href="#安装Python2和Python3" class="headerlink" title="安装Python2和Python3"></a>安装Python2和Python3</h1><p>从官网分别下载Python2.x和Python3.x版本的程序进行安装。安装方法略。</p>
+<p>并将分别将Python加入到环境变量中。安装正确的话，环境变量中应当存在以下值。</p>
+<ul>
+<li>path\to\Python27</li>
+<li>path\to\Python27\Scripts</li>
+<li>path\to\Python36</li>
+<li>path\to\Python36\Scripts</li>
+</ul>
+<p>将Python27根目录下的python.exe,pythonw.exe分别重命名为python2.exe,python2w.exe</p>
+<p>将Python36根目录下的python.exe,pythonw.exe分别重命名为python3.exe,python3w.exe</p>
+<p>cmd执行命令python2和python3查看是否成功</p>
+<h1 id="pip2和pip3设置"><a href="#pip2和pip3设置" class="headerlink" title="pip2和pip3设置"></a>pip2和pip3设置</h1><p>cmd分别执行以下命令：</p>
+<ul>
+<li><p>python3 -m pip install –upgrade pip –force-reinstall</p>
+</li>
+<li><p>python2 -m pip install –upgrade pip –force-reinstall</p>
+</li>
+</ul>
+<p>安装成功之后，可通过[pip2 install xxx]和[pip3 install xxx]来安装各自的包啦！</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Python/">Python</a>
+  </div>
 
 </div>
 
@@ -122,7 +142,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/06/24/hello-world/" data-title="Hello World | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/06/28/Win10下py2和py3共存/" data-title="Win10下py2和py3共存 | 飞翔的pig" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -136,13 +156,21 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/06/27/vi常用命令/" title="vi常用命令">
+ <a href="/2017/06/28/Python爬虫学习笔记/" title="Python爬虫学习笔记">
   <strong>上一篇：</strong><br/>
   <span>
-  vi常用命令</span>
+  Python爬虫学习笔记</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2017/06/27/vi常用命令/"  title="vi常用命令">
+ <strong>下一篇：</strong><br/> 
+ <span>vi常用命令
+</span>
+</a>
+</div>
 
 </nav>
 
@@ -155,7 +183,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Python2和Python3"><span class="toc-number">1.</span> <span class="toc-text">安装Python2和Python3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pip2和pip3设置"><span class="toc-number">2.</span> <span class="toc-text">pip2和pip3设置</span></a></li></ol>
  
   </div>
 

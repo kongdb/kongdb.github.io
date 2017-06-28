@@ -82,6 +82,163 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/06/28/Python爬虫学习笔记/" title="Python爬虫学习笔记" itemprop="url">Python爬虫学习笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-28T12:05:49.000Z" itemprop="datePublished"> 发表于 2017-06-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Requests库的使用"><a href="#Requests库的使用" class="headerlink" title="Requests库的使用"></a>Requests库的使用</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>pip3 install requests</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>获取百度首页的内容<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">r = requests.get(<span class="string">"http://www.baidu.com"</span>)</div><div class="line">r<span class="selector-class">.encoding</span> = <span class="string">"utf-8"</span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.text)</span></span></div></pre></td></tr></table></figure></p>
+<h2 id="主要API"><a href="#主要API" class="headerlink" title="主要API"></a>主要API</h2><ul>
+<li>request</li>
+</ul>
+<p>“<strong>集大成者</strong>”，可构造以下的各个请求</p>
+<ul>
+<li>get</li>
+</ul>
+<p>获取页面内容的接口，对应于HTTP的GET </p>
+<ul>
+<li>head</li>
+</ul>
+<p>获取页面头信息的接口，对应于HTTP的HEAD </p>
+<ul>
+<li>post</li>
+</ul>
+<p>向网页提交POST请求的接口，对应于HTTP的POST</p>
+<ul>
+<li>put</li>
+</ul>
+<p>向网页提交PUT请求的接口，对应于HTTP的PUT</p>
+<ul>
+<li>patch</li>
+</ul>
+<p>向网页提交局部修改请求的接口，对应于HTTP的PATCH</p>
+<ul>
+<li>delete</li>
+</ul>
+<p>向网页提交删除请求的接口，对应于HTTP的DELETE</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/06/28/Win10下py2和py3共存/" title="Win10下py2和py3共存" itemprop="url">Win10下py2和py3共存</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-28T11:40:53.000Z" itemprop="datePublished"> 发表于 2017-06-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="安装Python2和Python3"><a href="#安装Python2和Python3" class="headerlink" title="安装Python2和Python3"></a>安装Python2和Python3</h1><p>从官网分别下载Python2.x和Python3.x版本的程序进行安装。安装方法略。</p>
+<p>并将分别将Python加入到环境变量中。安装正确的话，环境变量中应当存在以下值。</p>
+<ul>
+<li>path\to\Python27</li>
+<li>path\to\Python27\Scripts</li>
+<li>path\to\Python36</li>
+<li>path\to\Python36\Scripts</li>
+</ul>
+<p>将Python27根目录下的python.exe,pythonw.exe分别重命名为python2.exe,python2w.exe</p>
+<p>将Python36根目录下的python.exe,pythonw.exe分别重命名为python3.exe,python3w.exe</p>
+<p>cmd执行命令python2和python3查看是否成功</p>
+<h1 id="pip2和pip3设置"><a href="#pip2和pip3设置" class="headerlink" title="pip2和pip3设置"></a>pip2和pip3设置</h1><p>cmd分别执行以下命令：</p>
+<ul>
+<li><p>python3 -m pip install –upgrade pip –force-reinstall</p>
+</li>
+<li><p>python2 -m pip install –upgrade pip –force-reinstall</p>
+</li>
+</ul>
+<p>安装成功之后，可通过[pip2 install xxx]和[pip3 install xxx]来安装各自的包啦！</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Python/">Python</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/06/27/vi常用命令/" title="vi常用命令" itemprop="url">vi常用命令</a>
   </h1>
   <p class="article-author">By
@@ -103,7 +260,7 @@
 </ul>
 <p>三种模式之间的切换及主要功能如下图所示：</p>
 <p><img src="/images/vi%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/vi_mode.png" alt="image"></p>
-<p>*使用vi命令是，最初始进入的即为默认模式</p>
+<p>*使用vi命令时，最初始进入的即为默认模式</p>
 <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="默认模式"><a href="#默认模式" class="headerlink" title="默认模式"></a>默认模式</h2><h3 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h3><p><strong>[Ctrl+u]</strong> 向前翻半屏</p>
 <p><strong>[Ctrl+d]</strong> 向后翻半屏</p>
 <p><strong>[Ctrl+f]</strong> 向前翻一屏</p>
@@ -254,7 +411,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/编程/" title="编程">编程<sup>1</sup></a></li>
+			<li><a href="/categories/编程/" title="编程">编程<sup>2</sup></a></li>
 		  
 		
 		</ul>
@@ -265,6 +422,10 @@
 <div class="tagslist">
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
 		
 			
 				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
