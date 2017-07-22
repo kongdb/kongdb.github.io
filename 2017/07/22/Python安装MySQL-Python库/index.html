@@ -1,0 +1,477 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Python安装MySQL-Python库 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="Python2.7安装MySQL-Python直接执行pip命令1pip2 install MySQL-Python 报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory 安装mysql-connector-curl: https://dev.m">
+<meta name="keywords" content="vi, nodejs, robotframework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python安装MySQL-Python库">
+<meta property="og:url" content="http://yoursite.com/2017/07/22/Python安装MySQL-Python库/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="Python2.7安装MySQL-Python直接执行pip命令1pip2 install MySQL-Python 报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory 安装mysql-connector-curl: https://dev.m">
+<meta property="og:updated_time" content="2017-07-22T12:00:28.017Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python安装MySQL-Python库">
+<meta name="twitter:description" content="Python2.7安装MySQL-Python直接执行pip命令1pip2 install MySQL-Python 报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory 安装mysql-connector-curl: https://dev.m">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/22/Python安装MySQL-Python库/" title="Python安装MySQL-Python库" itemprop="url">Python安装MySQL-Python库</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-22T11:48:05.000Z" itemprop="datePublished"> 发表于 2017-07-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python2-7安装MySQL-Python"><span class="toc-number">1.</span> <span class="toc-text">Python2.7安装MySQL-Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#直接执行pip命令"><span class="toc-number">1.1.</span> <span class="toc-text">直接执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装mysql-connector-c"><span class="toc-number">1.2.</span> <span class="toc-text">安装mysql-connector-c</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再次执行pip命令"><span class="toc-number">1.3.</span> <span class="toc-text">再次执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置编译INCLUDE和LIB目录"><span class="toc-number">1.4.</span> <span class="toc-text">设置编译INCLUDE和LIB目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python3安装MySQL-Python"><span class="toc-number">2.</span> <span class="toc-text">Python3安装MySQL-Python</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="Python2-7安装MySQL-Python"><a href="#Python2-7安装MySQL-Python" class="headerlink" title="Python2.7安装MySQL-Python"></a>Python2.7安装MySQL-Python</h1><h2 id="直接执行pip命令"><a href="#直接执行pip命令" class="headerlink" title="直接执行pip命令"></a>直接执行pip命令</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip2 <span class="keyword">install</span> MySQL-Python</div></pre></td></tr></table></figure>
+<p>报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory</p>
+<h2 id="安装mysql-connector-c"><a href="#安装mysql-connector-c" class="headerlink" title="安装mysql-connector-c"></a>安装mysql-connector-c</h2><p>url: <a href="https://dev.mysql.com/downloads/connector/c/6.0.html" target="_blank" rel="external">https://dev.mysql.com/downloads/connector/c/6.0.html</a></p>
+<p>下载相应的版本，比如64位的windows则下载：</p>
+<p>mysql-connector-c-6.0.2-winx64.msi</p>
+<p>默认安装即可</p>
+<h2 id="再次执行pip命令"><a href="#再次执行pip命令" class="headerlink" title="再次执行pip命令"></a>再次执行pip命令</h2><p>还是同样的错误，去mysql-connector-c的安装目录下查找，config-win.h文件确实已经有了。</p>
+<p>奇怪，把目录设到环境变量Path中也不行。既然是编译的时候报错了，是不是驾驶INCLUDE目录就行了呢？</p>
+<h2 id="设置编译INCLUDE和LIB目录"><a href="#设置编译INCLUDE和LIB目录" class="headerlink" title="设置编译INCLUDE和LIB目录"></a>设置编译INCLUDE和LIB目录</h2><p>cmd输入</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SET INCLUDE=<span class="symbol">C:</span>\Program Files\MySQL\MySQL Connector C <span class="number">6.0</span>.<span class="number">2</span>\<span class="keyword">include</span></div><div class="line">SET LIB=<span class="symbol">C:</span>\Program Files\MySQL\MySQL Connector C <span class="number">6.0</span>.<span class="number">2</span>\<span class="class"><span class="keyword">lib</span>\<span class="title">opt</span></span></div></pre></td></tr></table></figure>
+<p>再次执行pip，安装成功</p>
+<h1 id="Python3安装MySQL-Python"><a href="#Python3安装MySQL-Python" class="headerlink" title="Python3安装MySQL-Python"></a>Python3安装MySQL-Python</h1><p>安装上面同样的方法之后，还是报错 mysqlclient.lib中函数undefined，暂时不知道怎么解决。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2017/07/22/Python安装MySQL-Python库/" data-title="Python安装MySQL-Python库 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/07/12/Python核心编程学习笔记/"  title="Python核心编程学习笔记">
+ <strong>下一篇：</strong><br/> 
+ <span>Python核心编程学习笔记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python2-7安装MySQL-Python"><span class="toc-number">1.</span> <span class="toc-text">Python2.7安装MySQL-Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#直接执行pip命令"><span class="toc-number">1.1.</span> <span class="toc-text">直接执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装mysql-connector-c"><span class="toc-number">1.2.</span> <span class="toc-text">安装mysql-connector-c</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再次执行pip命令"><span class="toc-number">1.3.</span> <span class="toc-text">再次执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置编译INCLUDE和LIB目录"><span class="toc-number">1.4.</span> <span class="toc-text">设置编译INCLUDE和LIB目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python3安装MySQL-Python"><span class="toc-number">2.</span> <span class="toc-text">Python3安装MySQL-Python</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
