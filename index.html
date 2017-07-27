@@ -82,6 +82,70 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/07/26/Python金融大数据分析学习笔记/" title="Python金融大数据分析学习笔记" itemprop="url">Python金融大数据分析学习笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2017-07-26T13:49:28.000Z" itemprop="datePublished"> 发表于 2017-07-26</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Python常用工具"><a href="#Python常用工具" class="headerlink" title="Python常用工具"></a>Python常用工具</h1><h2 id="IPython-Notebook"><a href="#IPython-Notebook" class="headerlink" title="IPython Notebook"></a>IPython Notebook</h2><p>说明: 本地Web短编写调试Python代码</p>
+<p>安装方法: pip install juputer</p>
+<p>运行: jupyter notebook</p>
+<h2 id="Python-quant-platform"><a href="#Python-quant-platform" class="headerlink" title="Python quant-platform"></a>Python quant-platform</h2><p>说明: Web浏览器的金融分析和协作平台，环境已经配置好</p>
+<p>地址: <a href="http://analytics.quant-platform.com" target="_blank" rel="external">http://analytics.quant-platform.com</a></p>
+<h2 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h2><p>说明: 拥有科学计算的Python发行版，提供了包管理和环境管理功能，可以方便地解决多版本Python共存的问题</p>
+<h1 id="数据类型和结构"><a href="#数据类型和结构" class="headerlink" title="数据类型和结构"></a>数据类型和结构</h1><h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><h3 id="浮点数精确地存储"><a href="#浮点数精确地存储" class="headerlink" title="浮点数精确地存储"></a>浮点数精确地存储</h3><figure class="highlight llvm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">c</span> = <span class="number">0.5</span></div><div class="line"><span class="keyword">c</span>.as_integer_ratio()</div></pre></td></tr></table></figure>
+<h3 id="decimal-模块"><a href="#decimal-模块" class="headerlink" title="decimal 模块"></a>decimal 模块</h3><figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="built_in">decimal</span></div><div class="line">from <span class="built_in">decimal</span> <span class="keyword">import</span> <span class="built_in">Decimal</span></div><div class="line"></div><div class="line">d = <span class="built_in">Decimal</span>(<span class="number">1</span>) / <span class="built_in">Decimal</span>(<span class="number">11</span>) #28位</div><div class="line"></div><div class="line"><span class="built_in">decimal</span>.getcontext().prec = <span class="number">50</span></div><div class="line">d = <span class="built_in">Decimal</span>(<span class="number">1</span>) / <span class="built_in">Decimal</span>(<span class="number">11</span>) #50位</div></pre></td></tr></table></figure>
+<h3 id="函数式编程filter-map-reduce"><a href="#函数式编程filter-map-reduce" class="headerlink" title="函数式编程filter,map,reduce"></a>函数式编程filter,map,reduce</h3><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def even(x):</div><div class="line">    <span class="keyword">return</span> x % <span class="number">2</span> == <span class="number">0</span></div><div class="line"></div><div class="line">a = <span class="keyword">map</span>(even, <span class="keyword">range</span>(<span class="number">10</span>)) #迭代器</div><div class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> a] #[<span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>]</div></pre></td></tr></table></figure>
+<p>使用lamda函数</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">map(<span class="name">lamda</span> x: x ** <span class="number">2</span>, )</div></pre></td></tr></table></figure>
+<p>filter:筛选匹配函数布尔值的元素</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = filter(even, range(<span class="number">10</span>))</div><div class="line">[x for x in a] #[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</div></pre></td></tr></table></figure>
+<p>reduce:归纳列表</p>
+<p>求列表和的例子<br><figure class="highlight golo"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from functools <span class="keyword">import</span> <span class="keyword">reduce</span></div><div class="line"><span class="keyword">reduce</span>(lambda x, y: x+ y, range(<span class="number">15</span>))</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/07/22/Python安装MySQL-Python库/" title="Python安装MySQL-Python库" itemprop="url">Python安装MySQL-Python库</a>
   </h1>
   <p class="article-author">By
@@ -752,15 +816,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
 			
 		
 		</ul>
