@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | 飞翔的pig</title>
+    <title>IRR与XIRR | 飞翔的pig</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Kongdb">
     
 
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords" content="vi, nodejs, robotframework">
+    <meta name="description" content="运用Excel函数IRR与XIRR，一键计算定投收益率和借款利息率">
+<meta name="keywords" content="金融,理财">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/06/24/hello-world/index.html">
+<meta property="og:title" content="IRR与XIRR">
+<meta property="og:url" content="http://yoursite.com/2017/08/13/IRR与XIRR/index.html">
 <meta property="og:site_name" content="飞翔的pig">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta property="og:updated_time" content="2017-06-24T13:45:47.241Z">
+<meta property="og:description" content="运用Excel函数IRR与XIRR，一键计算定投收益率和借款利息率">
+<meta property="og:updated_time" content="2017-08-13T13:42:34.135Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="IRR与XIRR">
+<meta name="twitter:description" content="运用Excel函数IRR与XIRR，一键计算定投收益率和借款利息率">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/06/24/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2017/08/13/IRR与XIRR/" title="IRR与XIRR" itemprop="url">IRR与XIRR</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
 		
   <p class="article-time">
-    <time datetime="2017-06-24T13:45:47.239Z" itemprop="datePublished"> 发表于 2017-06-24</time>
+    <time datetime="2017-08-13T12:43:51.000Z" itemprop="datePublished"> 发表于 2017-08-13</time>
     
   </p>
 </header>
@@ -97,24 +97,278 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IRR函数"><span class="toc-number">1.</span> <span class="toc-text">IRR函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法"><span class="toc-number">1.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-number">1.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XIRR函数"><span class="toc-number">2.</span> <span class="toc-text">XIRR函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明-1"><span class="toc-number">2.1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法-1"><span class="toc-number">2.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-1"><span class="toc-number">2.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考链接"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
 		
 		</div>
 		
-		<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+		<h1 id="IRR函数"><a href="#IRR函数" class="headerlink" title="IRR函数"></a>IRR函数</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>一系列现金流的内部收益率，现金流数额不必相等，但是必须是<strong>定期出现</strong>的（如每周或每月）</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>IRR(values, [guess])</p>
+<p>参数说明如下</p>
+<ul>
+<li><p>Values    必需。 数组或单元格的引用，这些单元格包含用来计算内部收益率的数字。</p>
+</li>
+<li><ul>
+<li>Values 必须包含至少一个正值和一个负值，以计算返回的内部收益率。</li>
+</ul>
+</li>
+<li><ul>
+<li>IRR 使用值的顺序来说明现金流的顺序。 一定要按您需要的顺序输入支出值和收益值。</li>
+</ul>
+</li>
+<li><ul>
+<li>如果数组或引用包含文本、逻辑值或空白单元格，这些数值将被忽略。</li>
+</ul>
+</li>
+<li><p>Guess    可选。 对函数 IRR 计算结果的估计值。</p>
+</li>
+<li><ul>
+<li>Microsoft Excel 使用迭代法计算函数 IRR。 从 guess 开始，IRR 不断修正计算结果，直至其精度小于 0.00001%。 如果 IRR 运算 20 次，仍未找到结果，则返回 错误值 #NUM!。</li>
+</ul>
+</li>
+<li><ul>
+<li>多数情况下，不必为 IRR 计算提供 guess 值。 如果省略 guess，则假定它为 0.1 (10%)。</li>
+</ul>
+</li>
+<li><ul>
+<li>如果 IRR 返回 错误值 #NUM!，或结果不接近您预期的值，可用另一个 guess 值重试。</li>
+</ul>
+</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>1、一开始投入一笔资金，每年取得一定收入，计算收益率</p>
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-70000</td>
+<td>成本费用</td>
+</tr>
+<tr>
+<td>12000</td>
+<td>第一年净收入</td>
+</tr>
+<tr>
+<td>15000</td>
+<td>第二年净收入</td>
+</tr>
+<tr>
+<td>18000</td>
+<td>第三年净收入</td>
+</tr>
+<tr>
+<td>21000</td>
+<td>第四年净收入</td>
+</tr>
+<tr>
+<td>26000</td>
+<td>第五年净收入</td>
+</tr>
+<tr>
+<td>8.66%</td>
+<td>五年后的内部收益率( =IRR(A2:A7) )</td>
+</tr>
+</tbody>
+</table>
+<p>2、一开始借了一笔钱，每月还一部分，计算借款实际利率</p>
+<p>比如和银行借了30000元，每月还5100，分6个月还</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>现金流</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>30000</td>
+</tr>
+<tr>
+<td>第一个月</td>
+<td>-5100</td>
+</tr>
+<tr>
+<td>第二个月</td>
+<td>-5100</td>
+</tr>
+<tr>
+<td>第三个月</td>
+<td>-5100</td>
+</tr>
+<tr>
+<td>第四个月</td>
+<td>-5100</td>
+</tr>
+<tr>
+<td>第五个月</td>
+<td>-5100</td>
+</tr>
+<tr>
+<td>第六个月</td>
+<td>-5100</td>
+</tr>
+<tr>
+<td>每月利率（=IRR(B2:B8)）</td>
+<td>0.57%</td>
+</tr>
+<tr>
+<td>年化利率 （=(1+IRR(B2:B8))^12-1）</td>
+<td>7.04%</td>
+</tr>
+</tbody>
+</table>
+<p>3、每月定投一笔钱，一段时间后计算平均收益</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>定投资金</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一个月初</td>
+<td>-10000</td>
+</tr>
+<tr>
+<td>第二个月初</td>
+<td>-10000</td>
+</tr>
+<tr>
+<td>第三个月初</td>
+<td>-10000</td>
+</tr>
+<tr>
+<td>第四个月初</td>
+<td>-10000</td>
+</tr>
+<tr>
+<td>第五个月初</td>
+<td>-10000</td>
+</tr>
+<tr>
+<td>第六个月初</td>
+<td>-10000</td>
+</tr>
+<tr>
+<td>第六个月末余额</td>
+<td>63000</td>
+</tr>
+<tr>
+<td>每月利率（=IRR(B2:B8)）</td>
+<td>1.4%</td>
+</tr>
+<tr>
+<td>年化利率 （=(1+IRR(B2:B8))^12-1）</td>
+<td>18.1%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>哇塞，实际年化好吓人</strong></p>
+<h1 id="XIRR函数"><a href="#XIRR函数" class="headerlink" title="XIRR函数"></a>XIRR函数</h1><h2 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h2><p>用于计算不一定定期发生的现金流的内部收益率</p>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><p>XIRR(values, dates, [guess])</p>
+<p>参数说明如下</p>
+<ul>
+<li><p>值    必需。 与 dates 中的支付时间相对应的一系列现金流。 首期支付是可选的，并与投资开始时的成本或支付有关。 如果第一个值是成本或支付，则它必须是负值。 所有后续支付都基于 365 天/年贴现。 值系列中必须至少包含一个正值和一个负值。</p>
+</li>
+<li><p>日期    必需。 与现金流支付相对应的支付日期表。 日期可按任何顺序排列。 应使用 DATE 函数输入日期，或者将日期作为其他公式或函数的结果输入。 例如，使用函数 DATE(2008,5,23) 输入 2008 年 5 月 23 日。 如果日期以文本形式输入，则会出现问题 。</p>
+</li>
+<li><p>Guess    可选。 对函数 XIRR 计算结果的估计值。</p>
+</li>
+</ul>
+<h2 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h2><p>1、一开始投入一笔钱，不定期获得收益</p>
+<table>
+<thead>
+<tr>
+<th>现金流</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-10000</td>
+<td>2008-1-1</td>
+</tr>
+<tr>
+<td>2750</td>
+<td>2008-3-1</td>
+</tr>
+<tr>
+<td>4250</td>
+<td>2008-10-30</td>
+</tr>
+<tr>
+<td>3250</td>
+<td>2009-2-15</td>
+</tr>
+<tr>
+<td>2750</td>
+<td>2009-4-1</td>
+</tr>
+<tr>
+<td>年化收益率(=XIRR(A2:A6, B2:B6))</td>
+<td>37.34%</td>
+</tr>
+</tbody>
+</table>
+<p>2、每月不定期定投</p>
+<table>
+<thead>
+<tr>
+<th>现金流</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-3000</td>
+<td>2016-1-14</td>
+</tr>
+<tr>
+<td>-3000</td>
+<td>2016-1-10</td>
+</tr>
+<tr>
+<td>-5000</td>
+<td>2016-3-6</td>
+</tr>
+<tr>
+<td>-10000</td>
+<td>2016-8-10</td>
+</tr>
+<tr>
+<td>-10000</td>
+<td>2016-10-10</td>
+</tr>
+<tr>
+<td>32850</td>
+<td>2016-10-30</td>
+</tr>
+<tr>
+<td>年化收益率(=XIRR(A2:A2, B2:B7))</td>
+<td>17.51%</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>微信公众号：越女事务所</p>
+<p>IRR 官方说明：</p>
+<p><a href="https://support.office.com/zh-CN/article/IRR-%E5%87%BD%E6%95%B0-64925EAA-9988-495B-B290-3AD0C163C1BC" target="_blank" rel="external">https://support.office.com/zh-CN/article/IRR-%E5%87%BD%E6%95%B0-64925EAA-9988-495B-B290-3AD0C163C1BC</a></p>
+<p>XIRR官方说明：</p>
+<p><a href="https://support.office.com/zh-CN/article/XIRR-%E5%87%BD%E6%95%B0-DE1242EC-6477-445B-B11B-A303AD9ADC9D" target="_blank" rel="external">https://support.office.com/zh-CN/article/XIRR-%E5%87%BD%E6%95%B0-DE1242EC-6477-445B-B11B-A303AD9ADC9D</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/金融/">金融</a><a href="/tags/理财/">理财</a>
+  </div>
 
 </div>
 
@@ -122,7 +376,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/06/24/hello-world/" data-title="Hello World | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/08/13/IRR与XIRR/" data-title="IRR与XIRR | 飞翔的pig" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -135,14 +389,14 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/06/27/vi常用命令/" title="vi常用命令">
-  <strong>上一篇：</strong><br/>
-  <span>
-  vi常用命令</span>
+
+<div class="next">
+<a href="/2017/08/09/试题解答/"  title="试题解答">
+ <strong>下一篇：</strong><br/> 
+ <span>试题解答
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -155,7 +409,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IRR函数"><span class="toc-number">1.</span> <span class="toc-text">IRR函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法"><span class="toc-number">1.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-number">1.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XIRR函数"><span class="toc-number">2.</span> <span class="toc-text">XIRR函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明-1"><span class="toc-number">2.1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法-1"><span class="toc-number">2.2.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-1"><span class="toc-number">2.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考链接"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
  
   </div>
 

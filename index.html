@@ -76,767 +76,222 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/09/试题解答/" title="试题解答" itemprop="url">试题解答</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-09T12:10:02.000Z" itemprop="datePublished"> 发表于 2017-08-09</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="题目1"><a href="#题目1" class="headerlink" title="题目1"></a>题目1</h1><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#-*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line"><span class="comment">#逐块读取，每块的size</span></div><div class="line"><span class="type">CHUNK_SIZE</span> = <span class="number">1000</span></div><div class="line"><span class="comment">#空年龄的key</span></div><div class="line"><span class="type">NULL_KEY</span> = -<span class="number">1</span></div><div class="line"></div><div class="line">def readDataFromFile(fName):</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(fName):</div><div class="line">        print(<span class="string">"请确认文件是否存在, 路径：%s"</span> % fName)</div><div class="line">        <span class="keyword">return</span></div><div class="line">    <span class="comment">#逐块的迭代器，header=0表示忽略第一行的表头</span></div><div class="line">    chunker = pd.read_table(fName, sep='\s+', header=<span class="number">0</span>, chunksize=<span class="type">CHUNK_SIZE</span>)</div><div class="line">    <span class="comment">#结果的列表</span></div><div class="line">    <span class="literal">result</span> = &#123;&#125;</div><div class="line">    <span class="comment">#行号</span></div><div class="line">    line = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> piece <span class="keyword">in</span> chunker:</div><div class="line">        <span class="comment">#年龄的列表</span></div><div class="line">        ages = piece.age.values</div><div class="line">        <span class="comment">#年龄是否为空的列表，空则为False</span></div><div class="line">        isEmptyAge = piece.age.isnull().values</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(len(ages)):</div><div class="line">            line = line + <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> isEmptyAge[i]:</div><div class="line">                <span class="literal">result</span>[<span class="type">NULL_KEY</span>] = (<span class="literal">result</span>[<span class="type">NULL_KEY</span>] + <span class="number">1</span> <span class="keyword">if</span> <span class="type">NULL_KEY</span> <span class="keyword">in</span> <span class="literal">result</span> <span class="keyword">else</span> <span class="number">1</span>)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">try</span>:</div><div class="line">                    key = <span class="built_in">int</span>(ages[i])</div><div class="line">                    <span class="literal">result</span>[key] = (<span class="literal">result</span>[key] + <span class="number">1</span> <span class="keyword">if</span> key <span class="keyword">in</span> <span class="literal">result</span> <span class="keyword">else</span> <span class="number">1</span>)</div><div class="line">                <span class="keyword">except</span>:</div><div class="line">                    print('***错误！数据的第%d行，年龄不是整数数字***' % line)</div><div class="line">    <span class="keyword">return</span> <span class="literal">result</span></div><div class="line"></div><div class="line">def saveResultToFile(fName, <span class="literal">result</span>):</div><div class="line">    <span class="keyword">with</span> open(fName, 'w') <span class="keyword">as</span> f:</div><div class="line">        f.write('年龄  人数\n')</div><div class="line">        <span class="comment">#给年龄排个序</span></div><div class="line">        ages = list(<span class="literal">result</span>.keys())</div><div class="line">        ages.sort()</div><div class="line">        <span class="keyword">for</span> age <span class="keyword">in</span> ages:</div><div class="line">            <span class="keyword">if</span> age == <span class="type">NULL_KEY</span>:</div><div class="line">                f.write('未知  %d\n' % <span class="literal">result</span>[age])</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                f.write('%d    %d\n' % (age, <span class="literal">result</span>[age]))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == '__main__':</div><div class="line">    inFile = 'E:/info.txt'</div><div class="line">    outFile = 'E:/<span class="literal">result</span>.txt'</div><div class="line">    <span class="literal">result</span> = readDataFromFile(inFile)</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="literal">result</span> <span class="keyword">is</span> <span class="type">None</span>:</div><div class="line">        saveResultToFile(outFile, <span class="literal">result</span>)</div></pre></td></tr></table></figure>
-<h1 id="题目2"><a href="#题目2" class="headerlink" title="题目2"></a>题目2</h1><figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf<span class="number">-8</span> -*-</div><div class="line">import unittest</div><div class="line"></div><div class="line">def checkListFormat(lData):</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(lData, list) <span class="keyword">or</span> <span class="built_in">len</span>(lData) != <span class="number">2</span>:</div><div class="line">        <span class="built_in">print</span>(<span class="string">'数据格式错误'</span>)</div><div class="line">        <span class="keyword">return</span> False</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> lData:</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(i, int):</div><div class="line">            <span class="built_in">print</span>(<span class="string">'数据格式错误'</span>)</div><div class="line">            <span class="keyword">return</span> False</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> lData[<span class="number">0</span>] &lt; lData[<span class="number">1</span>]:</div><div class="line">        <span class="built_in">print</span>(<span class="string">'数据格式错误'</span>)</div><div class="line">        <span class="keyword">return</span> False</div><div class="line">    <span class="keyword">return</span> True</div><div class="line"></div><div class="line">def insertList(before, inData):</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> checkListFormat(inData): <span class="keyword">return</span></div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(before, list): <span class="keyword">return</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> before:</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> checkListFormat(i): <span class="keyword">return</span></div><div class="line">    n = <span class="built_in">len</span>(before)</div><div class="line">    startIndex = n</div><div class="line">    endIndex = n</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">        <span class="keyword">if</span> inData[<span class="number">0</span>] &gt; before[i][<span class="number">1</span>]:</div><div class="line">            continue</div><div class="line">        startIndex = i</div><div class="line">        <span class="keyword">break</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">        <span class="keyword">if</span> inData[<span class="number">1</span>] &gt; before[i][<span class="number">0</span>]:</div><div class="line">            continue</div><div class="line">        endIndex = i - <span class="number">1</span></div><div class="line">        <span class="keyword">break</span></div><div class="line">    #startIndex为n说明待插入值的最小值都比原列表发最后一个值大</div><div class="line">    newBegin = (inData[<span class="number">0</span>] <span class="keyword">if</span> startIndex == n <span class="keyword">else</span> <span class="built_in">min</span>(inData[<span class="number">0</span>], before[startIndex][<span class="number">0</span>]))</div><div class="line">    newEnd = <span class="number">0</span></div><div class="line">    <span class="keyword">if</span> endIndex == <span class="number">-1</span>: #待插入值的最大值都比原列表第一个值大</div><div class="line">        newEnd = inData[<span class="number">1</span>]</div><div class="line">    elif endIndex == n: #需要比较两个列表最后一个值</div><div class="line">        newEnd = <span class="built_in">max</span>(inData[<span class="number">1</span>], before[n<span class="number">-1</span>][<span class="number">1</span>])</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        newEnd = <span class="built_in">max</span>(inData[<span class="number">1</span>], before[endIndex][<span class="number">1</span>])</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(startIndex, <span class="built_in">min</span>(endIndex+<span class="number">1</span>, n)):</div><div class="line">        before.pop(startIndex)</div><div class="line">    before.<span class="built_in">insert</span>(startIndex, [newBegin, newEnd])</div><div class="line">    <span class="keyword">return</span> before</div><div class="line"></div><div class="line">class TestInsert(unittest.TestCase):</div><div class="line">    def test_insertList(self):</div><div class="line">        self.assertEqual(insertList(<span class="string">[[1, 3], [6, 9]]</span>, [<span class="number">2</span>, <span class="number">5</span>]),</div><div class="line">                         <span class="string">[[1, 5], [6, 9]]</span>)</div><div class="line">        self.assertEqual(insertList(<span class="string">[[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]]</span>, [<span class="number">4</span>, <span class="number">9</span>]),</div><div class="line">                         <span class="string">[[1, 2], [3, 10], [12, 16]]</span>)</div><div class="line">        self.assertEqual(insertList(<span class="string">[[6, 9], [10, 11]]</span>, [<span class="number">1</span>, <span class="number">3</span>]),</div><div class="line">                         <span class="string">[[1, 3], [6, 9], [10, 11]]</span>)</div><div class="line">        self.assertEqual(insertList(<span class="string">[[6, 9], [10, 11]]</span>, [<span class="number">19</span>, <span class="number">32</span>]),</div><div class="line">                         <span class="string">[[6, 9], [10, 11], [19, 32]]</span>)</div><div class="line">        self.assertEqual(insertList(<span class="string">[[6, 9], [10, 13]]</span>, [<span class="number">3</span>, <span class="number">8</span>]),</div><div class="line">                         <span class="string">[[3, 9], [10, 13]]</span>)</div><div class="line">        self.assertEqual(insertList(<span class="string">[[6, 9], [10, 13]]</span>, [<span class="number">12</span>, <span class="number">17</span>]),</div><div class="line">                         <span class="string">[[6, 9], [10, 17]]</span>)</div><div class="line">        self.assertEqual(insertList(<span class="string">[[6, 9], [10, 13]]</span>, [<span class="number">11</span>, <span class="number">12</span>]),</div><div class="line">                         <span class="string">[[6, 9], [10, 13]]</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    unittest.main()</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/07/26/Python金融大数据分析学习笔记/" title="Python金融大数据分析学习笔记" itemprop="url">Python金融大数据分析学习笔记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-07-26T13:49:28.000Z" itemprop="datePublished"> 发表于 2017-07-26</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="Python常用工具"><a href="#Python常用工具" class="headerlink" title="Python常用工具"></a>Python常用工具</h1><h2 id="IPython-Notebook"><a href="#IPython-Notebook" class="headerlink" title="IPython Notebook"></a>IPython Notebook</h2><p>说明: 本地Web短编写调试Python代码</p>
-<p>安装方法: pip install juputer</p>
-<p>运行: jupyter notebook</p>
-<h2 id="Python-quant-platform"><a href="#Python-quant-platform" class="headerlink" title="Python quant-platform"></a>Python quant-platform</h2><p>说明: Web浏览器的金融分析和协作平台，环境已经配置好</p>
-<p>地址: <a href="http://analytics.quant-platform.com" target="_blank" rel="external">http://analytics.quant-platform.com</a></p>
-<h2 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h2><p>说明: 拥有科学计算的Python发行版，提供了包管理和环境管理功能，可以方便地解决多版本Python共存的问题</p>
-<h1 id="数据类型和结构"><a href="#数据类型和结构" class="headerlink" title="数据类型和结构"></a>数据类型和结构</h1><h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h2><h3 id="浮点数精确地存储"><a href="#浮点数精确地存储" class="headerlink" title="浮点数精确地存储"></a>浮点数精确地存储</h3><figure class="highlight llvm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">c</span> = <span class="number">0.5</span></div><div class="line"><span class="keyword">c</span>.as_integer_ratio()</div></pre></td></tr></table></figure>
-<h3 id="decimal-模块"><a href="#decimal-模块" class="headerlink" title="decimal 模块"></a>decimal 模块</h3><figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="built_in">decimal</span></div><div class="line">from <span class="built_in">decimal</span> <span class="keyword">import</span> <span class="built_in">Decimal</span></div><div class="line"></div><div class="line">d = <span class="built_in">Decimal</span>(<span class="number">1</span>) / <span class="built_in">Decimal</span>(<span class="number">11</span>) #28位</div><div class="line"></div><div class="line"><span class="built_in">decimal</span>.getcontext().prec = <span class="number">50</span></div><div class="line">d = <span class="built_in">Decimal</span>(<span class="number">1</span>) / <span class="built_in">Decimal</span>(<span class="number">11</span>) #50位</div></pre></td></tr></table></figure>
-<h3 id="函数式编程filter-map-reduce"><a href="#函数式编程filter-map-reduce" class="headerlink" title="函数式编程filter,map,reduce"></a>函数式编程filter,map,reduce</h3><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def even(x):</div><div class="line">    <span class="keyword">return</span> x % <span class="number">2</span> == <span class="number">0</span></div><div class="line"></div><div class="line">a = <span class="keyword">map</span>(even, <span class="keyword">range</span>(<span class="number">10</span>)) #迭代器</div><div class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> a] #[<span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>, <span class="literal">True</span>, <span class="literal">False</span>]</div></pre></td></tr></table></figure>
-<p>使用lamda函数</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">map(<span class="name">lamda</span> x: x ** <span class="number">2</span>, )</div></pre></td></tr></table></figure>
-<p>filter:筛选匹配函数布尔值的元素</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = filter(even, range(<span class="number">10</span>))</div><div class="line">[x for x in a] #[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>]</div></pre></td></tr></table></figure>
-<p>reduce:归纳列表</p>
-<p>求列表和的例子<br><figure class="highlight golo"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from functools <span class="keyword">import</span> <span class="keyword">reduce</span></div><div class="line"><span class="keyword">reduce</span>(lambda x, y: x+ y, range(<span class="number">15</span>))</div></pre></td></tr></table></figure></p>
-<h3 id="Python-字符串逆序"><a href="#Python-字符串逆序" class="headerlink" title="Python 字符串逆序"></a>Python 字符串逆序</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">"123你好世界def"</span></div><div class="line"><span class="section">s[::-1]</span></div></pre></td></tr></table></figure>
-<p>str[begin:end:step]</p>
-<p>step 默认值为1</p>
-<h3 id="深层拷贝deepcopy的运用"><a href="#深层拷贝deepcopy的运用" class="headerlink" title="深层拷贝deepcopy的运用"></a>深层拷贝deepcopy的运用</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span> = [<span class="number">0.5</span>, <span class="number">1</span>]</div><div class="line"><span class="selector-tag">b</span> = <span class="selector-tag">a</span></div><div class="line"><span class="selector-tag">a</span>[<span class="number">0</span>] = <span class="number">3</span></div><div class="line"><span class="selector-tag">b</span> #[<span class="number">3</span>, <span class="number">1</span>]</div></pre></td></tr></table></figure>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from copy import deepcopy</div><div class="line"><span class="selector-tag">a</span> = [<span class="number">0.5</span>, <span class="number">1</span>]</div><div class="line"><span class="selector-tag">b</span> = deepcopy(a)</div><div class="line"><span class="selector-tag">a</span>[<span class="number">0</span>] = <span class="number">3</span></div><div class="line"><span class="selector-tag">b</span> #[<span class="number">0.5</span>, <span class="number">1</span>]</div></pre></td></tr></table></figure>
-<p>参考：<a href="https://iaman.actor/blog/2016/04/17/copy-in-python" target="_blank" rel="external">https://iaman.actor/blog/2016/04/17/copy-in-python</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/07/22/Python安装MySQL-Python库/" title="Python安装MySQL-Python库" itemprop="url">Python安装MySQL-Python库</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-07-22T11:48:05.000Z" itemprop="datePublished"> 发表于 2017-07-22</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="Python2-7安装MySQL-Python"><a href="#Python2-7安装MySQL-Python" class="headerlink" title="Python2.7安装MySQL-Python"></a>Python2.7安装MySQL-Python</h1><h2 id="直接执行pip命令"><a href="#直接执行pip命令" class="headerlink" title="直接执行pip命令"></a>直接执行pip命令</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip2 <span class="keyword">install</span> MySQL-Python</div></pre></td></tr></table></figure>
-<p>报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory</p>
-<h2 id="安装mysql-connector-c"><a href="#安装mysql-connector-c" class="headerlink" title="安装mysql-connector-c"></a>安装mysql-connector-c</h2><p>url: <a href="https://dev.mysql.com/downloads/connector/c/6.0.html" target="_blank" rel="external">https://dev.mysql.com/downloads/connector/c/6.0.html</a></p>
-<p>下载相应的版本，比如64位的windows则下载：</p>
-<p>mysql-connector-c-6.0.2-winx64.msi</p>
-<p>默认安装即可</p>
-<h2 id="再次执行pip命令"><a href="#再次执行pip命令" class="headerlink" title="再次执行pip命令"></a>再次执行pip命令</h2><p>还是同样的错误，去mysql-connector-c的安装目录下查找，config-win.h文件确实已经有了。</p>
-<p>奇怪，把目录设到环境变量Path中也不行。既然是编译的时候报错了，是不是驾驶INCLUDE目录就行了呢？</p>
-<h2 id="设置编译INCLUDE和LIB目录"><a href="#设置编译INCLUDE和LIB目录" class="headerlink" title="设置编译INCLUDE和LIB目录"></a>设置编译INCLUDE和LIB目录</h2><p>cmd输入</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SET INCLUDE=<span class="symbol">C:</span>\Program Files\MySQL\MySQL Connector C <span class="number">6.0</span>.<span class="number">2</span>\<span class="keyword">include</span></div><div class="line">SET LIB=<span class="symbol">C:</span>\Program Files\MySQL\MySQL Connector C <span class="number">6.0</span>.<span class="number">2</span>\<span class="class"><span class="keyword">lib</span>\<span class="title">opt</span></span></div></pre></td></tr></table></figure>
-<p>再次执行pip，安装成功</p>
-<h1 id="Python3安装MySQL-Python"><a href="#Python3安装MySQL-Python" class="headerlink" title="Python3安装MySQL-Python"></a>Python3安装MySQL-Python</h1><p>安装上面同样的方法之后，还是报错 mysqlclient.lib中函数undefined，暂时不知道怎么解决。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/07/12/Python核心编程学习笔记/" title="Python核心编程学习笔记" itemprop="url">Python核心编程学习笔记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-07-12T14:08:46.000Z" itemprop="datePublished"> 发表于 2017-07-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><h2 id="常见正则表达式符号和字符"><a href="#常见正则表达式符号和字符" class="headerlink" title="常见正则表达式符号和字符"></a>常见正则表达式符号和字符</h2><table>
-<thead>
-<tr>
-<th>表示法</th>
-<th>描述</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>literal</td>
-<td>匹配字符串字面值</td>
-<td>re.match(‘foo’, ‘food’)</td>
-</tr>
-<tr>
-<td>re1</td>
-<td>re2</td>
-<td>匹配正则表达式re1或者re2</td>
-<td>re.match(‘ab\</td>
-<td>cd’, ‘abd’)</td>
-</tr>
-<tr>
-<td>.</td>
-<td>匹配任何字符（除了\n之外）</td>
-<td>re.match(‘.e’, ‘de’)</td>
-</tr>
-<tr>
-<td>^</td>
-<td>匹配字符串起始部分</td>
-<td>re.match(‘^Dear’, ‘Dear my baby’)</td>
-</tr>
-<tr>
-<td>$</td>
-<td>匹配字符串的终止部分</td>
-<td>re.search(‘baby$’, ‘Dear my baby’)</td>
-</tr>
-<tr>
-<td>*</td>
-<td>匹配0次或多次前面出现的正则表达式</td>
-<td>re.search(‘ba*b’, ‘Dear my baby’)</td>
-</tr>
-<tr>
-<td>+</td>
-<td>匹配1次或多次前面出现的正则表达式</td>
-<td>re.search(‘\w+.com’, ‘<a href="http://ww.baidu.com" target="_blank" rel="external">http://ww.baidu.com</a>‘)</td>
-</tr>
-<tr>
-<td>?</td>
-<td>匹配0次或1次前面出现的正则表达式</td>
-<td>re.search(r’b\w?.com’, ‘<a href="http://ww.ba.com" target="_blank" rel="external">http://ww.ba.com</a>‘)</td>
-</tr>
-<tr>
-<td>{n}</td>
-<td>匹配n次前面出现的正则表达式</td>
-<td>re.search(r’[0-9]{3}’, ‘87a45b775c’)</td>
-</tr>
-<tr>
-<td>{m, n}</td>
-<td>匹配m到n次前面出现的正则表达式</td>
-<td>re.search(r’[0-9]{2,3}’, ‘87a45b775c’)</td>
-</tr>
-<tr>
-<td>[x-y]</td>
-<td>匹配x~y范围内的任意”单一字符”</td>
-<td>re.search(‘[a-z]’, ‘123ACFdGH’)</td>
-</tr>
-<tr>
-<td>[^…]</td>
-<td>不匹配此字符集中出现的任意字符</td>
-<td>re.search(‘[^A-Z]’, ‘ASDG1KL’)</td>
-</tr>
-<tr>
-<td>(…)</td>
-<td>匹配封闭的正则表达式，并另存为子组</td>
-<td>re.search(‘([A-Z]{3}).([0-9]{3})’, ‘ASDG123’).group()</td>
-</tr>
-<tr>
-<td>\d</td>
-<td>匹配任何十进制数，同[0-9]，与\D相反</td>
-<td>re.search(r’\d’, ‘ASDG123’)</td>
-</tr>
-<tr>
-<td>\w</td>
-<td>匹配任何字母数字下划线，同[A-Za-z0-9_]，与\W相反</td>
-<td>re.search(r’\w’, ‘:”@#$a_+’)</td>
-</tr>
-<tr>
-<td>\s</td>
-<td>匹配任何空格字符，与[\n\t\v\f]同，与\S相反</td>
-<td>re.search(r’\s’, ‘:”abc def’)</td>
-</tr>
-<tr>
-<td>\b</td>
-<td>匹配任何边界字符，与\B相反</td>
-<td>re.search(r’\bThe\b’, ‘:”They is not The’)</td>
-</tr>
-<tr>
-<td>\N</td>
-<td>匹配已保存的子组，其中N为1,2…</td>
-<td>price:\16</td>
-</tr>
-<tr>
-<td>\c</td>
-<td>匹配特殊字符</td>
-<td>.,\,*</td>
-</tr>
-</tbody>
-</table>
-<h1 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h1><h2 id="TCP示例代码"><a href="#TCP示例代码" class="headerlink" title="TCP示例代码"></a>TCP示例代码</h2><p>tcp服务器</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="built_in">from</span> <span class="built_in">socket</span> import *</div><div class="line"><span class="built_in">from</span> <span class="built_in">time</span> import ctime</div><div class="line"></div><div class="line">HOST = <span class="string">''</span></div><div class="line">PORT = <span class="number">21567</span></div><div class="line">BUFSIZE = <span class="number">1024</span></div><div class="line">ADDR = (HOST, PORT)</div><div class="line"></div><div class="line">tcpSerSock = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM)</div><div class="line">tcpSerSock.bind(ADDR)</div><div class="line">tcpSerSock.listen(<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="keyword">while</span> True:</div><div class="line">    print(<span class="string">"waiting for connection..."</span>)</div><div class="line">    tcpCliSock, addr = tcpSerSock.accept()</div><div class="line">    print(<span class="string">'...connected from :'</span>, addr)</div><div class="line"></div><div class="line">    <span class="keyword">while</span> True:</div><div class="line">        data = tcpCliSock.recv(BUFSIZE)</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> data:</div><div class="line">            break</div><div class="line">        <span class="comment">#tcpCliSock.send(bytes('hello', 'utf-8'))</span></div><div class="line">        sendData = <span class="string">'[%s] %s'</span> % (ctime(), data.decode(<span class="string">'utf-8'</span>))</div><div class="line">        tcpCliSock.<span class="built_in">send</span>(<span class="keyword">bytes</span>(sendData, <span class="string">'utf-8'</span>))</div><div class="line">    tcpCliSock.<span class="built_in">close</span>()</div><div class="line"></div><div class="line">tcpSerSock.<span class="built_in">close</span>()</div></pre></td></tr></table></figure>
-<p>tcp客户端</p>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="title">from</span> socket <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="type">HOST</span> = '<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>'</div><div class="line"><span class="type">PORT</span> = <span class="number">21567</span></div><div class="line"><span class="type">BUFSIZE</span> = <span class="number">1024</span></div><div class="line"><span class="type">ADDR</span> = (<span class="type">HOST</span>, <span class="type">PORT</span>)</div><div class="line"></div><div class="line"><span class="title">tcpClt</span> = socket(<span class="type">AF_INET</span>, <span class="type">SOCK_STREAM</span>)</div><div class="line"><span class="title">tcpClt</span>.connect(<span class="type">ADDR</span>)</div><div class="line"><span class="title">while</span> <span class="type">True</span>:</div><div class="line">    <span class="class"><span class="keyword">data</span> = input('&gt; ')</span></div><div class="line">    <span class="keyword">if</span> not <span class="class"><span class="keyword">data</span>:</span></div><div class="line">        break</div><div class="line">    tcpClt.send(bytes(<span class="class"><span class="keyword">data</span>, 'utf-8'))</span></div><div class="line">    <span class="class"><span class="keyword">data</span> = tcpClt.recv(<span class="type">BUFSIZE</span>)</span></div><div class="line">    <span class="keyword">if</span> not <span class="class"><span class="keyword">data</span>:</span></div><div class="line">        break</div><div class="line">    print(<span class="class"><span class="keyword">data</span>.decode('<span class="title">utf</span>-8'))</span></div><div class="line"></div><div class="line"><span class="title">tcpClt</span>.close()</div></pre></td></tr></table></figure>
-<p>udp服务器</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</div><div class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime</div><div class="line"></div><div class="line">HOST = <span class="string">''</span></div><div class="line">PORT = <span class="number">21567</span></div><div class="line">BUFSIZE = <span class="number">1024</span></div><div class="line">ADDR = (HOST, PORT)</div><div class="line"></div><div class="line">udpSerSock = socket(AF_INET, SOCK_DGRAM)</div><div class="line">udpSerSock.bind(ADDR)</div><div class="line"></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">print</span>(<span class="string">'waiting for message ...'</span>)</div><div class="line">    data, addr = udpSerSock.recvfrom(BUFSIZE)</div><div class="line">    sendData = <span class="string">'[%s] %s'</span> % (ctime(), data.decode(<span class="string">'utf-8'</span>))</div><div class="line">    udpSerSock.sendto(bytes(sendData, <span class="string">'utf-8'</span>), addr)</div><div class="line">    <span class="keyword">print</span>(<span class="string">'...received from and returned to :'</span>, addr)</div><div class="line">udpSerSock.close()</div></pre></td></tr></table></figure>
-<p>udp客户端</p>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="title">from</span> socket <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="type">HOST</span> = '<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>'</div><div class="line"><span class="type">PORT</span> = <span class="number">21567</span></div><div class="line"><span class="type">BUFSIZE</span> = <span class="number">1024</span></div><div class="line"><span class="type">ADDR</span> = (<span class="type">HOST</span>, <span class="type">PORT</span>)</div><div class="line"></div><div class="line"><span class="title">udpCltSock</span> = socket(<span class="type">AF_INET</span>, <span class="type">SOCK_DGRAM</span>)</div><div class="line"><span class="title">while</span> <span class="type">True</span>:</div><div class="line">    <span class="class"><span class="keyword">data</span> = input('&gt; ')</span></div><div class="line">    <span class="keyword">if</span> not <span class="class"><span class="keyword">data</span>:</span></div><div class="line">        break</div><div class="line">    udpCltSock.sendto(bytes(<span class="class"><span class="keyword">data</span>, 'utf-8'), <span class="type">ADDR</span>)</span></div><div class="line">    <span class="class"><span class="keyword">data</span>, addr = udpCltSock.recvfrom(<span class="type">BUFSIZE</span>)</span></div><div class="line">    <span class="keyword">if</span> not <span class="class"><span class="keyword">data</span>:</span></div><div class="line">        break</div><div class="line">    print(<span class="class"><span class="keyword">data</span>)</span></div><div class="line"><span class="title">udpCltSock</span>.close()</div></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/07/01/日常记录备忘/" title="日常记录备忘" itemprop="url">日常记录备忘</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-07-01T07:38:26.000Z" itemprop="datePublished"> 发表于 2017-07-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="系统同时配置了py2和py3环境，运行rf脚本无反应"><a href="#系统同时配置了py2和py3环境，运行rf脚本无反应" class="headerlink" title="系统同时配置了py2和py3环境，运行rf脚本无反应"></a>系统同时配置了py2和py3环境，运行rf脚本无反应</h1><p>因为ride不支持py3，只能使用py2<br>需要将Python27\Scripts\pybot.bat中[python]替换为[python2]</p>
-<h1 id="使用uiautomatorviewer-bat时提示unable-connect-to-adb"><a href="#使用uiautomatorviewer-bat时提示unable-connect-to-adb" class="headerlink" title="使用uiautomatorviewer.bat时提示unable connect to adb"></a>使用uiautomatorviewer.bat时提示unable connect to adb</h1><p>修改前：</p>
-<p>-Dcom.android.uiautomator.bindir=%prog_dir%</p>
-<p>修改后：</p>
-<p>-Dcom.android.uiautomator.bindir=%ANDROID_HOME%\tools</p>
-<h1 id="android相关命令"><a href="#android相关命令" class="headerlink" title="android相关命令"></a>android相关命令</h1><h2 id="获取已安装的应用的包名"><a href="#获取已安装的应用的包名" class="headerlink" title="获取已安装的应用的包名"></a>获取已安装的应用的包名</h2><p>adb shell pm list packages</p>
-<h2 id="获取包名对应的路径"><a href="#获取包名对应的路径" class="headerlink" title="获取包名对应的路径"></a>获取包名对应的路径</h2><p>adb shell pm path com.huawei.ca</p>
-<p>其中com.huawei.ca为相应的包名</p>
-<h2 id="查看已安装应用的Activity"><a href="#查看已安装应用的Activity" class="headerlink" title="查看已安装应用的Activity"></a>查看已安装应用的Activity</h2><p>先打开应用，再输入以下命令</p>
-<p>adb shell dumpsys window w |findstr \/ | findstr name=</p>
-<p>或者：</p>
-<p>adb shell dumpsys window windows | findstr mFocusedApp</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/06/28/Python爬虫学习笔记/" title="Python爬虫学习笔记" itemprop="url">Python爬虫学习笔记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-06-28T12:05:49.000Z" itemprop="datePublished"> 发表于 2017-06-28</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="Requests库的使用"><a href="#Requests库的使用" class="headerlink" title="Requests库的使用"></a>Requests库的使用</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>pip3 install requests</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>获取百度首页的内容<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">r = requests.get(<span class="string">"http://www.baidu.com"</span>)</div><div class="line">r<span class="selector-class">.encoding</span> = <span class="string">"utf-8"</span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.text)</span></span></div></pre></td></tr></table></figure></p>
-<h2 id="主要API"><a href="#主要API" class="headerlink" title="主要API"></a>主要API</h2><ul>
-<li>request</li>
-</ul>
-<p>“<strong>集大成者</strong>”，可构造以下的各个请求。</p>
-<ul>
-<li>get</li>
-</ul>
-<p>获取页面内容的接口，对应于HTTP的GET </p>
-<p>函数完整定义如下：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def <span class="built_in">get</span>(url, params=None, **kwargs):</div><div class="line">    r<span class="string">""</span><span class="comment">"Sends a GET request.</span></div><div class="line"></div><div class="line">    :param ur<span class="variable">l:</span> URL <span class="keyword">for</span> the <span class="keyword">new</span> :clas<span class="variable">s:</span>`Request` object.</div><div class="line">    :param param<span class="variable">s:</span> (optional) Dictionary <span class="built_in">or</span> bytes <span class="keyword">to</span> <span class="keyword">be</span> sent in the query <span class="built_in">string</span> <span class="keyword">for</span> the :clas<span class="variable">s:</span>`Request`.</div><div class="line">    :param \*\*kwarg<span class="variable">s:</span> Optional arguments that ``request`` takes.</div><div class="line">    :<span class="keyword">return</span>: :clas<span class="variable">s:</span>`Response <span class="symbol">&lt;Response&gt;</span>` object</div><div class="line">    :rtype: requests.Response</div><div class="line">    <span class="string">""</span><span class="comment">"</span></div><div class="line"></div><div class="line">    kwargs.setdefault(<span class="string">'allow_redirects'</span>, True)</div><div class="line">    <span class="keyword">return</span> request(<span class="string">'get'</span>, url, params=params, **kwargs)</div></pre></td></tr></table></figure>
-<p>注释部分已将各个参数及返回值含义解释清楚。</p>
-<p>get函数返回的Response对象包含了爬虫返回的全部内容。主要包括</p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>status_code</td>
-<td>请求的状态码，200表示连接成功，404表示连接失败</td>
-</tr>
-<tr>
-<td>text</td>
-<td>响应内容的字符串形式</td>
-</tr>
-<tr>
-<td>encoding</td>
-<td>从header中取得的内容编码方式</td>
-</tr>
-<tr>
-<td>apparent_encoding</td>
-<td>从内容中分析出的响应内容的编码方式</td>
-</tr>
-<tr>
-<td>content</td>
-<td>响应内容的二进制形式</td>
-</tr>
-</tbody>
-</table>
-<p><strong>爬取网页的一般框架</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHTMLText</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">	r = requests.get(url)</div><div class="line">	r.raise_for_status() <span class="comment">#非正常状态，如404时，会产生异常</span></div><div class="line">	r.encoding = r.apparent_encoding</div><div class="line">	<span class="keyword">return</span> r.text</div><div class="line">    <span class="keyword">except</span>:</div><div class="line">	<span class="keyword">return</span> <span class="string">"产生异常"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    url = <span class="string">"http://www.baidu.com"</span></div><div class="line">    print(getHTMLText(url))</div></pre></td></tr></table></figure>
-<ul>
-<li>head</li>
-</ul>
-<p>获取页面头信息的接口，对应于HTTP的HEAD </p>
-<p>优势：网络流量小</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">r = requests.head(<span class="string">"http://www.baidu.com"</span>)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(r.headers)</span></span></div></pre></td></tr></table></figure>
-<ul>
-<li>post</li>
-</ul>
-<p>向网页提交POST请求的接口，对应于HTTP的POST</p>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="title">payload</span> = &#123;<span class="string">"key1"</span> : <span class="string">"value1"</span>, <span class="string">"key2"</span> : <span class="string">"value2"</span>&#125;</div><div class="line"><span class="title">r</span> = requests.post(<span class="string">"http://httpbin.org/post"</span>, <span class="class"><span class="keyword">data</span>=payload)</span></div><div class="line"><span class="title">print</span>(r.text)</div></pre></td></tr></table></figure>
-<ul>
-<li>put</li>
-</ul>
-<p>向网页提交PUT请求的接口，对应于HTTP的PUT</p>
-<p>与post类似，会将原有的数据覆盖</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line">payload = &#123;<span class="string">"key1"</span> : <span class="string">"value1"</span>, <span class="string">"key2"</span> : <span class="string">"value2"</span>&#125;</div><div class="line">r = requests.<span class="built_in">put</span>(<span class="string">"http://httpbin.org/put"</span>, data=payload)</div><div class="line"><span class="built_in">print</span>(r.<span class="built_in">text</span>)</div></pre></td></tr></table></figure>
-<ul>
-<li>patch</li>
-</ul>
-<p>向网页提交局部修改请求的接口，对应于HTTP的PATCH</p>
-<ul>
-<li>delete</li>
-</ul>
-<p>向网页提交删除请求的接口，对应于HTTP的DELETE</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/06/28/Win10下py2和py3共存/" title="Win10下py2和py3共存" itemprop="url">Win10下py2和py3共存</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-06-28T11:40:53.000Z" itemprop="datePublished"> 发表于 2017-06-28</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="安装Python2和Python3"><a href="#安装Python2和Python3" class="headerlink" title="安装Python2和Python3"></a>安装Python2和Python3</h1><p>从官网分别下载Python2.x和Python3.x版本的程序进行安装。安装方法略。</p>
-<p>并将分别将Python加入到环境变量中。安装正确的话，环境变量中应当存在以下值。</p>
-<ul>
-<li>path\to\Python27</li>
-<li>path\to\Python27\Scripts</li>
-<li>path\to\Python36</li>
-<li>path\to\Python36\Scripts</li>
-</ul>
-<p>将Python27根目录下的python.exe,pythonw.exe分别重命名为python2.exe,python2w.exe</p>
-<p>将Python36根目录下的python.exe,pythonw.exe分别重命名为python3.exe,python3w.exe</p>
-<p>cmd执行命令python2和python3查看是否成功</p>
-<h1 id="pip2和pip3设置"><a href="#pip2和pip3设置" class="headerlink" title="pip2和pip3设置"></a>pip2和pip3设置</h1><p>cmd分别执行以下命令：</p>
-<ul>
-<li><p>python3 -m pip install –upgrade pip –force-reinstall</p>
-</li>
-<li><p>python2 -m pip install –upgrade pip –force-reinstall</p>
-</li>
-</ul>
-<p>安装成功之后，可通过[pip2 install xxx]和[pip3 install xxx]来安装各自的包啦！</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/编程/">编程</a>
-</div>
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/Python/">Python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/06/27/vi常用命令/" title="vi常用命令" itemprop="url">vi常用命令</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-06-27T13:43:16.000Z" itemprop="datePublished"> 发表于 2017-06-27</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="三种模式"><a href="#三种模式" class="headerlink" title="三种模式"></a>三种模式</h1><p>vi总共有三种模式，命名方法不一，暂且命名为</p>
-<ul>
-<li>默认模式</li>
-<li>命令模式</li>
-<li>编辑模式</li>
-</ul>
-<p>三种模式之间的切换及主要功能如下图所示：</p>
-<p><img src="/images/vi%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/vi_mode.png" alt="image"></p>
-<p>*使用vi命令时，最初始进入的即为默认模式</p>
-<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="默认模式"><a href="#默认模式" class="headerlink" title="默认模式"></a>默认模式</h2><h3 id="翻页"><a href="#翻页" class="headerlink" title="翻页"></a>翻页</h3><p><strong>[Ctrl+u]</strong> 向前翻半屏</p>
-<p><strong>[Ctrl+d]</strong> 向后翻半屏</p>
-<p><strong>[Ctrl+f]</strong> 向前翻一屏</p>
-<p><strong>[Ctrl+b]</strong> 向后翻一屏</p>
-<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><p><strong>[h]</strong> 向左移动光标（类似于左键）</p>
-<p><strong>[j]</strong> 向下移动光标（类似于下键）</p>
-<p><strong>[k]</strong> 向上移动光标（类似于上键）</p>
-<p><strong>[l]</strong> 向右移动光标（类似于右键）</p>
-<p><strong>[0]</strong> 移动光标到行首（类似于Home键）</p>
-<p><strong>[$]</strong> 移动光标到行首（类似于End键）</p>
-<p><strong>[G]</strong> 移动光标到末行行首</p>
-<p><strong>[nG]</strong> 移动光标到第n行行首，n为1,2,3…</p>
-<p><strong>[gg]</strong> 移动光标到首行行首,类似于[1G]</p>
-<p><strong>[1+Enter]</strong> 光标向下移动n行至行首</p>
-<h3 id="删除文本"><a href="#删除文本" class="headerlink" title="删除文本"></a>删除文本</h3><p><strong>[x]</strong> 删除光标后的一个字符（X为向前删除一个字符）</p>
-<p><strong>[dd]</strong> 删除光标在的一整行</p>
-<p><strong>[ndd]</strong> 删除光标所在行在内向后的n行。n为1,2,3…</p>
-<h3 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h3><p><strong>[yy]</strong> 复制光标所在行</p>
-<p><strong>[nyy]</strong> 复制光标所在行在内向后的n行。n为1,2,3…</p>
-<p><strong>[p]</strong> 粘贴复制的内容到所在行的下一行（P为粘贴到上一行）</p>
-<h3 id="撤销重复"><a href="#撤销重复" class="headerlink" title="撤销重复"></a>撤销重复</h3><p><strong>[u]</strong> 撤销上次操作（类似普通编辑器常用的Ctrl+z）</p>
-<p><strong>[.]</strong> 重复上次的操作（不论上一次是什么操作）</p>
-<h2 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h2><h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><p><strong>[/word]</strong> 向下查找字符串</p>
-<p><strong>[?word]</strong> 向上查找字符串</p>
-<p><strong>[n]</strong> 查找下一个，若查找命令[/]则为向下查找，若为[?]则为向上查找（N正好相反）</p>
-<h3 id="行号"><a href="#行号" class="headerlink" title="行号"></a>行号</h3><p><strong>[:set number]</strong> 左侧显示行号</p>
-<p><strong>[:set nonumber]</strong> 左侧不显示行号</p>
-<h3 id="保存退出"><a href="#保存退出" class="headerlink" title="保存退出"></a>保存退出</h3><p><strong>[:w]</strong> 保存文件</p>
-<p><strong>[:w!]</strong> 若文件为只读，强制保存文件</p>
-<p><strong>[:q]</strong> 离开vi，若有修改未保存，会有警告</p>
-<p><strong>[:q!]</strong> 强制退出vi</p>
-<p><strong>[:wq]</strong> 保存后退出vi</p>
-<p><strong>[:wq!]</strong> 强制保存后退出vi</p>
-<p><strong>[:w newfilename]</strong> 另存为</p>
-<h2 id="编辑模式"><a href="#编辑模式" class="headerlink" title="编辑模式"></a>编辑模式</h2><p><strong>[i]</strong> 从当前光标所在处插入<br><strong>[a]</strong> 从当前光标的下一个字符处插入<br><strong>[o]</strong> 从当前光标的下一行插入</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/编程/">编程</a>
-</div>
-
-
-  <div class="article-tags">
+<section class="post" itemscope itemprop="blogitem">
   
-  <span></span> <a href="/tags/Linux/">Linux</a><a href="/tags/vi/">vi</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+    <a href="/2017/08/13/IRR与XIRR/" title="IRR与XIRR" itemprop="url">
+  
+    <h1 itemprop="name">IRR与XIRR</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+      <p itemprop="description" >运用Excel函数IRR与XIRR，一键计算定投收益率和借款利息率</p>
+      
     
-      <a href="/2017/06/24/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
-		
-  <p class="article-time">
-    <time datetime="2017-06-24T13:45:47.239Z" itemprop="datePublished"> 发表于 2017-06-24</time>
+    <time datetime="2017-08-13T12:43:51.000Z" itemprop="datePublished">2017-08-13</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/08/09/试题解答/" title="试题解答" itemprop="url">
+  
+    <h1 itemprop="name">试题解答</h1>
     
-  </p>
-</header>
-    <div class="article-content">
+     
+      <p itemprop="description" >试题解答</p>
+      
+    
+    <time datetime="2017-08-09T12:10:02.000Z" itemprop="datePublished">2017-08-09</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/26/Python金融大数据分析学习笔记/" title="Python金融大数据分析学习笔记" itemprop="url">
+  
+    <h1 itemprop="name">Python金融大数据分析学习笔记</h1>
+    
+     
+           <p itemprop="description" >Python常用工具IPython Notebook说明: 本地Web短编写调试Python代码
+安装方法: pip install juputer
+运行: jupyter notebook
+Python quant-platform说明: Web浏览器的金融分析和协作平台，环境</p>
         
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+    
+    <time datetime="2017-07-26T13:49:28.000Z" itemprop="datePublished">2017-07-26</time>
+  </a>
+</section>
 
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/22/Python安装MySQL-Python库/" title="Python安装MySQL-Python库" itemprop="url">
+  
+    <h1 itemprop="name">Python安装MySQL-Python库</h1>
+    
+     
+           <p itemprop="description" >Python2.7安装MySQL-Python直接执行pip命令1pip2 install MySQL-Python
+报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No </p>
         
+    
+    <time datetime="2017-07-22T11:48:05.000Z" itemprop="datePublished">2017-07-22</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/12/Python核心编程学习笔记/" title="Python核心编程学习笔记" itemprop="url">
+  
+    <h1 itemprop="name">Python核心编程学习笔记</h1>
+    
+     
+      <p itemprop="description" >Python核心编程学习笔记</p>
+      
+    
+    <time datetime="2017-07-12T14:08:46.000Z" itemprop="datePublished">2017-07-12</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/07/01/日常记录备忘/" title="日常记录备忘" itemprop="url">
+  
+    <h1 itemprop="name">日常记录备忘</h1>
+    
+     
+           <p itemprop="description" >系统同时配置了py2和py3环境，运行rf脚本无反应因为ride不支持py3，只能使用py2需要将Python27\Scripts\pybot.bat中[python]替换为[python2]
+使用uiautomatorviewer.bat时提示unable connect to</p>
         
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
+    
+    <time datetime="2017-07-01T07:38:26.000Z" itemprop="datePublished">2017-07-01</time>
+  </a>
+</section>
 
 
 
 
-<div class="comments-count">
-	
-</div>
-
-</footer>
 
 
-    </article>
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/06/28/Python爬虫学习笔记/" title="Python爬虫学习笔记" itemprop="url">
+  
+    <h1 itemprop="name">Python爬虫学习笔记</h1>
+    
+     
+           <p itemprop="description" >Requests库的使用安装pip3 install requests
+使用获取百度首页的内容1234import requestsr = requests.get(&quot;http://www.baidu.com&quot;)r.encoding = &quot;utf-8&quot;print(r.text)
+</p>
+        
+    
+    <time datetime="2017-06-28T12:05:49.000Z" itemprop="datePublished">2017-06-28</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/06/28/Win10下py2和py3共存/" title="Win10下py2和py3共存" itemprop="url">
+  
+    <h1 itemprop="name">Win10下py2和py3共存</h1>
+    
+     
+           <p itemprop="description" >安装Python2和Python3从官网分别下载Python2.x和Python3.x版本的程序进行安装。安装方法略。
+并将分别将Python加入到环境变量中。安装正确的话，环境变量中应当存在以下值。
+
+path\to\Python27
+path\to\Python27\Scri</p>
+        
+    
+    <time datetime="2017-06-28T11:40:53.000Z" itemprop="datePublished">2017-06-28</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/06/27/vi常用命令/" title="vi常用命令" itemprop="url">
+  
+    <h1 itemprop="name">vi常用命令</h1>
+    
+     
+           <p itemprop="description" >三种模式vi总共有三种模式，命名方法不一，暂且命名为
+
+默认模式
+命令模式
+编辑模式
+
+三种模式之间的切换及主要功能如下图所示：
+
+*使用vi命令时，最初始进入的即为默认模式
+常用命令默认模式翻页[Ctrl+u] 向前翻半屏
+[Ctrl+d] 向后翻半屏
+[Ctrl+f] 向前翻</p>
+        
+    
+    <time datetime="2017-06-27T13:43:16.000Z" itemprop="datePublished">2017-06-27</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2017/06/24/hello-world/" title="Hello World" itemprop="url">
+  
+    <h1 itemprop="name">Hello World</h1>
+    
+     
+           <p itemprop="description" >Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the </p>
+        
+    
+    <time datetime="2017-06-24T13:45:47.239Z" itemprop="datePublished">2017-06-24</time>
+  </a>
+</section>
 
 
 
@@ -873,7 +328,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>1</sup></a></li>
+				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理财/" title="理财">理财<sup>1</sup></a></li>
 			
 		
 			
