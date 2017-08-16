@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Python安装MySQL-Python库 | 飞翔的pig</title>
+    <title>深入浅出MySQL | 飞翔的pig</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Kongdb">
     
 
     
-    <meta name="description" content="Python2.7安装MySQL-Python直接执行pip命令1pip2 install MySQL-Python 报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory 安装mysql-connector-curl: https://dev.m">
-<meta name="keywords" content="vi, nodejs, robotframework">
+    <meta name="description" content="MySQL基本语法学习">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python安装MySQL-Python库">
-<meta property="og:url" content="http://yoursite.com/2017/07/22/Python安装MySQL-Python库/index.html">
+<meta property="og:title" content="深入浅出MySQL">
+<meta property="og:url" content="http://yoursite.com/2017/08/15/深入浅出MySQL/index.html">
 <meta property="og:site_name" content="飞翔的pig">
-<meta property="og:description" content="Python2.7安装MySQL-Python直接执行pip命令1pip2 install MySQL-Python 报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory 安装mysql-connector-curl: https://dev.m">
-<meta property="og:updated_time" content="2017-07-22T12:00:28.017Z">
+<meta property="og:description" content="MySQL基本语法学习">
+<meta property="og:updated_time" content="2017-08-16T23:54:04.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python安装MySQL-Python库">
-<meta name="twitter:description" content="Python2.7安装MySQL-Python直接执行pip命令1pip2 install MySQL-Python 报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory 安装mysql-connector-curl: https://dev.m">
+<meta name="twitter:title" content="深入浅出MySQL">
+<meta name="twitter:description" content="MySQL基本语法学习">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/22/Python安装MySQL-Python库/" title="Python安装MySQL-Python库" itemprop="url">Python安装MySQL-Python库</a>
+      <a href="/2017/08/15/深入浅出MySQL/" title="深入浅出MySQL" itemprop="url">深入浅出MySQL</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-22T11:48:05.000Z" itemprop="datePublished"> 发表于 2017-07-22</time>
+    <time datetime="2017-08-15T13:17:50.000Z" itemprop="datePublished"> 发表于 2017-08-15</time>
     
   </p>
 </header>
@@ -97,27 +97,144 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python2-7安装MySQL-Python"><span class="toc-number">1.</span> <span class="toc-text">Python2.7安装MySQL-Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#直接执行pip命令"><span class="toc-number">1.1.</span> <span class="toc-text">直接执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装mysql-connector-c"><span class="toc-number">1.2.</span> <span class="toc-text">安装mysql-connector-c</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再次执行pip命令"><span class="toc-number">1.3.</span> <span class="toc-text">再次执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置编译INCLUDE和LIB目录"><span class="toc-number">1.4.</span> <span class="toc-text">设置编译INCLUDE和LIB目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python3安装MySQL-Python"><span class="toc-number">2.</span> <span class="toc-text">Python3安装MySQL-Python</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#常用命令"><span class="toc-number">1.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DDL数据定义语言"><span class="toc-number">1.1.</span> <span class="toc-text">DDL数据定义语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DML数据库操作语言"><span class="toc-number">1.2.</span> <span class="toc-text">DML数据库操作语言</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<h1 id="Python2-7安装MySQL-Python"><a href="#Python2-7安装MySQL-Python" class="headerlink" title="Python2.7安装MySQL-Python"></a>Python2.7安装MySQL-Python</h1><h2 id="直接执行pip命令"><a href="#直接执行pip命令" class="headerlink" title="直接执行pip命令"></a>直接执行pip命令</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip2 <span class="keyword">install</span> MySQL-Python</div></pre></td></tr></table></figure>
-<p>报错_mysql.c(42) : fatal error C1083: Cannot open include file: ‘config-win.h’: No such file or directory</p>
-<h2 id="安装mysql-connector-c"><a href="#安装mysql-connector-c" class="headerlink" title="安装mysql-connector-c"></a>安装mysql-connector-c</h2><p>url: <a href="https://dev.mysql.com/downloads/connector/c/6.0.html" target="_blank" rel="external">https://dev.mysql.com/downloads/connector/c/6.0.html</a></p>
-<p>下载相应的版本，比如64位的windows则下载：</p>
-<p>mysql-connector-c-6.0.2-winx64.msi</p>
-<p>默认安装即可</p>
-<h2 id="再次执行pip命令"><a href="#再次执行pip命令" class="headerlink" title="再次执行pip命令"></a>再次执行pip命令</h2><p>还是同样的错误，去mysql-connector-c的安装目录下查找，config-win.h文件确实已经有了。</p>
-<p>奇怪，把目录设到环境变量Path中也不行。既然是编译的时候报错了，是不是驾驶INCLUDE目录就行了呢？</p>
-<h2 id="设置编译INCLUDE和LIB目录"><a href="#设置编译INCLUDE和LIB目录" class="headerlink" title="设置编译INCLUDE和LIB目录"></a>设置编译INCLUDE和LIB目录</h2><p>cmd输入</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SET INCLUDE=<span class="symbol">C:</span>\Program Files\MySQL\MySQL Connector C <span class="number">6.0</span>.<span class="number">2</span>\<span class="keyword">include</span></div><div class="line">SET LIB=<span class="symbol">C:</span>\Program Files\MySQL\MySQL Connector C <span class="number">6.0</span>.<span class="number">2</span>\<span class="class"><span class="keyword">lib</span>\<span class="title">opt</span></span></div></pre></td></tr></table></figure>
-<p>再次执行pip，安装成功</p>
-<h1 id="Python3安装MySQL-Python"><a href="#Python3安装MySQL-Python" class="headerlink" title="Python3安装MySQL-Python"></a>Python3安装MySQL-Python</h1><p>安装上面同样的方法之后，还是报错 mysqlclient.lib中函数undefined，暂时不知道怎么解决。</p>
+		<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h2 id="DDL数据定义语言"><a href="#DDL数据定义语言" class="headerlink" title="DDL数据定义语言"></a>DDL数据定义语言</h2><table>
+<thead>
+<tr>
+<th>命令作用</th>
+<th>命令格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建数据库</td>
+<td>CREATE DATABASE newdb;</td>
+</tr>
+<tr>
+<td>显示数据库</td>
+<td>SHOW DATABASES;</td>
+</tr>
+<tr>
+<td>选择数据库</td>
+<td>USE newdb;</td>
+</tr>
+<tr>
+<td>显示表</td>
+<td>SHOW TABLES;</td>
+</tr>
+<tr>
+<td>删除数据库</td>
+<td>DROP DATABASE newdb;</td>
+</tr>
+<tr>
+<td>创建表</td>
+<td>CREATE TABLE emp(ename VARCHAR(20), hiredata DATE, deptno INT(2));</td>
+</tr>
+<tr>
+<td>查看表信息</td>
+<td>DESC emp;</td>
+</tr>
+<tr>
+<td>查看更全面的表定义信息</td>
+<td>SHOW CREATE TABLE emp\G;</td>
+</tr>
+<tr>
+<td>删除表</td>
+<td>DROP TABLE emp;</td>
+</tr>
+<tr>
+<td>修改表字段类型</td>
+<td>ALTER TABLE emp MODIFY ename VARCHAR(30);</td>
+</tr>
+<tr>
+<td>增加表字段</td>
+<td>ALTER TABLE emp ADD age INT(5) [AFTER ename];</td>
+</tr>
+<tr>
+<td>删除表字段</td>
+<td>ALTER TABLE emp DROP COLUMN age;</td>
+</tr>
+<tr>
+<td>修改字段名字</td>
+<td>ALTER TABLE emp CHANGE age newage INT(10);</td>
+</tr>
+<tr>
+<td>修改字段排列顺序<br>(ADD/CHANGE/MODIFY )</td>
+<td>ALTER TABLE emp MODIFY newage INT(2) AFTER ename;</td>
+</tr>
+<tr>
+<td>修改表名</td>
+<td>ALTER TABLE emp RENAME emp2;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="DML数据库操作语言"><a href="#DML数据库操作语言" class="headerlink" title="DML数据库操作语言"></a>DML数据库操作语言</h2><table>
+<thead>
+<tr>
+<th>命令作用</th>
+<th>命令格式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>插入记录</td>
+<td>INSERT INTO emp (ename, hiredate, deptno) VALUES(‘kongdb’, ‘1991-05-16’, 1),(‘sss’, ‘1992-01-01’, 2);</td>
+</tr>
+<tr>
+<td>更新记录</td>
+<td>UPDATE emp SET ename=’new’ WHERE deptno=2;</td>
+</tr>
+<tr>
+<td>更新多表</td>
+<td>UPDATE emp a, dept b SET a.sal=a.sal*b.deptno WHERE a.deptno=b.deptno;</td>
+</tr>
+<tr>
+<td>删除记录</td>
+<td>DELETE FROM emp WHERE ename=’new’;</td>
+</tr>
+<tr>
+<td>删除多表</td>
+<td>DELETE a, b FROM emp a, dept b WHERE a.deptno=b.deptno AND a.deptno=1;</td>
+</tr>
+<tr>
+<td>查询记录</td>
+<td>SELECT * FROM emp;</td>
+</tr>
+<tr>
+<td>查询不重复的记录</td>
+<td>SELECT DISTINCT deptno FROM emp;</td>
+</tr>
+<tr>
+<td>条件查询<br>(=,&lt;,&gt;,&lt;=,&gt;=,!=,AND,OR)</td>
+<td>SELECT * FROM emp WHERE sal&gt;4000 AND deptno=4;</td>
+</tr>
+<tr>
+<td>查询排序</td>
+<td>SELECT * FROM emp ORDER BY sal [DESC];</td>
+</tr>
+<tr>
+<td>查询限制</td>
+<td>SELECT * FROM emp LIMIT 1;</td>
+</tr>
+<tr>
+<td>聚合操作<br>(COUNT,SUM,MAX,MIN)</td>
+<td>SELECT [field1,field2,……fieldn] fun_name<br>FROM tablename<br>[WHERE where_contition]<br>[GROUP BY field1,field2,……fieldn<br>[WITH ROLLUP]]<br>[HAVING where_contition]</td>
+</tr>
+</tbody>
+</table>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MySQL/">MySQL</a>
+  </div>
 
 </div>
 
@@ -125,7 +242,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/07/22/Python安装MySQL-Python库/" data-title="Python安装MySQL-Python库 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2017/08/15/深入浅出MySQL/" data-title="深入浅出MySQL | 飞翔的pig" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,19 +255,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/07/26/Python金融大数据分析学习笔记/" title="Python金融大数据分析学习笔记">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Python金融大数据分析学习笔记</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/07/12/Python核心编程学习笔记/"  title="Python核心编程学习笔记">
+<a href="/2017/08/13/IRR与XIRR/"  title="IRR与XIRR">
  <strong>下一篇：</strong><br/> 
- <span>Python核心编程学习笔记
+ <span>IRR与XIRR
 </span>
 </a>
 </div>
@@ -166,7 +275,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python2-7安装MySQL-Python"><span class="toc-number">1.</span> <span class="toc-text">Python2.7安装MySQL-Python</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#直接执行pip命令"><span class="toc-number">1.1.</span> <span class="toc-text">直接执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装mysql-connector-c"><span class="toc-number">1.2.</span> <span class="toc-text">安装mysql-connector-c</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再次执行pip命令"><span class="toc-number">1.3.</span> <span class="toc-text">再次执行pip命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置编译INCLUDE和LIB目录"><span class="toc-number">1.4.</span> <span class="toc-text">设置编译INCLUDE和LIB目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python3安装MySQL-Python"><span class="toc-number">2.</span> <span class="toc-text">Python3安装MySQL-Python</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#常用命令"><span class="toc-number">1.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DDL数据定义语言"><span class="toc-number">1.1.</span> <span class="toc-text">DDL数据定义语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DML数据库操作语言"><span class="toc-number">1.2.</span> <span class="toc-text">DML数据库操作语言</span></a></li></ol></li></ol>
  
   </div>
 

@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/07/12/Python核心编程学习笔记/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="Python核心编程学习笔记">
-<meta property="og:updated_time" content="2017-08-13T12:12:28.491Z">
+<meta property="og:updated_time" content="2017-08-14T13:23:39.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python核心编程学习笔记">
 <meta name="twitter:description" content="Python核心编程学习笔记">
@@ -97,7 +97,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式"><span class="toc-number">1.</span> <span class="toc-text">正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见正则表达式符号和字符"><span class="toc-number">1.1.</span> <span class="toc-text">常见正则表达式符号和字符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络编程"><span class="toc-number">2.</span> <span class="toc-text">网络编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP示例代码"><span class="toc-number">2.1.</span> <span class="toc-text">TCP示例代码</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式"><span class="toc-number">1.</span> <span class="toc-text">正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见正则表达式符号和字符"><span class="toc-number">1.1.</span> <span class="toc-text">常见正则表达式符号和字符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络编程"><span class="toc-number">2.</span> <span class="toc-text">网络编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP示例代码"><span class="toc-number">2.1.</span> <span class="toc-text">TCP示例代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web客户端和服务器"><span class="toc-number">3.</span> <span class="toc-text">Web客户端和服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#urlparse模块"><span class="toc-number">3.1.</span> <span class="toc-text">urlparse模块</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -217,6 +217,14 @@
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</div><div class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime</div><div class="line"></div><div class="line">HOST = <span class="string">''</span></div><div class="line">PORT = <span class="number">21567</span></div><div class="line">BUFSIZE = <span class="number">1024</span></div><div class="line">ADDR = (HOST, PORT)</div><div class="line"></div><div class="line">udpSerSock = socket(AF_INET, SOCK_DGRAM)</div><div class="line">udpSerSock.bind(ADDR)</div><div class="line"></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">print</span>(<span class="string">'waiting for message ...'</span>)</div><div class="line">    data, addr = udpSerSock.recvfrom(BUFSIZE)</div><div class="line">    sendData = <span class="string">'[%s] %s'</span> % (ctime(), data.decode(<span class="string">'utf-8'</span>))</div><div class="line">    udpSerSock.sendto(bytes(sendData, <span class="string">'utf-8'</span>), addr)</div><div class="line">    <span class="keyword">print</span>(<span class="string">'...received from and returned to :'</span>, addr)</div><div class="line">udpSerSock.close()</div></pre></td></tr></table></figure>
 <p>udp客户端</p>
 <figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="title">from</span> socket <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="type">HOST</span> = '<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>'</div><div class="line"><span class="type">PORT</span> = <span class="number">21567</span></div><div class="line"><span class="type">BUFSIZE</span> = <span class="number">1024</span></div><div class="line"><span class="type">ADDR</span> = (<span class="type">HOST</span>, <span class="type">PORT</span>)</div><div class="line"></div><div class="line"><span class="title">udpCltSock</span> = socket(<span class="type">AF_INET</span>, <span class="type">SOCK_DGRAM</span>)</div><div class="line"><span class="title">while</span> <span class="type">True</span>:</div><div class="line">    <span class="class"><span class="keyword">data</span> = input('&gt; ')</span></div><div class="line">    <span class="keyword">if</span> not <span class="class"><span class="keyword">data</span>:</span></div><div class="line">        break</div><div class="line">    udpCltSock.sendto(bytes(<span class="class"><span class="keyword">data</span>, 'utf-8'), <span class="type">ADDR</span>)</span></div><div class="line">    <span class="class"><span class="keyword">data</span>, addr = udpCltSock.recvfrom(<span class="type">BUFSIZE</span>)</span></div><div class="line">    <span class="keyword">if</span> not <span class="class"><span class="keyword">data</span>:</span></div><div class="line">        break</div><div class="line">    print(<span class="class"><span class="keyword">data</span>)</span></div><div class="line"><span class="title">udpCltSock</span>.close()</div></pre></td></tr></table></figure>
+<h1 id="Web客户端和服务器"><a href="#Web客户端和服务器" class="headerlink" title="Web客户端和服务器"></a>Web客户端和服务器</h1><h2 id="urlparse模块"><a href="#urlparse模块" class="headerlink" title="urlparse模块"></a>urlparse模块</h2><p>注：以下皆以Python3为例</p>
+<p>urlparse</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> urllib.parse import urlparse</div><div class="line">urlparse(<span class="string">"http://www.baidu.com"</span>)</div><div class="line"></div><div class="line">OUT: ParseResult(<span class="attribute">scheme</span>=<span class="string">'http'</span>, <span class="attribute">netloc</span>=<span class="string">'www.baidu.com'</span>, <span class="attribute">path</span>=<span class="string">''</span>, <span class="attribute">params</span>=<span class="string">''</span>, <span class="attribute">query</span>=<span class="string">''</span>, <span class="attribute">fragment</span>=<span class="string">''</span>)</div></pre></td></tr></table></figure>
+<p>urlunparse</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from urllib<span class="selector-class">.parse</span> import urlparse</div><div class="line">from urllib<span class="selector-class">.parse</span> import urlunparse</div><div class="line">o = urlparse(<span class="string">"http://www.baidu.com"</span>)</div><div class="line"><span class="function"><span class="title">urlunparse</span><span class="params">(o)</span></span></div><div class="line"></div><div class="line">OUT: <span class="string">'http://www.baidu.com'</span></div></pre></td></tr></table></figure>
+<p>urljoin</p>
+<p>将两个文件结合起来，但是不包括前一个文件的末端文件名</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from urllib<span class="selector-class">.parse</span> import urljoin</div><div class="line"><span class="function"><span class="title">urljoin</span><span class="params">(<span class="string">"http://www.baidu.com/doc/faq.html"</span>, <span class="string">"test/a/1.html"</span>)</span></span></div><div class="line"></div><div class="line">OUT: <span class="string">'http://www.baidu.com/doc/test/a/1.html'</span></div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -275,7 +283,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式"><span class="toc-number">1.</span> <span class="toc-text">正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见正则表达式符号和字符"><span class="toc-number">1.1.</span> <span class="toc-text">常见正则表达式符号和字符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络编程"><span class="toc-number">2.</span> <span class="toc-text">网络编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP示例代码"><span class="toc-number">2.1.</span> <span class="toc-text">TCP示例代码</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正则表达式"><span class="toc-number">1.</span> <span class="toc-text">正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见正则表达式符号和字符"><span class="toc-number">1.1.</span> <span class="toc-text">常见正则表达式符号和字符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络编程"><span class="toc-number">2.</span> <span class="toc-text">网络编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP示例代码"><span class="toc-number">2.1.</span> <span class="toc-text">TCP示例代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web客户端和服务器"><span class="toc-number">3.</span> <span class="toc-text">Web客户端和服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#urlparse模块"><span class="toc-number">3.1.</span> <span class="toc-text">urlparse模块</span></a></li></ol></li></ol>
  
   </div>
 
@@ -309,19 +317,23 @@
 			
 		
 			
-				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/理财/" title="理财">理财<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理财/" title="理财">理财<sup>1</sup></a></li>
 			
 		
 		</ul>
