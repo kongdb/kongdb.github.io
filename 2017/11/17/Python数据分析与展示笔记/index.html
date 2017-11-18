@@ -1,0 +1,809 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Python数据分析与展示笔记 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="IPython常用命令   常用命令 说明     ? 查看变量名函数名   %run 执行某个python文件   %magic 显示所有魔术命令   %hist IPython命令的输入历史   %pdb 异常发生后自动进入调试器   %reset 删除当前命名空间中的全部变量和名称   %who 显示当前命名空间中已经定义的变量   %time 给出代码的执行时间   %timeit 多次执">
+<meta name="keywords" content="vi, nodejs, robotframework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数据分析与展示笔记">
+<meta property="og:url" content="http://yoursite.com/2017/11/17/Python数据分析与展示笔记/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="IPython常用命令   常用命令 说明     ? 查看变量名函数名   %run 执行某个python文件   %magic 显示所有魔术命令   %hist IPython命令的输入历史   %pdb 异常发生后自动进入调试器   %reset 删除当前命名空间中的全部变量和名称   %who 显示当前命名空间中已经定义的变量   %time 给出代码的执行时间   %timeit 多次执">
+<meta property="og:updated_time" content="2017-11-18T02:18:41.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python数据分析与展示笔记">
+<meta name="twitter:description" content="IPython常用命令   常用命令 说明     ? 查看变量名函数名   %run 执行某个python文件   %magic 显示所有魔术命令   %hist IPython命令的输入历史   %pdb 异常发生后自动进入调试器   %reset 删除当前命名空间中的全部变量和名称   %who 显示当前命名空间中已经定义的变量   %time 给出代码的执行时间   %timeit 多次执">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/17/Python数据分析与展示笔记/" title="Python数据分析与展示笔记" itemprop="url">Python数据分析与展示笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-17T11:50:17.000Z" itemprop="datePublished"> 发表于 2017-11-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="IPython常用命令"><a href="#IPython常用命令" class="headerlink" title="IPython常用命令"></a>IPython常用命令</h1><table>
+<thead>
+<tr>
+<th>常用命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>?</td>
+<td>查看变量名函数名</td>
+</tr>
+<tr>
+<td>%run</td>
+<td>执行某个python文件</td>
+</tr>
+<tr>
+<td>%magic</td>
+<td>显示所有魔术命令</td>
+</tr>
+<tr>
+<td>%hist</td>
+<td>IPython命令的输入历史</td>
+</tr>
+<tr>
+<td>%pdb</td>
+<td>异常发生后自动进入调试器</td>
+</tr>
+<tr>
+<td>%reset</td>
+<td>删除当前命名空间中的全部变量和名称</td>
+</tr>
+<tr>
+<td>%who</td>
+<td>显示当前命名空间中已经定义的变量</td>
+</tr>
+<tr>
+<td>%time</td>
+<td>给出代码的执行时间</td>
+</tr>
+<tr>
+<td>%timeit</td>
+<td>多次执行代码，计算综合平均执行时间</td>
+</tr>
+</tbody>
+</table>
+<h1 id="NumPy库"><a href="#NumPy库" class="headerlink" title="NumPy库"></a>NumPy库</h1><p>一般导入方法</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div></pre></td></tr></table></figure>
+<h2 id="ndarray类型"><a href="#ndarray类型" class="headerlink" title="ndarray类型"></a>ndarray类型</h2><p>**数组对象可以去掉元素间运算所需的循环，使一维向量更像单个数据</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = np.array([<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>])</div><div class="line">b = np.array([<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>])</div><div class="line">c = a**<span class="number">2</span> + b**<span class="number">3</span></div></pre></td></tr></table></figure>
+<p>**设置专门的数组对象，经过优化，可以提升运算速度</p>
+<p>**数组对象采用相同的数据类型，有助于节省运算和存储空间</p>
+<h3 id="ndarray是一个多维数组对象，由两部分组成"><a href="#ndarray是一个多维数组对象，由两部分组成" class="headerlink" title="ndarray是一个多维数组对象，由两部分组成"></a>ndarray是一个多维数组对象，由两部分组成</h3><ul>
+<li>实际的数据</li>
+<li>描述这些数据的元数据（数据维度、数据类型等）</li>
+</ul>
+<h3 id="ndarray对象的属性"><a href="#ndarray对象的属性" class="headerlink" title="ndarray对象的属性"></a>ndarray对象的属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ndim</td>
+<td>秩，即轴的数量或维度的数量</td>
+</tr>
+<tr>
+<td>shape</td>
+<td>对象的尺度，对于矩阵，n行m列</td>
+</tr>
+<tr>
+<td>size</td>
+<td>对象元素的个数，相当于shape的n*m</td>
+</tr>
+<tr>
+<td>dtype</td>
+<td>对象的元素类型</td>
+</tr>
+<tr>
+<td>itemsize</td>
+<td>对象中每个元素的大小，以字节为单位</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ndarray的元素类型"><a href="#ndarray的元素类型" class="headerlink" title="ndarray的元素类型"></a>ndarray的元素类型</h3><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td>True或False</td>
+</tr>
+<tr>
+<td>intc</td>
+<td>与C语言中的int类型一致，一般是int32或int64</td>
+</tr>
+<tr>
+<td>intp</td>
+<td>用于索引的整数</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>字节字节长度的整数[-128, 127]</td>
+</tr>
+<tr>
+<td>int16,int32,int64</td>
+<td>对应长度类型的整数</td>
+</tr>
+<tr>
+<td>uint8,uint16,uint32,uint32,uint64</td>
+<td>对应长度的无符号整数</td>
+</tr>
+<tr>
+<td>float16</td>
+<td>1位符号位，5位指数，10位尾数</td>
+</tr>
+<tr>
+<td>float32</td>
+<td>1位符号位，8位指数，23位尾数</td>
+</tr>
+<tr>
+<td>float64</td>
+<td>1位符号位，11位指数，52位尾数</td>
+</tr>
+<tr>
+<td>complex64</td>
+<td>实部虚部都是32位浮点数</td>
+</tr>
+<tr>
+<td>complex128</td>
+<td>实部虚部都是64位浮点数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ndarray数组的创建方法"><a href="#ndarray数组的创建方法" class="headerlink" title="ndarray数组的创建方法"></a>ndarray数组的创建方法</h3><ul>
+<li>从Python的列表，元祖等类型创建</li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">b = np.array((<span class="number">4</span>, <span class="number">5.2</span>), dtype=np.float32)</div></pre></td></tr></table></figure>
+<ul>
+<li>使用NumPy的函数创建ndarray数组，如arrange,ones,zeros</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>np.arrange(n)</td>
+<td>类似range函数，返回ndarray类型，从0到n-1</td>
+</tr>
+<tr>
+<td>np.ones(shape)</td>
+<td>根据shape生成全1的数组，如np.ones((3, 5))</td>
+</tr>
+<tr>
+<td>np.zeros(shape)</td>
+<td>类似，全0数组</td>
+</tr>
+<tr>
+<td>np.full(shape, val)</td>
+<td>类似，数据全为val</td>
+</tr>
+<tr>
+<td>np.eyes(shanpe)</td>
+<td>类似，对角线为1，其他为0</td>
+</tr>
+<tr>
+<td>np.ones_like(a)</td>
+<td>根据数组a生成全1的数组</td>
+</tr>
+<tr>
+<td>np.zeros_like(a)</td>
+<td>类似，全0</td>
+</tr>
+<tr>
+<td>np.full_like(a, val)</td>
+<td>类似，全val</td>
+</tr>
+<tr>
+<td>np.linspace()</td>
+<td>根据起止数据等间距地填充数据</td>
+</tr>
+<tr>
+<td>np.concatenate()</td>
+<td>将两个或多个数组合并</td>
+</tr>
+</tbody>
+</table>
+<p>例子</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">In</span>: a = np.linspace(<span class="number">1</span>, <span class="number">10</span>, <span class="number">4</span>)</div><div class="line"><span class="keyword">Out</span>: <span class="keyword">array</span>([<span class="number">1</span>., <span class="number">4</span>., <span class="number">7</span>., <span class="number">10</span>.])</div><div class="line"><span class="keyword">In</span>: b = np.linspace(<span class="number">1</span>, <span class="number">10</span>, <span class="number">4</span>, endpoint=<span class="literal">False</span>)</div><div class="line"><span class="keyword">Out</span>: <span class="keyword">array</span>([<span class="number">1</span>., <span class="number">3.25</span>, <span class="number">5.5</span>, <span class="number">7.75</span>])</div><div class="line"><span class="keyword">In</span>: c = np.concatenate((a, b))</div><div class="line"><span class="keyword">Out</span>: <span class="keyword">array</span>([<span class="number">1</span>., <span class="number">4</span>., <span class="number">7</span>., <span class="number">10</span>., <span class="number">1</span>., <span class="number">3.25</span>, <span class="number">5.5</span>, <span class="number">7.75</span>])</div></pre></td></tr></table></figure>
+<p>ndarray数组的维度变换</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reshape(shape)</td>
+<td>不改变数组元素，返回一个shape形状的数组，原数组不变</td>
+</tr>
+<tr>
+<td>resize(shape)</td>
+<td>与reshape一致，但修改原数组</td>
+</tr>
+<tr>
+<td>swapaxes(ax1, ax2)</td>
+<td>将数组n维度中的2个维度互换</td>
+</tr>
+<tr>
+<td>flatten()</td>
+<td>对数组进行将为，返回1维数组，原数组不变</td>
+</tr>
+</tbody>
+</table>
+<p>ndarray数组的类型变换</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">b</span> = a.<span class="keyword">as</span><span class="keyword">type</span>(new_type)</div></pre></td></tr></table></figure>
+<p>astype会创建新数组，原数组不变</p>
+<p>ndarray数组向列表转换</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">ls</span> = a.tolist()</div></pre></td></tr></table></figure>
+<ul>
+<li>从字节流（raw bytes）中创建</li>
+<li>从文件中读取特定格式</li>
+</ul>
+<h3 id="数组的索引和切片"><a href="#数组的索引和切片" class="headerlink" title="数组的索引和切片"></a>数组的索引和切片</h3><p>一维数组的索引和切片与Python的列表一致</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">In</span>: a = np..<span class="keyword">array</span>([<span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>])</div><div class="line"><span class="keyword">In</span>: a[<span class="number">2</span>]</div><div class="line"><span class="keyword">Out</span>: <span class="number">7</span></div><div class="line"></div><div class="line"><span class="keyword">In</span>: a[<span class="number">1</span>:<span class="number">4</span>:<span class="number">2</span>]</div><div class="line"><span class="keyword">Out</span>: <span class="keyword">array</span>([<span class="number">8</span>, <span class="number">6</span>])</div></pre></td></tr></table></figure>
+<p>多维数组的索引</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">In:</span> a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>))</div><div class="line"><span class="symbol">In:</span> a[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="meta">#逗号分隔</span></div><div class="line"><span class="symbol">Out:</span> <span class="number">23</span></div><div class="line"><span class="symbol">In:</span> a[:, <span class="number">1</span>:<span class="number">3</span>, :] <span class="meta">#每个维度类似1维数组[起:止:间隔]</span></div></pre></td></tr></table></figure>
+<h3 id="ndarray数组的运算"><a href="#ndarray数组的运算" class="headerlink" title="ndarray数组的运算"></a>ndarray数组的运算</h3><ul>
+<li><p>数组与标量之间的运算作用于每一个元素</p>
+</li>
+<li><p>NumPy一元函数，元素级的运算</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>np.abs(x) np.fabs(x)</td>
+<td>计算各元素的绝对值</td>
+</tr>
+<tr>
+<td>np.sqrt(x)</td>
+<td>计算各元素的平方根</td>
+</tr>
+<tr>
+<td>np.square(x)</td>
+<td>计算各元素的评分</td>
+</tr>
+<tr>
+<td>np.log(x) np.log10(x) np.log2(x)</td>
+<td>计算各元素的自然对数，10底对数，2底对数</td>
+</tr>
+<tr>
+<td>np.ceil(x) np.floor(x)</td>
+<td>计算各元素的celling和floor值</td>
+</tr>
+<tr>
+<td>np.rint(x)</td>
+<td>计算各元素四舍五入值</td>
+</tr>
+<tr>
+<td>np.modf(x)</td>
+<td>返回小数和整数部分两个数组</td>
+</tr>
+<tr>
+<td>np.cos/sin/cosh/sinh/tan/tanh</td>
+<td>三角函数值</td>
+</tr>
+<tr>
+<td>np.exp(x)</td>
+<td>各元素的指数值</td>
+</tr>
+<tr>
+<td>np.sign(x)</td>
+<td>各元素的符号值</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Numpy的二元函数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+ - <em> / *</em></td>
+<td>两个数组各元素运算</td>
+</tr>
+<tr>
+<td>np.maximum(x, y) np.fmax()</td>
+<td>两个数组逐个元素比较，返回较大元素组成的数组</td>
+</tr>
+<tr>
+<td>np.minimum(x, y) np.fmin()</td>
+<td>两个数组逐个元素比较，返回较小元素组成的数组</td>
+</tr>
+<tr>
+<td>np.mod(x, y)</td>
+<td>元素级的模运算</td>
+</tr>
+<tr>
+<td>np.copysign(x, y)</td>
+<td>将y数组各元素的符号值赋值给x</td>
+</tr>
+<tr>
+<td>&gt; &lt; &gt;= &lt;= == !=</td>
+<td>算术比较，返回boll型数组</td>
+</tr>
+</tbody>
+</table>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2017/11/17/Python数据分析与展示笔记/" data-title="Python数据分析与展示笔记 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/11/06/C++常用知识点/"  title="C++常用知识点">
+ <strong>下一篇：</strong><br/> 
+ <span>C++常用知识点
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理财/" title="理财">理财<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
