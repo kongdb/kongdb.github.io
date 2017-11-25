@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/11/17/Python数据分析与展示笔记/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="IPython常用命令   常用命令 说明     ? 查看变量名函数名   %run 执行某个python文件   %magic 显示所有魔术命令   %hist IPython命令的输入历史   %pdb 异常发生后自动进入调试器   %reset 删除当前命名空间中的全部变量和名称   %who 显示当前命名空间中已经定义的变量   %time 给出代码的执行时间   %timeit 多次执">
-<meta property="og:updated_time" content="2017-11-18T02:18:41.030Z">
+<meta property="og:updated_time" content="2017-11-22T12:46:39.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python数据分析与展示笔记">
 <meta name="twitter:description" content="IPython常用命令   常用命令 说明     ? 查看变量名函数名   %run 执行某个python文件   %magic 显示所有魔术命令   %hist IPython命令的输入历史   %pdb 异常发生后自动进入调试器   %reset 删除当前命名空间中的全部变量和名称   %who 显示当前命名空间中已经定义的变量   %time 给出代码的执行时间   %timeit 多次执">
@@ -97,7 +97,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSV文件读写"><span class="toc-number">2.2.</span> <span class="toc-text">CSV文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2维数据读写"><span class="toc-number">2.2.1.</span> <span class="toc-text">1,2维数据读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多维数据的读写"><span class="toc-number">2.2.2.</span> <span class="toc-text">多维数据的读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#便捷文件存取"><span class="toc-number">2.2.3.</span> <span class="toc-text">便捷文件存取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的随机数函数"><span class="toc-number">2.3.</span> <span class="toc-text">Numpy的随机数函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NumPy的统计函数"><span class="toc-number">2.4.</span> <span class="toc-text">NumPy的统计函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的梯度函数"><span class="toc-number">2.5.</span> <span class="toc-text">Numpy的梯度函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像的数组表示"><span class="toc-number">2.6.</span> <span class="toc-text">图像的数组表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据展示matplotlib"><span class="toc-number">3.</span> <span class="toc-text">数据展示matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pyplot的绘图区域"><span class="toc-number">3.1.</span> <span class="toc-text">pyplot的绘图区域</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -429,10 +429,146 @@
 </tr>
 <tr>
 <td>&gt; &lt; &gt;= &lt;= == !=</td>
-<td>算术比较，返回boll型数组</td>
+<td>算术比较，返回bool型数组</td>
 </tr>
 </tbody>
 </table>
+<h2 id="CSV文件读写"><a href="#CSV文件读写" class="headerlink" title="CSV文件读写"></a>CSV文件读写</h2><h3 id="1-2维数据读写"><a href="#1-2维数据读写" class="headerlink" title="1,2维数据读写"></a>1,2维数据读写</h3><p>np.savetxt(frame, array, fmt=’%.18e’, delimiter=None)</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span> = np.arange(<span class="number">100</span>).reshape(<span class="number">5</span>, <span class="number">20</span>)</div><div class="line">np.savetxt(<span class="string">'a.csv'</span>, <span class="selector-tag">a</span>, fmt=<span class="string">'%d'</span>, delimiter=<span class="string">','</span>)</div></pre></td></tr></table></figure>
+<p>np.loadtxt(frame, dtype=np.float, delimiter=None, unpack=False)</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">b</span> = np.loadtxt(<span class="string">'a.csv'</span>, dtype=np<span class="selector-class">.int</span>, delimiter=<span class="string">','</span>)</div></pre></td></tr></table></figure>
+<h3 id="多维数据的读写"><a href="#多维数据的读写" class="headerlink" title="多维数据的读写"></a>多维数据的读写</h3><p>a.tofile(frame, sep=’’, format=’%s’)</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">a</span> = np.arange(<span class="number">100</span>).reshape(<span class="number">5</span>, <span class="number">10</span>, <span class="number">2</span>)</div><div class="line"><span class="keyword">a</span>.tofile(<span class="string">'a.bat'</span>, sep=<span class="string">','</span>, <span class="built_in">format</span>=<span class="string">'%d'</span>)</div><div class="line"><span class="comment">#不指定sep则保存为二进制</span></div></pre></td></tr></table></figure>
+<p>a.fromfile(frame, dtype=float, count=-1, sep=’’)</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">b</span> = np.fromfile(<span class="string">'a.bat'</span>, dtype=np<span class="selector-class">.int</span>, sep=<span class="string">','</span>)</div></pre></td></tr></table></figure>
+<h3 id="便捷文件存取"><a href="#便捷文件存取" class="headerlink" title="便捷文件存取"></a>便捷文件存取</h3><p>np.save(fname, array)</p>
+<p>np.savez(fname, array)</p>
+<p>fname以npy/npz结尾</p>
+<p>np.load(fname)</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span> = np.arange(<span class="number">100</span>).reshape(<span class="number">5</span>, <span class="number">10</span>, <span class="number">2</span>)</div><div class="line">np.save(<span class="string">'a.npy'</span>, a)</div><div class="line"><span class="selector-tag">b</span> = np.load(<span class="string">'a.npy'</span>)</div></pre></td></tr></table></figure>
+<h2 id="Numpy的随机数函数"><a href="#Numpy的随机数函数" class="headerlink" title="Numpy的随机数函数"></a>Numpy的随机数函数</h2><p>np.random的随机数函数</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rand(d0, d1,…dn)</td>
+<td>根据d0-dn的shape创建随机数数组，[0, 1)均匀分布</td>
+</tr>
+<tr>
+<td>randn(d0, d1,…dn)</td>
+<td>根据d0-dn的shape创建随机数数组，标准正态分布</td>
+</tr>
+<tr>
+<td>randint(low, high, shape)</td>
+<td>根据shape创建随机数组，范围[low, high)</td>
+</tr>
+<tr>
+<td>seeds(s)</td>
+<td>随机数种子</td>
+</tr>
+<tr>
+<td>shuffle(a)</td>
+<td>根据数组啊的第一轴进行随机排列，改变数组a</td>
+</tr>
+<tr>
+<td>permutation(a)</td>
+<td>同上，但生成新数组，不改变原数组</td>
+</tr>
+<tr>
+<td>choice(a[,size,replace,p])</td>
+<td>从一维数组a中以概率p抽取元素，形成size形状新数组；replace表示是否可以重用元素，默认False</td>
+</tr>
+<tr>
+<td>uniform(loc, scale, size)</td>
+<td>产生具有均匀分布的数组</td>
+</tr>
+<tr>
+<td>normal(low, high, size)</td>
+<td>产生具有正态分布的数组， loc均值，scale标准差</td>
+</tr>
+<tr>
+<td>poisson(lam, size)</td>
+<td>产生具有泊松分布的数组，lam随机事件发生概率</td>
+</tr>
+</tbody>
+</table>
+<h2 id="NumPy的统计函数"><a href="#NumPy的统计函数" class="headerlink" title="NumPy的统计函数"></a>NumPy的统计函数</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sum(a, axis=None)</td>
+<td>根据给定轴计算数组啊相关元素和</td>
+</tr>
+<tr>
+<td>mean(a, axis=None)</td>
+<td>期望</td>
+</tr>
+<tr>
+<td>average(a, axis, weights=None)</td>
+<td>加权平均值</td>
+</tr>
+<tr>
+<td>std(a, axis=None)</td>
+<td>标准差</td>
+</tr>
+<tr>
+<td>var(a, axis=None)</td>
+<td>方差</td>
+</tr>
+<tr>
+<td>min(a) max(a)</td>
+<td>求最小/大值</td>
+</tr>
+<tr>
+<td>argmin(a) argmax(a)</td>
+<td>最小/大值降一维后下标</td>
+</tr>
+<tr>
+<td>unravel_index(index, shape)</td>
+<td>根据shape将一维下标转换成多维下标</td>
+</tr>
+<tr>
+<td>ptp(a)</td>
+<td>最大值最小值的差</td>
+</tr>
+<tr>
+<td>median(a)</td>
+<td>中位数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Numpy的梯度函数"><a href="#Numpy的梯度函数" class="headerlink" title="Numpy的梯度函数"></a>Numpy的梯度函数</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gradient(a)</td>
+<td>计算数组a中元素的梯度，a为多维时，返回每个维度的梯度</td>
+</tr>
+</tbody>
+</table>
+<p>梯度：连续值之间的变化率，即斜率</p>
+<p>xy坐标轴连续3个x坐标对应的y值为：a，b，c，其中b的梯度为(c-a)/2</p>
+<h2 id="图像的数组表示"><a href="#图像的数组表示" class="headerlink" title="图像的数组表示"></a>图像的数组表示</h2><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">from PIL import Image</div><div class="line">import numpy as np</div><div class="line"></div><div class="line"><span class="meta">#获得图像数组</span></div><div class="line">im = np.array(Image.open(<span class="string">'1.jpg'</span>))</div><div class="line"></div><div class="line"><span class="meta">#运算并修改数组</span></div><div class="line">b = [<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>] -im</div><div class="line"><span class="meta">#获取新图片</span></div><div class="line">im = Image.fromarray(b.astype(np.<span class="keyword">uint8</span>))</div><div class="line"><span class="meta">#保存图片</span></div><div class="line">im.save(<span class="string">'new.jpg'</span>)</div></pre></td></tr></table></figure>
+<h1 id="数据展示matplotlib"><a href="#数据展示matplotlib" class="headerlink" title="数据展示matplotlib"></a>数据展示matplotlib</h1><p>matplotlib库较复杂，类似于matlab。可以使用matplotlib.pyploy</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">import</span> <span class="selector-tag">matplotlib</span><span class="selector-class">.pyplot</span> <span class="selector-tag">as</span> <span class="selector-tag">plt</span></div><div class="line"><span class="selector-tag">plt</span><span class="selector-class">.plot</span>([<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</div><div class="line"><span class="selector-tag">plt</span><span class="selector-class">.ylabel</span>(<span class="string">'grade'</span>)</div><div class="line">#保存图片</div><div class="line"><span class="selector-tag">plt</span><span class="selector-class">.savefig</span>(<span class="string">'test'</span>, dpi=<span class="number">600</span>)</div><div class="line"><span class="selector-tag">plt</span><span class="selector-class">.show</span>()</div></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#同时指定x,y值</div><div class="line">plt.plot([<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>],[<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</div><div class="line">#xmin,xmax,ymin,ymax</div><div class="line">plt.axis([<span class="number">-1</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">6</span>])</div><div class="line">plt.ylabel('grade')</div><div class="line">#plt.savefig('test', dpi=<span class="number">600</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h2 id="pyplot的绘图区域"><a href="#pyplot的绘图区域" class="headerlink" title="pyplot的绘图区域"></a>pyplot的绘图区域</h2><p>plt.subplot(nrows, ncols, plot_num)</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">a</span> = np.arange(<span class="number">0</span>, <span class="number">5</span>, <span class="number">0.02</span>)</div><div class="line"><span class="comment">#两行一列绘图区域的上半部分</span></div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">plt.plot(<span class="keyword">a</span>, np.<span class="built_in">exp</span>(-<span class="keyword">a</span>) * np.<span class="built_in">cos</span>(<span class="number">2</span>*np.<span class="literal">pi</span>*<span class="keyword">a</span>))</div><div class="line"><span class="comment">#两行一列绘图区域的下半部分</span></div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>)</div><div class="line">plt.plot(<span class="keyword">a</span>, np.<span class="built_in">cos</span>(np.<span class="literal">pi</span>*<span class="keyword">a</span>))</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -458,6 +594,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/11/25/统计超大文件中字符串出现次数/" title="统计超大文件中字符串出现次数">
+  <strong>上一篇：</strong><br/>
+  <span>
+  统计超大文件中字符串出现次数</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/11/06/C++常用知识点/"  title="C++常用知识点">
@@ -478,7 +622,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSV文件读写"><span class="toc-number">2.2.</span> <span class="toc-text">CSV文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2维数据读写"><span class="toc-number">2.2.1.</span> <span class="toc-text">1,2维数据读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多维数据的读写"><span class="toc-number">2.2.2.</span> <span class="toc-text">多维数据的读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#便捷文件存取"><span class="toc-number">2.2.3.</span> <span class="toc-text">便捷文件存取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的随机数函数"><span class="toc-number">2.3.</span> <span class="toc-text">Numpy的随机数函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NumPy的统计函数"><span class="toc-number">2.4.</span> <span class="toc-text">NumPy的统计函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的梯度函数"><span class="toc-number">2.5.</span> <span class="toc-text">Numpy的梯度函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像的数组表示"><span class="toc-number">2.6.</span> <span class="toc-text">图像的数组表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据展示matplotlib"><span class="toc-number">3.</span> <span class="toc-text">数据展示matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pyplot的绘图区域"><span class="toc-number">3.1.</span> <span class="toc-text">pyplot的绘图区域</span></a></li></ol></li></ol>
  
   </div>
 

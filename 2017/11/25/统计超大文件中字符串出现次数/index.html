@@ -1,0 +1,512 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>统计超大文件中字符串出现次数 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="背景：有一个超大的文件，需要统计里面某个字符串出现的次数 注：下文中的log.txt为500万行左右 Python实现逐行读取方式（单线程）1234567891011count = 0def getCountInFile(fname, s):    global count    with open(fname, &apos;rb&apos;) as f:        for line in f:">
+<meta name="keywords" content="vi, nodejs, robotframework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="统计超大文件中字符串出现次数">
+<meta property="og:url" content="http://yoursite.com/2017/11/25/统计超大文件中字符串出现次数/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="背景：有一个超大的文件，需要统计里面某个字符串出现的次数 注：下文中的log.txt为500万行左右 Python实现逐行读取方式（单线程）1234567891011count = 0def getCountInFile(fname, s):    global count    with open(fname, &apos;rb&apos;) as f:        for line in f:">
+<meta property="og:updated_time" content="2017-11-25T13:48:52.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="统计超大文件中字符串出现次数">
+<meta name="twitter:description" content="背景：有一个超大的文件，需要统计里面某个字符串出现的次数 注：下文中的log.txt为500万行左右 Python实现逐行读取方式（单线程）1234567891011count = 0def getCountInFile(fname, s):    global count    with open(fname, &apos;rb&apos;) as f:        for line in f:">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/25/统计超大文件中字符串出现次数/" title="统计超大文件中字符串出现次数" itemprop="url">统计超大文件中字符串出现次数</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-25T11:50:17.000Z" itemprop="datePublished"> 发表于 2017-11-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python实现"><span class="toc-number">1.</span> <span class="toc-text">Python实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#逐行读取方式（单线程）"><span class="toc-number">1.1.</span> <span class="toc-text">逐行读取方式（单线程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逐块读取方式（单线程）"><span class="toc-number">1.2.</span> <span class="toc-text">逐块读取方式（单线程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逐行读取方式（多线程）"><span class="toc-number">1.3.</span> <span class="toc-text">逐行读取方式（多线程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逐块读取方式（多线程）"><span class="toc-number">1.4.</span> <span class="toc-text">逐块读取方式（多线程）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C-实现"><span class="toc-number">2.</span> <span class="toc-text">C++实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#逐行读取方式（单线程）-1"><span class="toc-number">2.1.</span> <span class="toc-text">逐行读取方式（单线程）</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>背景：有一个超大的文件，需要统计里面某个字符串出现的次数</p>
+<p>注：下文中的log.txt为500万行左右</p>
+<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1><h2 id="逐行读取方式（单线程）"><a href="#逐行读取方式（单线程）" class="headerlink" title="逐行读取方式（单线程）"></a>逐行读取方式（单线程）</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">count</span> = <span class="number">0</span></div><div class="line"></div><div class="line">def getCountInFile(fname, s):</div><div class="line">    <span class="keyword">global</span> <span class="built_in">count</span></div><div class="line">    with <span class="keyword">open</span>(fname, <span class="string">'rb'</span>) <span class="keyword">as</span> <span class="keyword">f</span>:</div><div class="line">        <span class="keyword">for</span> <span class="built_in">line</span> in <span class="keyword">f</span>:</div><div class="line">            <span class="built_in">count</span> += <span class="built_in">line</span>.<span class="built_in">count</span>(s)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    getCountInFile(<span class="string">'log.txt'</span>, <span class="keyword">b</span><span class="string">'kongdb'</span>)</div><div class="line">    <span class="keyword">print</span>(<span class="string">'total count is:%d'</span> % <span class="built_in">count</span>)</div></pre></td></tr></table></figure>
+<p>使用Ipython timeit命令得出时间大概在2.8s</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">%timeit %<span class="built_in">run</span> single_thread_1.py</div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line"><span class="number">1</span> loop, best <span class="keyword">of</span> <span class="number">3</span>: <span class="number">2.78</span> s per loop</div></pre></td></tr></table></figure>
+<h2 id="逐块读取方式（单线程）"><a href="#逐块读取方式（单线程）" class="headerlink" title="逐块读取方式（单线程）"></a>逐块读取方式（单线程）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line">count = <span class="number">0</span></div><div class="line"><span class="comment">#逐块读取，每块的大小</span></div><div class="line">CHUNK_SIZE = <span class="number">500000</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getCountInFile</span><span class="params">(fname, s)</span>:</span></div><div class="line">    <span class="keyword">global</span> count</div><div class="line">    <span class="comment">#先获取文件总大小</span></div><div class="line">    total_size = os.path.getsize(fname)</div><div class="line">    <span class="keyword">with</span> open(fname, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</div><div class="line">        <span class="comment">#分块</span></div><div class="line">        piece_count = int(total_size/CHUNK_SIZE) + <span class="number">1</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(piece_count):</div><div class="line">            content = f.read(CHUNK_SIZE)</div><div class="line">            count += content.count(s)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    getCountInFile(<span class="string">'log.txt'</span>, <span class="string">b'kongdb'</span>)</div><div class="line">    print(<span class="string">'total count is:%d'</span> % count)</div></pre></td></tr></table></figure>
+<p>使用Ipython timeit命令得出时间大概在80ms</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">%timeit %<span class="built_in">run</span> single_thread_2.py</div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">...</div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line"><span class="number">10</span> loops, best <span class="keyword">of</span> <span class="number">3</span>: <span class="number">79.3</span> ms per loop</div></pre></td></tr></table></figure>
+<p>不过我想了一下，这样分块可能会存在这样一个问题。</p>
+<p>比如第n块的最后一个字母是’k’，而第n+1块的前几个字母是’ongdb’，即分的块正好把待查询的子块切割了。这样就会导致子块遗漏了。</p>
+<p>想了以下的解决办法，可能不是太好。</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">current_pos = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(piece_count):</div><div class="line">    <span class="built_in">content</span> = f.<span class="built_in">read</span>(CHUNK_SIZE)</div><div class="line">    count += <span class="built_in">content</span>.count(s)</div><div class="line">    #每次读完一个子块之后，位置向后退<span class="string">"子串长度减1"</span>个字符</div><div class="line">    current_pos += CHUNK_SIZE - len(s) + <span class="number">1</span></div><div class="line">    f.seek(current_pos)</div><div class="line">...</div></pre></td></tr></table></figure>
+<h2 id="逐行读取方式（多线程）"><a href="#逐行读取方式（多线程）" class="headerlink" title="逐行读取方式（多线程）"></a>逐行读取方式（多线程）</h2><p>尝试使一个线程从某一个固定行开始读取，但是因为Python没有从某一行开始读取的方法。只能使用next(f)这种方法来跳过前n行。但这样并不能使时间减少。放弃</p>
+<p>也有可能是我使用的方法不对。</p>
+<h2 id="逐块读取方式（多线程）"><a href="#逐块读取方式（多线程）" class="headerlink" title="逐块读取方式（多线程）"></a>逐块读取方式（多线程）</h2><p>Python有seek方法来跳过前n个字符。所以思路就是：</p>
+<ul>
+<li>每个线程都有一个start属性</li>
+<li>先跳过前start个字符</li>
+<li>读取一个固定大小的块，并计算count</li>
+<li>合并各个线程的结果</li>
+</ul>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">import os</div><div class="line">import threading</div><div class="line"></div><div class="line">g_lock = threading.Lock()</div><div class="line"></div><div class="line"><span class="built_in">count</span> = <span class="number">0</span></div><div class="line">#逐块读取，每块的大小</div><div class="line">CHUNK_SIZE = <span class="number">500000</span></div><div class="line"></div><div class="line">def getCountInFile(fname, start, s):</div><div class="line">    with <span class="keyword">open</span>(fname, <span class="string">'rb'</span>) <span class="keyword">as</span> <span class="keyword">f</span>:</div><div class="line">        <span class="keyword">f</span>.seek(start)</div><div class="line">        content = <span class="keyword">f</span>.<span class="keyword">read</span>(CHUNK_SIZE + <span class="built_in">len</span>(s) -<span class="number">1</span>)</div><div class="line">        <span class="keyword">if</span> not conten<span class="variable">t:</span></div><div class="line">            <span class="keyword">return</span></div><div class="line">        with g_lock:</div><div class="line">            <span class="keyword">global</span> <span class="built_in">count</span></div><div class="line">            <span class="built_in">count</span> += content.<span class="built_in">count</span>(s)</div><div class="line">#线程列表</div><div class="line">threads = []</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    fname = <span class="string">'log.txt'</span></div><div class="line">    #先获取文件总大小</div><div class="line">    total_size = os.path.getsize(fname)</div><div class="line">    <span class="keyword">for</span> i in <span class="built_in">range</span>(<span class="keyword">int</span>(total_size/CHUNK_SIZE) + <span class="number">1</span>):</div><div class="line">        t = threading.Thread(target=getCountInFile,</div><div class="line">                             <span class="keyword">args</span>=(fname, i*CHUNK_SIZE, <span class="keyword">b</span><span class="string">'kongdb'</span>))</div><div class="line">        threads.<span class="keyword">append</span>(t)</div><div class="line">    <span class="keyword">for</span> t in thread<span class="variable">s:</span></div><div class="line">        t.start()</div><div class="line">    <span class="keyword">for</span> t in thread<span class="variable">s:</span></div><div class="line">        t.<span class="keyword">join</span>()</div><div class="line">    <span class="keyword">print</span>(<span class="string">'total count is:%d'</span> % <span class="built_in">count</span>)</div></pre></td></tr></table></figure>
+<p>想法很天真，然鹅</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">%timeit %<span class="built_in">run</span> multithread_thread_1.py</div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">...</div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line">total <span class="built_in">count</span> <span class="keyword">is</span>:<span class="number">884736</span></div><div class="line"><span class="number">10</span> loops, best <span class="keyword">of</span> <span class="number">3</span>: <span class="number">105</span> ms per loop</div></pre></td></tr></table></figure>
+<p>时间并没有实际缩短，还增加了大约20ms，汗。</p>
+<p>是因为Python的GIL限制了呢，还是我的使用方法不正确呢。</p>
+<h1 id="C-实现"><a href="#C-实现" class="headerlink" title="C++实现"></a>C++实现</h1><p>C++ std里的读写文件用的不是很多，但理所当然的觉得C++肯定要比Python快吧</p>
+<p>然而结果好像并不是这样的。</p>
+<p>先实现统计子串次数的函数</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#include "stdafx.h"</span></div><div class="line"><span class="comment">#include &lt;string&gt;</span></div><div class="line"><span class="comment">#include &lt;stdio.h&gt;</span></div><div class="line"></div><div class="line">//统计子串出现次数</div><div class="line"><span class="keyword">int</span> getStrCount(const char *src, const char *<span class="function"><span class="keyword">sub</span>)</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> len = strlen(<span class="function"><span class="keyword">sub</span>)</span>;</div><div class="line">	<span class="keyword">if</span> (src == nullptr || <span class="function"><span class="keyword">sub</span> == <span class="title">nullptr</span></span></div><div class="line">		|| <span class="title">strlen</span>(<span class="title">src</span>) == 0 || <span class="title">len</span> == 0)</div><div class="line">		<span class="title">return</span> 0;</div><div class="line">	<span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (src = strstr(src, <span class="function"><span class="keyword">sub</span>)) </span>&#123;</div><div class="line">		num++;</div><div class="line">		src += len;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> num;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="逐行读取方式（单线程）-1"><a href="#逐行读取方式（单线程）-1" class="headerlink" title="逐行读取方式（单线程）"></a>逐行读取方式（单线程）</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">getCountInFile</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *fname, <span class="keyword">const</span> <span class="keyword">char</span> *sub)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="built_in">std</span>::<span class="function">ifstream <span class="title">f</span><span class="params">(fname)</span></span>;</div><div class="line">	<span class="keyword">while</span> (!f.eof()) &#123;</div><div class="line">		<span class="keyword">char</span> line[<span class="number">51</span>] = <span class="string">"\0"</span>;</div><div class="line">		f.getline(line, <span class="number">50</span>);</div><div class="line">		count += getStrCount(line, sub);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> start = GetTickCount();</div><div class="line">	getCountInFile(<span class="string">"log.txt"</span>, <span class="string">"kongdb"</span>);</div><div class="line">	<span class="keyword">int</span> end = GetTickCount();</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"time elapse:%d\n"</span>, end - start);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"total count is:%d\n"</span>, count);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中使用GetTickCount函数来计算性能</p>
+<p>结果如下</p>
+<p>time elapse:8531<br>total count:884736</p>
+<p>大约是8.5s，竟然比Python的逐行读取慢这么多，不科学啊。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2017/11/25/统计超大文件中字符串出现次数/" data-title="统计超大文件中字符串出现次数 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/11/17/Python数据分析与展示笔记/"  title="Python数据分析与展示笔记">
+ <strong>下一篇：</strong><br/> 
+ <span>Python数据分析与展示笔记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python实现"><span class="toc-number">1.</span> <span class="toc-text">Python实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#逐行读取方式（单线程）"><span class="toc-number">1.1.</span> <span class="toc-text">逐行读取方式（单线程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逐块读取方式（单线程）"><span class="toc-number">1.2.</span> <span class="toc-text">逐块读取方式（单线程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逐行读取方式（多线程）"><span class="toc-number">1.3.</span> <span class="toc-text">逐行读取方式（多线程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逐块读取方式（多线程）"><span class="toc-number">1.4.</span> <span class="toc-text">逐块读取方式（多线程）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C-实现"><span class="toc-number">2.</span> <span class="toc-text">C++实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#逐行读取方式（单线程）-1"><span class="toc-number">2.1.</span> <span class="toc-text">逐行读取方式（单线程）</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/理财/" title="理财">理财<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
