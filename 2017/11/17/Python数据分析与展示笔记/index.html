@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/11/17/Python数据分析与展示笔记/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="IPython常用命令   常用命令 说明     ? 查看变量名函数名   %run 执行某个python文件   %magic 显示所有魔术命令   %hist IPython命令的输入历史   %pdb 异常发生后自动进入调试器   %reset 删除当前命名空间中的全部变量和名称   %who 显示当前命名空间中已经定义的变量   %time 给出代码的执行时间   %timeit 多次执">
-<meta property="og:updated_time" content="2017-11-22T12:46:39.397Z">
+<meta property="og:updated_time" content="2017-12-01T12:44:36.049Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python数据分析与展示笔记">
 <meta name="twitter:description" content="IPython常用命令   常用命令 说明     ? 查看变量名函数名   %run 执行某个python文件   %magic 显示所有魔术命令   %hist IPython命令的输入历史   %pdb 异常发生后自动进入调试器   %reset 删除当前命名空间中的全部变量和名称   %who 显示当前命名空间中已经定义的变量   %time 给出代码的执行时间   %timeit 多次执">
@@ -97,7 +97,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSV文件读写"><span class="toc-number">2.2.</span> <span class="toc-text">CSV文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2维数据读写"><span class="toc-number">2.2.1.</span> <span class="toc-text">1,2维数据读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多维数据的读写"><span class="toc-number">2.2.2.</span> <span class="toc-text">多维数据的读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#便捷文件存取"><span class="toc-number">2.2.3.</span> <span class="toc-text">便捷文件存取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的随机数函数"><span class="toc-number">2.3.</span> <span class="toc-text">Numpy的随机数函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NumPy的统计函数"><span class="toc-number">2.4.</span> <span class="toc-text">NumPy的统计函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的梯度函数"><span class="toc-number">2.5.</span> <span class="toc-text">Numpy的梯度函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像的数组表示"><span class="toc-number">2.6.</span> <span class="toc-text">图像的数组表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据展示matplotlib"><span class="toc-number">3.</span> <span class="toc-text">数据展示matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pyplot的绘图区域"><span class="toc-number">3.1.</span> <span class="toc-text">pyplot的绘图区域</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSV文件读写"><span class="toc-number">2.2.</span> <span class="toc-text">CSV文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2维数据读写"><span class="toc-number">2.2.1.</span> <span class="toc-text">1,2维数据读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多维数据的读写"><span class="toc-number">2.2.2.</span> <span class="toc-text">多维数据的读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#便捷文件存取"><span class="toc-number">2.2.3.</span> <span class="toc-text">便捷文件存取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的随机数函数"><span class="toc-number">2.3.</span> <span class="toc-text">Numpy的随机数函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NumPy的统计函数"><span class="toc-number">2.4.</span> <span class="toc-text">NumPy的统计函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的梯度函数"><span class="toc-number">2.5.</span> <span class="toc-text">Numpy的梯度函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像的数组表示"><span class="toc-number">2.6.</span> <span class="toc-text">图像的数组表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据展示matplotlib"><span class="toc-number">3.</span> <span class="toc-text">数据展示matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pyplot的绘图区域"><span class="toc-number">3.1.</span> <span class="toc-text">pyplot的绘图区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#plot函数"><span class="toc-number">3.2.</span> <span class="toc-text">plot函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pyplot的中文显示"><span class="toc-number">3.2.1.</span> <span class="toc-text">pyplot的中文显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pyplot的文本显示"><span class="toc-number">3.2.2.</span> <span class="toc-text">pyplot的文本显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详细切分绘图区域"><span class="toc-number">3.2.3.</span> <span class="toc-text">详细切分绘图区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pyplot基础图表函数"><span class="toc-number">3.2.4.</span> <span class="toc-text">pyplot基础图表函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#饼图"><span class="toc-number">3.2.4.1.</span> <span class="toc-text">饼图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直方图"><span class="toc-number">3.2.4.2.</span> <span class="toc-text">直方图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极坐标"><span class="toc-number">3.2.4.3.</span> <span class="toc-text">极坐标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#散点图"><span class="toc-number">3.2.4.4.</span> <span class="toc-text">散点图</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pandas库"><span class="toc-number">4.</span> <span class="toc-text">pandas库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Series类型"><span class="toc-number">4.1.</span> <span class="toc-text">Series类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Series创建"><span class="toc-number">4.1.1.</span> <span class="toc-text">Series创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Series的基本操作"><span class="toc-number">4.1.2.</span> <span class="toc-text">Series的基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Series的name属性"><span class="toc-number">4.1.3.</span> <span class="toc-text">Series的name属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataFrame类型"><span class="toc-number">4.2.</span> <span class="toc-text">DataFrame类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建"><span class="toc-number">4.2.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引"><span class="toc-number">4.2.2.</span> <span class="toc-text">索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型操作"><span class="toc-number">4.2.3.</span> <span class="toc-text">数据类型操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas的排序"><span class="toc-number">4.3.</span> <span class="toc-text">Pandas的排序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#根据索引进行排序"><span class="toc-number">4.3.1.</span> <span class="toc-text">根据索引进行排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在指定轴上根据数据进行排序"><span class="toc-number">4.3.2.</span> <span class="toc-text">在指定轴上根据数据进行排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas的统计分析"><span class="toc-number">4.4.</span> <span class="toc-text">Pandas的统计分析</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -569,6 +569,435 @@
 <figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#同时指定x,y值</div><div class="line">plt.plot([<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>],[<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</div><div class="line">#xmin,xmax,ymin,ymax</div><div class="line">plt.axis([<span class="number">-1</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">6</span>])</div><div class="line">plt.ylabel('grade')</div><div class="line">#plt.savefig('test', dpi=<span class="number">600</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <h2 id="pyplot的绘图区域"><a href="#pyplot的绘图区域" class="headerlink" title="pyplot的绘图区域"></a>pyplot的绘图区域</h2><p>plt.subplot(nrows, ncols, plot_num)</p>
 <figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">a</span> = np.arange(<span class="number">0</span>, <span class="number">5</span>, <span class="number">0.02</span>)</div><div class="line"><span class="comment">#两行一列绘图区域的上半部分</span></div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>)</div><div class="line">plt.plot(<span class="keyword">a</span>, np.<span class="built_in">exp</span>(-<span class="keyword">a</span>) * np.<span class="built_in">cos</span>(<span class="number">2</span>*np.<span class="literal">pi</span>*<span class="keyword">a</span>))</div><div class="line"><span class="comment">#两行一列绘图区域的下半部分</span></div><div class="line">plt.subplot(<span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>)</div><div class="line">plt.plot(<span class="keyword">a</span>, np.<span class="built_in">cos</span>(np.<span class="literal">pi</span>*<span class="keyword">a</span>))</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h2 id="plot函数"><a href="#plot函数" class="headerlink" title="plot函数"></a>plot函数</h2><p>plt.plot(x, y, format_string, **kwargs)</p>
+<p>x,y:列表或数组</p>
+<p>format_string:控制曲线的格式字符串,由颜色，风格，标记字符组成</p>
+<table>
+<thead>
+<tr>
+<th>颜色字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘b’</td>
+<td>蓝色</td>
+</tr>
+<tr>
+<td>‘g’</td>
+<td>绿色</td>
+</tr>
+<tr>
+<td>‘r’</td>
+<td>红色</td>
+</tr>
+<tr>
+<td>‘c’</td>
+<td>青绿色</td>
+</tr>
+<tr>
+<td>‘#008000’</td>
+<td>RGB的某种颜色</td>
+</tr>
+<tr>
+<td>‘m’</td>
+<td>洋红色</td>
+</tr>
+<tr>
+<td>‘y’</td>
+<td>黄色</td>
+</tr>
+<tr>
+<td>‘k’</td>
+<td>黑色</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>白色</td>
+</tr>
+<tr>
+<td>‘0.8’</td>
+<td>灰度值</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>风格字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘-‘</td>
+<td>实线</td>
+</tr>
+<tr>
+<td>‘–’</td>
+<td>破折线</td>
+</tr>
+<tr>
+<td>‘-.’</td>
+<td>点划画线</td>
+</tr>
+<tr>
+<td>‘:’</td>
+<td>虚线</td>
+</tr>
+<tr>
+<td>‘’ ‘ ‘</td>
+<td>无线条</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>标记字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘.’</td>
+<td>点标记</td>
+</tr>
+<tr>
+<td>‘,’</td>
+<td>像素标记（极小点）</td>
+</tr>
+<tr>
+<td>‘o’</td>
+<td>实心圈标记</td>
+</tr>
+<tr>
+<td>‘v’</td>
+<td>倒三角标记</td>
+</tr>
+<tr>
+<td>‘^’</td>
+<td>上三角标记</td>
+</tr>
+<tr>
+<td>‘&gt;’</td>
+<td>右三角标记</td>
+</tr>
+<tr>
+<td>‘&lt;’</td>
+<td>左三角标记</td>
+</tr>
+<tr>
+<td>‘1’</td>
+<td>下花三角标记</td>
+</tr>
+<tr>
+<td>‘2’</td>
+<td>上花三角标记</td>
+</tr>
+<tr>
+<td>‘3’</td>
+<td>左花三角标记</td>
+</tr>
+<tr>
+<td>‘4’</td>
+<td>右花三角标记</td>
+</tr>
+<tr>
+<td>‘s’</td>
+<td>实心方形标记</td>
+</tr>
+<tr>
+<td>‘p’</td>
+<td>实心五角标记</td>
+</tr>
+<tr>
+<td>‘*’</td>
+<td>星形标记</td>
+</tr>
+<tr>
+<td>‘h’</td>
+<td>竖六边形标记</td>
+</tr>
+<tr>
+<td>‘H’</td>
+<td>横六边形标记</td>
+</tr>
+<tr>
+<td>‘+’</td>
+<td>十字标记</td>
+</tr>
+<tr>
+<td>‘x’</td>
+<td>x标记</td>
+</tr>
+<tr>
+<td>‘D’</td>
+<td>菱形标记</td>
+</tr>
+<tr>
+<td>‘d’</td>
+<td>瘦菱形标记</td>
+</tr>
+<tr>
+<td>‘</td>
+<td>‘</td>
+<td>垂直线标记</td>
+</tr>
+</tbody>
+</table>
+<p>**kwargs:第二组或更多的(x, y, format_string)</p>
+<ul>
+<li>color:控制颜色，color=’green’</li>
+<li>linestyle: 控制颜色，linestyle=’dashed’</li>
+<li>marker:标记风格，marker=’o’</li>
+<li>markerfacecolor:标记颜色，markerfacecolor=’blue’</li>
+<li>markersize:标记尺寸,markersize=20</li>
+</ul>
+<h3 id="pyplot的中文显示"><a href="#pyplot的中文显示" class="headerlink" title="pyplot的中文显示"></a>pyplot的中文显示</h3><ul>
+<li>方法一：使用rcParams修改默认字体</li>
+</ul>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line">matplotlib/rcParams[<span class="string">'font.family'</span>] = <span class="string">'SimHei'</span></div><div class="line">y.tlabel(<span class="string">'纵轴'</span>)</div></pre></td></tr></table></figure>
+<p>rcParams的属性</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘font.family’</td>
+<td>字体，’SimHei’黑体，’Kaiti’楷体，’LiSu’隶书，’Fangsong’仿宋，’YouYuan’幼圆，’STSong’华文宋体等</td>
+</tr>
+<tr>
+<td>‘font.style’</td>
+<td>字体风格，如normal,italic</td>
+</tr>
+<tr>
+<td>‘font.szie’</td>
+<td>字体大小，数字或large,x-small等</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>方法二：使用属性fontproperties</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">plt</span><span class="selector-class">.ylabel</span>(<span class="string">'横轴'</span>, fontproperties=<span class="string">'SimHei'</span>, fontsize=<span class="number">20</span>)</div></pre></td></tr></table></figure>
+<h3 id="pyplot的文本显示"><a href="#pyplot的文本显示" class="headerlink" title="pyplot的文本显示"></a>pyplot的文本显示</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plt.xlabel()</td>
+<td>x轴标签</td>
+</tr>
+<tr>
+<td>plt.ylabel()</td>
+<td>y轴标签</td>
+</tr>
+<tr>
+<td>plt.title()</td>
+<td>图形整体增加标签</td>
+</tr>
+<tr>
+<td>plt.text()</td>
+<td>任意位置增加文本</td>
+</tr>
+<tr>
+<td>plt.annotate()</td>
+<td>图形中增加带箭头的注解</td>
+</tr>
+</tbody>
+</table>
+<h3 id="详细切分绘图区域"><a href="#详细切分绘图区域" class="headerlink" title="详细切分绘图区域"></a>详细切分绘图区域</h3><ul>
+<li><p>subplot2grid</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plt.subplot2grid((<span class="number">3</span>, <span class="number">3</span>), (<span class="number">1</span>, <span class="number">0</span>), colspan=<span class="number">2</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>gridspec</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from matplotlib import gridspec</div><div class="line">gs = gridspec.GridSpec(3, 3)</div><div class="line">ax1 = plt.subplot(gs[0, :])</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="pyplot基础图表函数"><a href="#pyplot基础图表函数" class="headerlink" title="pyplot基础图表函数"></a>pyplot基础图表函数</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>plt.plot(x,y,fmt,…)</td>
+<td>坐标图</td>
+</tr>
+<tr>
+<td>plt.boxplot(data,notah,position)</td>
+<td>箱形图</td>
+</tr>
+<tr>
+<td>plt.bar(left,height,width,bottom)</td>
+<td>条形图</td>
+</tr>
+<tr>
+<td>plt.barh(width, bottom, left,height)</td>
+<td>横向条形图</td>
+</tr>
+<tr>
+<td>plt.polar(theta,r)</td>
+<td>极坐标图</td>
+</tr>
+<tr>
+<td>plt.pie(data, explode)</td>
+<td>饼图</td>
+</tr>
+<tr>
+<td>plt.psd(x,NFFT=256,pad_to,Fs)</td>
+<td>功率谱密度图</td>
+</tr>
+<tr>
+<td>plt.specgram(x,NFFT=256,pad_to,F)</td>
+<td>谱图</td>
+</tr>
+<tr>
+<td>plt.cohere(x,y,NFFT=256,Fs)</td>
+<td>x-y相关性函数</td>
+</tr>
+<tr>
+<td>plt.scatter(x,y)</td>
+<td>散点图</td>
+</tr>
+<tr>
+<td>plt.step(x,y,where)</td>
+<td>步阶图</td>
+</tr>
+<tr>
+<td>plt.hist(x,bins,normed)</td>
+<td>直方图</td>
+</tr>
+<tr>
+<td>plt.contour(x,y,z,n)</td>
+<td>等值图</td>
+</tr>
+<tr>
+<td>plt.vlines()</td>
+<td>垂直图</td>
+</tr>
+<tr>
+<td>plt.stem(x,y,linefmt,markerfmt)</td>
+<td>柴火图</td>
+</tr>
+<tr>
+<td>plt.plot_date()</td>
+<td>数据日期</td>
+</tr>
+</tbody>
+</table>
+<h4 id="饼图"><a href="#饼图" class="headerlink" title="饼图"></a>饼图</h4><figure class="highlight vala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#饼图</span></div><div class="line">labels = [<span class="string">'Frogs'</span>, <span class="string">'Hogs'</span>, <span class="string">'Dogs'</span>, <span class="string">'Logs'</span>]</div><div class="line">sizes = [<span class="number">15</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">10</span>]</div><div class="line"><span class="meta">#突出第二块</span></div><div class="line">explode = (<span class="number">0</span>, <span class="number">0.1</span>, <span class="number">0</span>, <span class="number">0</span>)</div><div class="line"></div><div class="line">plt.pie(sizes, explode=explode, labels=labels, autopct=<span class="string">'%1.1f%%'</span>,</div><div class="line">        shadow=False, startangle=<span class="number">90</span>)</div><div class="line"><span class="meta">#使得画出正圆形</span></div><div class="line">plt.axis(<span class="string">'equal'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h4 id="直方图"><a href="#直方图" class="headerlink" title="直方图"></a>直方图</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#直方图</span></div><div class="line">np.random.seed(0)</div><div class="line">mu, sigma = 100, 20</div><div class="line">a = np.random.normal(mu, sigma, <span class="attribute">size</span>=100)</div><div class="line"><span class="comment">#第二个参数bin代表直方的个数（划分的区间，y为每个区间中元素的个数（normed=1）或概率(normed=1)）</span></div><div class="line">plt.hist(a, 40, <span class="attribute">normed</span>=1, <span class="attribute">histtype</span>=<span class="string">'stepfilled'</span>, <span class="attribute">facecolor</span>=<span class="string">'b'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h4 id="极坐标"><a href="#极坐标" class="headerlink" title="极坐标"></a>极坐标</h4><h4 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a>散点图</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#散点图</div><div class="line">fig, ax = plt.subplots()</div><div class="line"><span class="selector-id">#scatter</span></div><div class="line">ax.plot(<span class="number">10</span>*np<span class="selector-class">.random</span><span class="selector-class">.randn</span>(<span class="number">100</span>), <span class="number">10</span>*np<span class="selector-class">.random</span><span class="selector-class">.randn</span>(<span class="number">100</span>), <span class="string">'o'</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<h1 id="pandas库"><a href="#pandas库" class="headerlink" title="pandas库"></a>pandas库</h1><h2 id="Series类型"><a href="#Series类型" class="headerlink" title="Series类型"></a>Series类型</h2><p>由一组数据及与之相关的索引组成</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.<span class="symbol">Series</span>([<span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>], index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>])</div></pre></td></tr></table></figure>
+<h3 id="Series创建"><a href="#Series创建" class="headerlink" title="Series创建"></a>Series创建</h3><ul>
+<li>从标量创建</li>
+</ul>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.Series(<span class="number">25</span>, <span class="keyword">index</span>=[<span class="string">'a'</span>, <span class="string">'b'</span>])</div></pre></td></tr></table></figure>
+<ul>
+<li>从字典类型创建</li>
+</ul>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.Series(&#123;<span class="string">'a'</span>:<span class="number">8</span>, <span class="string">'b'</span>:<span class="number">7</span>&#125;)</div></pre></td></tr></table></figure>
+<ul>
+<li>从ndarray创建</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">pd</span><span class="selector-class">.Seriess</span>(<span class="selector-tag">np</span><span class="selector-class">.arange</span>(5))</div></pre></td></tr></table></figure>
+<ul>
+<li>从列表创建</li>
+</ul>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.<span class="symbol">Series</span>([<span class="number">9</span>, <span class="number">8</span>], index=[<span class="string">'a'</span>, <span class="string">'b'</span>])</div></pre></td></tr></table></figure>
+<h3 id="Series的基本操作"><a href="#Series的基本操作" class="headerlink" title="Series的基本操作"></a>Series的基本操作</h3><p>索引切片等类似numpy</p>
+<h3 id="Series的name属性"><a href="#Series的name属性" class="headerlink" title="Series的name属性"></a>Series的name属性</h3><p>对象和索引都有name属性</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">b</span> = pd.Series([<span class="number">9</span>, <span class="number">8</span>], index=[<span class="string">'a'</span>, <span class="string">'b'</span>])</div><div class="line"><span class="selector-tag">b</span>.name=<span class="string">'Series对象'</span></div><div class="line"><span class="selector-tag">b</span><span class="selector-class">.index</span><span class="selector-class">.name</span>=<span class="string">'索引列'</span></div></pre></td></tr></table></figure>
+<h2 id="DataFrame类型"><a href="#DataFrame类型" class="headerlink" title="DataFrame类型"></a>DataFrame类型</h2><p>表格型数据类型</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><ul>
+<li>二维ndarray对象</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">pd</span><span class="selector-class">.DataFrame</span>(<span class="selector-tag">np</span><span class="selector-class">.arange</span>(10)<span class="selector-class">.reshape</span>(2, 5))</div></pre></td></tr></table></figure>
+<ul>
+<li>一维ndarray对象字典(或直接字典)创建<figure class="highlight prolog"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d = &#123;<span class="string">'one'</span>: pd.<span class="symbol">Series</span>([<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>], index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>]),</div><div class="line">     <span class="string">'two'</span>: pd.<span class="symbol">Series</span>([<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>], index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>])&#125;</div><div class="line">p = pd.<span class="symbol">DataFrame</span>(d)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p>行：d[<em>]，列:d.ix[</em>]</p>
+<p>获取0轴索引：d.index</p>
+<p>获取1轴索引: d.columns</p>
+<p>索引的常用方法</p>
+<ul>
+<li>append(idx) 连接另一个index对象，产生新的索引</li>
+<li>diff(idx) 差集，并返回</li>
+<li>intersection(idx) 交集</li>
+<li>union(idx) 并集</li>
+<li>delete(loc) 删除loc位置的元素</li>
+<li>insert(loc, c) 在loc位置增加索引</li>
+</ul>
+<h3 id="数据类型操作"><a href="#数据类型操作" class="headerlink" title="数据类型操作"></a>数据类型操作</h3><ul>
+<li>重新索引reindex</li>
+</ul>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">d = pd.<span class="symbol">DataFrame</span>(&#123;<span class="string">'c1'</span>:[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>], <span class="string">'c2'</span>:[<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>]&#125;, index=[<span class="string">'i1'</span>, <span class="string">'i2'</span>, <span class="string">'i3'</span>])</div><div class="line">#改变行顺序</div><div class="line">d.reindex(index=[<span class="string">'i3'</span>, <span class="string">'i2'</span>, <span class="string">'i1'</span>])</div><div class="line">#改变列顺序</div><div class="line">d.reindex(columns=[<span class="string">'c2'</span>, <span class="string">'c1'</span>])</div></pre></td></tr></table></figure>
+<p>参数<br>– index,columns :新的行列自定义索引<br>– fill_value : 填充缺失位置的值<br>– method : 填充方法，ffill向前填充，bfill向后填充<br>– limit: 最大填充量<br>– copy : 默认True，生成新对象，为False时不复制</p>
+<ul>
+<li>删除指定索引drop<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#删除<span class="selector-tag">0</span>轴</div><div class="line"><span class="selector-tag">d</span><span class="selector-class">.drop</span>([<span class="string">'i1'</span>])</div><div class="line">删除<span class="selector-tag">1</span>轴</div><div class="line"><span class="selector-tag">d</span><span class="selector-class">.drop</span>([<span class="string">'c1'</span>], axis=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Pandas的排序"><a href="#Pandas的排序" class="headerlink" title="Pandas的排序"></a>Pandas的排序</h2><h3 id="根据索引进行排序"><a href="#根据索引进行排序" class="headerlink" title="根据索引进行排序"></a>根据索引进行排序</h3><p>sort_index(axix=0, ascending=True)</p>
+<h3 id="在指定轴上根据数据进行排序"><a href="#在指定轴上根据数据进行排序" class="headerlink" title="在指定轴上根据数据进行排序"></a>在指定轴上根据数据进行排序</h3><p>sort_values(by, axix=0, ascending=True)</p>
+<p>by： axis轴上的某个索引，或索引列表</p>
+<p>NaN统一放到排序末尾</p>
+<h2 id="Pandas的统计分析"><a href="#Pandas的统计分析" class="headerlink" title="Pandas的统计分析"></a>Pandas的统计分析</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sum</td>
+<td>计算数据综合，按0轴，下同</td>
+</tr>
+<tr>
+<td>count</td>
+<td>非Nan的数量</td>
+</tr>
+<tr>
+<td>mean median</td>
+<td>算术平均，算术中位数</td>
+</tr>
+<tr>
+<td>var std</td>
+<td>方差，标准差</td>
+</tr>
+<tr>
+<td>min max</td>
+<td>最小，最大</td>
+</tr>
+<tr>
+<td>argmin argmax</td>
+<td>Series用，返回最值所在位置的索引（自动索引）</td>
+</tr>
+<tr>
+<td>idmin idmax</td>
+<td>同上，返回自定义索引</td>
+</tr>
+<tr>
+<td>describe</td>
+<td>对0轴进行统计汇总</td>
+</tr>
+</tbody>
+</table>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -622,7 +1051,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSV文件读写"><span class="toc-number">2.2.</span> <span class="toc-text">CSV文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2维数据读写"><span class="toc-number">2.2.1.</span> <span class="toc-text">1,2维数据读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多维数据的读写"><span class="toc-number">2.2.2.</span> <span class="toc-text">多维数据的读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#便捷文件存取"><span class="toc-number">2.2.3.</span> <span class="toc-text">便捷文件存取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的随机数函数"><span class="toc-number">2.3.</span> <span class="toc-text">Numpy的随机数函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NumPy的统计函数"><span class="toc-number">2.4.</span> <span class="toc-text">NumPy的统计函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的梯度函数"><span class="toc-number">2.5.</span> <span class="toc-text">Numpy的梯度函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像的数组表示"><span class="toc-number">2.6.</span> <span class="toc-text">图像的数组表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据展示matplotlib"><span class="toc-number">3.</span> <span class="toc-text">数据展示matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pyplot的绘图区域"><span class="toc-number">3.1.</span> <span class="toc-text">pyplot的绘图区域</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#IPython常用命令"><span class="toc-number">1.</span> <span class="toc-text">IPython常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NumPy库"><span class="toc-number">2.</span> <span class="toc-text">NumPy库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray类型"><span class="toc-number">2.1.</span> <span class="toc-text">ndarray类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray是一个多维数组对象，由两部分组成"><span class="toc-number">2.1.1.</span> <span class="toc-text">ndarray是一个多维数组对象，由两部分组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray对象的属性"><span class="toc-number">2.1.2.</span> <span class="toc-text">ndarray对象的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray的元素类型"><span class="toc-number">2.1.3.</span> <span class="toc-text">ndarray的元素类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的创建方法"><span class="toc-number">2.1.4.</span> <span class="toc-text">ndarray数组的创建方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组的索引和切片"><span class="toc-number">2.1.5.</span> <span class="toc-text">数组的索引和切片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray数组的运算"><span class="toc-number">2.1.6.</span> <span class="toc-text">ndarray数组的运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSV文件读写"><span class="toc-number">2.2.</span> <span class="toc-text">CSV文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2维数据读写"><span class="toc-number">2.2.1.</span> <span class="toc-text">1,2维数据读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多维数据的读写"><span class="toc-number">2.2.2.</span> <span class="toc-text">多维数据的读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#便捷文件存取"><span class="toc-number">2.2.3.</span> <span class="toc-text">便捷文件存取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的随机数函数"><span class="toc-number">2.3.</span> <span class="toc-text">Numpy的随机数函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NumPy的统计函数"><span class="toc-number">2.4.</span> <span class="toc-text">NumPy的统计函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy的梯度函数"><span class="toc-number">2.5.</span> <span class="toc-text">Numpy的梯度函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图像的数组表示"><span class="toc-number">2.6.</span> <span class="toc-text">图像的数组表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据展示matplotlib"><span class="toc-number">3.</span> <span class="toc-text">数据展示matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pyplot的绘图区域"><span class="toc-number">3.1.</span> <span class="toc-text">pyplot的绘图区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#plot函数"><span class="toc-number">3.2.</span> <span class="toc-text">plot函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pyplot的中文显示"><span class="toc-number">3.2.1.</span> <span class="toc-text">pyplot的中文显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pyplot的文本显示"><span class="toc-number">3.2.2.</span> <span class="toc-text">pyplot的文本显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#详细切分绘图区域"><span class="toc-number">3.2.3.</span> <span class="toc-text">详细切分绘图区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pyplot基础图表函数"><span class="toc-number">3.2.4.</span> <span class="toc-text">pyplot基础图表函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#饼图"><span class="toc-number">3.2.4.1.</span> <span class="toc-text">饼图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直方图"><span class="toc-number">3.2.4.2.</span> <span class="toc-text">直方图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#极坐标"><span class="toc-number">3.2.4.3.</span> <span class="toc-text">极坐标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#散点图"><span class="toc-number">3.2.4.4.</span> <span class="toc-text">散点图</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pandas库"><span class="toc-number">4.</span> <span class="toc-text">pandas库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Series类型"><span class="toc-number">4.1.</span> <span class="toc-text">Series类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Series创建"><span class="toc-number">4.1.1.</span> <span class="toc-text">Series创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Series的基本操作"><span class="toc-number">4.1.2.</span> <span class="toc-text">Series的基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Series的name属性"><span class="toc-number">4.1.3.</span> <span class="toc-text">Series的name属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataFrame类型"><span class="toc-number">4.2.</span> <span class="toc-text">DataFrame类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建"><span class="toc-number">4.2.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引"><span class="toc-number">4.2.2.</span> <span class="toc-text">索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型操作"><span class="toc-number">4.2.3.</span> <span class="toc-text">数据类型操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas的排序"><span class="toc-number">4.3.</span> <span class="toc-text">Pandas的排序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#根据索引进行排序"><span class="toc-number">4.3.1.</span> <span class="toc-text">根据索引进行排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在指定轴上根据数据进行排序"><span class="toc-number">4.3.2.</span> <span class="toc-text">在指定轴上根据数据进行排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas的统计分析"><span class="toc-number">4.4.</span> <span class="toc-text">Pandas的统计分析</span></a></li></ol></li></ol>
  
   </div>
 
