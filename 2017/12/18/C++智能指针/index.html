@@ -11,17 +11,17 @@
     
 
     
-    <meta name="description" content="定义智能指针是在  标头文件中的 std 命名空间中定义的。 C++标准库智能指针 测试对象定义1234567891011121314151617181920212223class Object&amp;#123;public:	Object(string name)	&amp;#123;		name_ = name;	&amp;#125;	~Object()	&amp;#123;		cout &amp;lt;&amp;lt; &quot;~Object">
-<meta name="keywords" content="vi, nodejs, robotframework">
+    <meta name="description" content="C++ std中的三种智能指针，unique_ptr,shared_ptr, weak_ptr。">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++智能指针">
 <meta property="og:url" content="http://yoursite.com/2017/12/18/C++智能指针/index.html">
 <meta property="og:site_name" content="飞翔的pig">
-<meta property="og:description" content="定义智能指针是在  标头文件中的 std 命名空间中定义的。 C++标准库智能指针 测试对象定义1234567891011121314151617181920212223class Object&amp;#123;public:	Object(string name)	&amp;#123;		name_ = name;	&amp;#125;	~Object()	&amp;#123;		cout &amp;lt;&amp;lt; &quot;~Object">
-<meta property="og:updated_time" content="2017-12-18T14:37:23.454Z">
+<meta property="og:description" content="C++ std中的三种智能指针，unique_ptr,shared_ptr, weak_ptr。">
+<meta property="og:updated_time" content="2017-12-24T14:15:40.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++智能指针">
-<meta name="twitter:description" content="定义智能指针是在  标头文件中的 std 命名空间中定义的。 C++标准库智能指针 测试对象定义1234567891011121314151617181920212223class Object&amp;#123;public:	Object(string name)	&amp;#123;		name_ = name;	&amp;#125;	~Object()	&amp;#123;		cout &amp;lt;&amp;lt; &quot;~Object">
+<meta name="twitter:description" content="C++ std中的三种智能指针，unique_ptr,shared_ptr, weak_ptr。">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -116,9 +116,13 @@
 <h2 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h2><p>采用引用计数的智能指针。</p>
 <h3 id="创建-1"><a href="#创建-1" class="headerlink" title="创建"></a>创建</h3><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//推荐</span></div><div class="line">auto <span class="keyword">shared</span><span class="number">1</span> = make<span class="number">_</span><span class="keyword">shared</span>&lt;Object&gt;(<span class="string">"kdb"</span>);</div><div class="line"><span class="keyword">shared</span><span class="number">1</span>-&gt;print();</div><div class="line"><span class="comment">//传入裸指针，不推荐</span></div><div class="line">auto <span class="keyword">shared</span><span class="number">2</span> = <span class="keyword">shared</span><span class="number">_p</span>tr&lt;Object&gt;(<span class="keyword">new</span> Object(<span class="string">"kdb"</span>));</div><div class="line"><span class="keyword">shared</span><span class="number">2</span>-&gt;print();</div><div class="line"><span class="comment">//声明和初始化需要分开时，传入nullptr</span></div><div class="line"><span class="keyword">shared</span><span class="number">_p</span>tr&lt;Object&gt; <span class="keyword">shared</span><span class="number">3</span>(nullptr);</div><div class="line"><span class="keyword">shared</span><span class="number">3</span> = make<span class="number">_</span><span class="keyword">shared</span>&lt;Object&gt;(<span class="string">"kdb"</span>);</div><div class="line"><span class="keyword">shared</span><span class="number">3</span>-&gt;print();</div></pre></td></tr></table></figure>
 <h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><p>与C++对象类似<br><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">auto <span class="keyword">shared</span><span class="number">1</span> = make<span class="number">_</span><span class="keyword">shared</span>&lt;Object&gt;(<span class="string">"kdb"</span>);</div><div class="line">auto <span class="keyword">shared</span><span class="number">2</span> = <span class="keyword">shared</span><span class="number">1</span>;</div><div class="line">auto <span class="keyword">shared</span><span class="number">3</span>(<span class="keyword">shared</span><span class="number">1</span>);</div><div class="line"><span class="keyword">shared</span><span class="number">1</span>-&gt;print();</div><div class="line"><span class="keyword">shared</span><span class="number">2</span>-&gt;print();</div><div class="line"><span class="keyword">shared</span><span class="number">3</span>-&gt;print();</div></pre></td></tr></table></figure></p>
-<h3 id="存在问题：嵌套引用时导致内存泄漏"><a href="#存在问题：嵌套引用时导致内存泄漏" class="headerlink" title="存在问题：嵌套引用时导致内存泄漏"></a>存在问题：嵌套引用时导致内存泄漏</h3><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">auto <span class="keyword">shared</span><span class="number">1</span> = make<span class="number">_</span><span class="keyword">shared</span>&lt;Object&gt;(<span class="string">"kdb"</span>);</div><div class="line">auto <span class="keyword">shared</span><span class="number">2</span> = make<span class="number">_</span><span class="keyword">shared</span>&lt;Object&gt;(<span class="string">"233"</span>);</div><div class="line"><span class="keyword">shared</span><span class="number">1</span>-&gt;setChild(<span class="keyword">shared</span><span class="number">2</span>);</div><div class="line"><span class="keyword">shared</span><span class="number">2</span>-&gt;setChild(<span class="keyword">shared</span><span class="number">1</span>);</div></pre></td></tr></table></figure>
+<h3 id="存在问题：嵌套引用时导致内存泄漏"><a href="#存在问题：嵌套引用时导致内存泄漏" class="headerlink" title="存在问题：嵌套引用时导致内存泄漏"></a>存在问题：嵌套引用时导致内存泄漏</h3><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">auto <span class="keyword">shared</span><span class="number">1</span> = make<span class="number">_</span><span class="keyword">shared</span>&lt;Object&gt;(<span class="string">"kdb"</span>);</div><div class="line">auto <span class="keyword">shared</span><span class="number">2</span> = make<span class="number">_</span><span class="keyword">shared</span>&lt;Object&gt;(<span class="string">"233"</span>);</div><div class="line"><span class="keyword">shared</span><span class="number">1</span>-&gt;setChild(<span class="keyword">shared</span><span class="number">2</span>);</div><div class="line"><span class="keyword">shared</span><span class="number">2</span>-&gt;setChild(<span class="keyword">shared</span><span class="number">1</span>);</div><div class="line">cout &lt;&lt; <span class="string">"shared1 count:"</span> &lt;&lt; <span class="keyword">shared</span><span class="number">1</span>.use<span class="number">_</span>count() &lt;&lt; endl; <span class="comment">//2</span></div><div class="line">cout &lt;&lt; <span class="string">"shared2 count:"</span> &lt;&lt; <span class="keyword">shared</span><span class="number">2</span>.use<span class="number">_</span>count() &lt;&lt; endl; <span class="comment">//2</span></div></pre></td></tr></table></figure>
 <h2 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h2><p>结合 shared_ptr 使用的特例智能指针。 weak_ptr 提供对一个或多个 shared_ptr 实例拥有的对象的访问，但不参与引用计数。</p>
 <p>将类中的成员变量类型改成weak_ptr<object>类型，则上述嵌套引用导致的内存泄漏不存在了</object></p>
+<p>再来看一个循环引用的例子<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//双向链表</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></div><div class="line">&#123;</div><div class="line">	Node(<span class="keyword">int</span> data)</div><div class="line">	:data_(data)</div><div class="line">	&#123;&#125;</div><div class="line">	~Node()</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Node deconstructor, data:%d\n"</span>, data_); </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> data_;</div><div class="line">	<span class="built_in">shared_ptr</span>&lt;Node&gt; prev_;</div><div class="line">	<span class="built_in">shared_ptr</span>&lt;Node&gt; next_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">testDoubleList</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">auto</span> node1 = make_shared&lt;Node&gt;(<span class="number">1</span>);</div><div class="line">	<span class="keyword">auto</span> node2 = make_shared&lt;Node&gt;(<span class="number">2</span>);</div><div class="line">	node1-&gt;next_ = node2;</div><div class="line">	node2-&gt;prev_ = node1;</div><div class="line">	<span class="comment">//引用计数为2导致资源泄漏</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"node1 count:%d\n"</span>, node1.use_count()); <span class="comment">//2</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"node2 count:%d\n"</span>, node2.use_count()); <span class="comment">//2</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>修改Node中的成员为weak_ptr则可以解决该问题<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//双向链表</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></div><div class="line">&#123;</div><div class="line">	Node(<span class="keyword">int</span> data)</div><div class="line">	:data_(data)</div><div class="line">	&#123;&#125;</div><div class="line">	~Node()</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Node deconstructor, data:%d\n"</span>, data_); </div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> data_;</div><div class="line">	weak_ptr&lt;Node&gt; prev_;</div><div class="line">	weak_ptr&lt;Node&gt; next_;</div><div class="line">	<span class="comment">//shared_ptr&lt;Node&gt; prev_;</span></div><div class="line">	<span class="comment">//shared_ptr&lt;Node&gt; next_;</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">testDoubleList</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">auto</span> node1 = make_shared&lt;Node&gt;(<span class="number">1</span>);</div><div class="line">	<span class="keyword">auto</span> node2 = make_shared&lt;Node&gt;(<span class="number">2</span>);</div><div class="line">	node1-&gt;next_ = node2;</div><div class="line">	node2-&gt;prev_ = node1;</div><div class="line">	<span class="comment">//资源释放</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"node1 count:%d\n"</span>, node1.use_count()); <span class="comment">//1</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"node2 count:%d\n"</span>, node2.use_count()); <span class="comment">//1</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>weak_ptr本身没有重载operator*和-&gt;，所以不具有普通指针的行为</p>
+<p>lock函数可以获得一个可用的shared_ptr，从而操作资源。</p>
 <p>参考</p>
 <ul>
 <li><a href="https://segmentfault.com/a/1190000006736869" target="_blank" rel="external">C++中智能指针的学习</a></li>
@@ -126,12 +130,23 @@
 <li><a href="https://msdn.microsoft.com/zh-cn/library/hh279676.aspx" target="_blank" rel="external">创建和使用 unique_ptr 实例</a></li>
 <li><a href="https://msdn.microsoft.com/zh-cn/library/hh279669.aspx" target="_blank" rel="external">创建和使用 shared_ptr 实例</a></li>
 <li><a href="https://msdn.microsoft.com/zh-cn/library/hh279672.aspx" target="_blank" rel="external">创建和使用共享 weak_ptr 实例</a></li>
+<li><a href="http://blog.csdn.net/yc2zgh1314/article/details/51264963" target="_blank" rel="external">shared_ptr造成的循环引用</a></li>
 </ul>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a>
+  </div>
 
 </div>
 
@@ -152,11 +167,19 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/12/24/C++常用知识点/" title="C++常用知识点">
+  <strong>上一篇：</strong><br/>
+  <span>
+  C++常用知识点</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2017/12/06/大话设计模式/"  title="C++常用知识点">
+<a href="/2017/12/06/大话设计模式/"  title="大话设计模式笔记">
  <strong>下一篇：</strong><br/> 
- <span>C++常用知识点
+ <span>大话设计模式笔记
 </span>
 </a>
 </div>
@@ -189,7 +212,19 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/编程/" title="编程">编程<sup>2</sup></a></li>
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>13</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
 		  
 		
 		</ul>
@@ -202,15 +237,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Python/" title="Python">Python<sup>4</sup></a></li>
+				<li><a href="/tags/Python/" title="Python">Python<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+				<li><a href="/tags/C/" title="C++">C++<sup>4</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/理财/" title="理财">理财<sup>1</sup></a></li>
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
 			
 		
 			
@@ -222,7 +257,17 @@
 			
 		
 			
-				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>1</sup></a></li>
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+		
+			
+		
 			
 		
 		</ul>
