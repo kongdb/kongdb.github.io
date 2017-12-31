@@ -1,0 +1,540 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>常见排序算法C++实现 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="C++中经常遇到的排序算法，记录备忘。">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见排序算法C++实现">
+<meta property="og:url" content="http://yoursite.com/2017/12/30/常见排序算法C++实现/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="C++中经常遇到的排序算法，记录备忘。">
+<meta property="og:updated_time" content="2017-12-31T02:45:32.120Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见排序算法C++实现">
+<meta name="twitter:description" content="C++中经常遇到的排序算法，记录备忘。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/30/常见排序算法C++实现/" title="常见排序算法C++实现" itemprop="url">常见排序算法C++实现</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2017-12-30T09:23:51.000Z" itemprop="datePublished"> 发表于 2017-12-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#冒泡排序"><span class="toc-number">1.</span> <span class="toc-text">冒泡排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#鸡尾酒排序"><span class="toc-number">2.</span> <span class="toc-text">鸡尾酒排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-1"><span class="toc-number">2.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-1"><span class="toc-number">2.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择排序"><span class="toc-number">3.</span> <span class="toc-text">选择排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-2"><span class="toc-number">3.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-2"><span class="toc-number">3.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#直接插入排序"><span class="toc-number">4.</span> <span class="toc-text">直接插入排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-3"><span class="toc-number">4.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-3"><span class="toc-number">4.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#归并排序"><span class="toc-number">5.</span> <span class="toc-text">归并排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-4"><span class="toc-number">5.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-4"><span class="toc-number">5.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化"><span class="toc-number">5.3.</span> <span class="toc-text">优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引申：将n个已排序的数组合并成一个有序数组"><span class="toc-number">5.4.</span> <span class="toc-text">引申：将n个已排序的数组合并成一个有序数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一：两两合并"><span class="toc-number">5.4.1.</span> <span class="toc-text">方法一：两两合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二：利用分治归并的思想"><span class="toc-number">5.4.2.</span> <span class="toc-text">方法二：利用分治归并的思想</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<p>先写出简单的交换两个值的swap函数<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void <span class="keyword">swap(int </span>&amp;a, int &amp;<span class="keyword">b)</span></div><div class="line">&#123;</div><div class="line">	int temp = a<span class="comment">;</span></div><div class="line">	a = <span class="keyword">b;</span></div><div class="line">	<span class="keyword">b </span>= temp<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>已升序为例，依次比较相邻两个数，大数放后。则一轮排序后最后一个值已为最大值。<br>此时再以同样的方法比较前(size - 1)个数。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//冒泡排序</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span> *<span class="built_in">array</span>, <span class="keyword">int</span> size)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size - <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> swapped = <span class="literal">false</span>;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; size - i - <span class="number">1</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span>(<span class="built_in">array</span>[j] &gt; <span class="built_in">array</span>[j+<span class="number">1</span>])&#123;</div><div class="line">				swap(<span class="built_in">array</span>[j], <span class="built_in">array</span>[j + <span class="number">1</span>]);</div><div class="line">				swapped = <span class="literal">true</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(!swapped)</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li>此为升序排列，若要降序，则将{array[j] &gt; array[j+1]}改为{array[j] &lt; array[j+1]}即可</li>
+<li>swapped标志量的说明：如果该标志量为false，表示某一次循环，<br>每一个a[j]都小于等于a[j + 1]，即已经是排序好的，所以跳出循环</li>
+</ul>
+<h1 id="鸡尾酒排序"><a href="#鸡尾酒排序" class="headerlink" title="鸡尾酒排序"></a>鸡尾酒排序</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p>冒泡排序的改进，进行双向排序，大数往后放，小数往前放（像摇晃的鸡尾酒）</p>
+<h2 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//鸡尾酒排序</span></div><div class="line"><span class="keyword">void</span> cocktailSort(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> <span class="built_in">begin</span> = <span class="number">0</span>, <span class="built_in">end</span> = <span class="built_in">size</span> - <span class="number">1</span>;</div><div class="line">	<span class="built_in">while</span>(<span class="built_in">begin</span> &lt; <span class="built_in">end</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="built_in">begin</span>; i &lt; <span class="built_in">end</span>; ++i)</div><div class="line">			<span class="built_in">if</span>(<span class="keyword">array</span>[i] &gt; <span class="keyword">array</span>[i + <span class="number">1</span>])</div><div class="line">				swap(<span class="keyword">array</span>[i], <span class="keyword">array</span>[i + <span class="number">1</span>]);</div><div class="line">		--<span class="built_in">end</span>;<span class="comment">//最后一个已排序好</span></div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="built_in">end</span>; i &gt; <span class="built_in">begin</span>; --i)</div><div class="line">			<span class="built_in">if</span>(<span class="keyword">array</span>[i] &lt; <span class="keyword">array</span>[i - <span class="number">1</span>])</div><div class="line">				swap(<span class="keyword">array</span>[i - <span class="number">1</span>], <span class="keyword">array</span>[i]);</div><div class="line">		++<span class="built_in">begin</span>;<span class="comment">//第一个位置已排序好</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h2><p>已升序为例</p>
+<ul>
+<li>第一次从整个数组中选择最小的一个，与第1个值交换，这时第一个值已排序好</li>
+<li>第二次从第一个之外剩下的数中选择最小的与第二个值交换，这时第二个值也排序好<br>依次类推</li>
+</ul>
+<h2 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//选择排序</span></div><div class="line"><span class="keyword">void</span> selectSort(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">size</span> - <span class="number">1</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> minIndex = i;</div><div class="line">		<span class="comment">//前i个数已排序好，而第i个值是最小基准值，所以从i + 1开始</span></div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; <span class="built_in">size</span>; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="built_in">if</span>(<span class="keyword">array</span>[j] &lt; <span class="keyword">array</span>[minIndex])</div><div class="line">			    minIndex = j;</div><div class="line">		&#125;</div><div class="line">		<span class="built_in">if</span>(minIndex != i)</div><div class="line">			swap(<span class="keyword">array</span>[i], <span class="keyword">array</span>[minIndex]);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h1><h2 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h2><p>将原数组想象分为两部分，第一部分是已排序好的，第二部分是乱序的。</p>
+<p>每次从乱序的部分取出第一个值，在已排序的部分找出一个合适的位置插入进去。</p>
+<p>其中，第一次排序排序时，已排序的部分为一个值</p>
+<h2 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//直接插入排序：方法1</span></div><div class="line"><span class="keyword">void</span> insertSort1(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="comment">//未排序的部分，从1开始往后遍历</span></div><div class="line">	<span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="built_in">size</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//从未排序的部分取出第一个，为待比较的值</span></div><div class="line">		<span class="keyword">int</span> curData = <span class="keyword">array</span>[i];</div><div class="line">		<span class="comment">//在第一部分中插入的索引</span></div><div class="line">		<span class="keyword">int</span> insertIndex = i;</div><div class="line">		<span class="comment">//已排序的部分为前i个值</span></div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; ++j)</div><div class="line">		&#123;</div><div class="line">			<span class="built_in">if</span>(<span class="keyword">array</span>[j] &gt; curData)</div><div class="line">			&#123;</div><div class="line">				insertIndex = j;</div><div class="line">				<span class="built_in">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="comment">//第一部分从最后一个位置，到待插入的位置，统统向后移一个位置</span></div><div class="line">		<span class="built_in">for</span>(<span class="keyword">int</span> j = i; j &gt; insertIndex; --j)</div><div class="line">			<span class="keyword">array</span>[j] = <span class="keyword">array</span>[j - <span class="number">1</span>];</div><div class="line">		<span class="comment">//将待比较的值插入</span></div><div class="line">		<span class="keyword">array</span>[insertIndex] = curData;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//第一种方法稍微有点啰嗦，可以更简略一些</span></div><div class="line"><span class="comment">//直接插入排序：方法2</span></div><div class="line"><span class="keyword">void</span> insertSort2(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="comment">//未排序的部分，从1开始往后遍历</span></div><div class="line">	<span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="built_in">size</span>; ++i)</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//从未排序的部分取出第一个，为待比较的值</span></div><div class="line">		<span class="keyword">int</span> curData = <span class="keyword">array</span>[i];</div><div class="line">		<span class="comment">//在第一部分中插入的索引</span></div><div class="line">		<span class="keyword">int</span> j = i;</div><div class="line">		<span class="comment">//从已排序部分的最后一个往前遍历，若比标准值大，则往后移一个</span></div><div class="line">		<span class="built_in">for</span>(j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; <span class="keyword">array</span>[j] &gt; curData; --j)</div><div class="line">			<span class="keyword">array</span>[j + <span class="number">1</span>] = <span class="keyword">array</span>[j];</div><div class="line">		<span class="keyword">array</span>[j + <span class="number">1</span>] = curData;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><h2 id="原理-4"><a href="#原理-4" class="headerlink" title="原理"></a>原理</h2><p>将数组的排序拆分成小的有序数组的合并。有点抽象，举个例子</p>
+<p>原数组有8个无序值-&gt;拆分成2组，每组4个 -&gt; 拆分成4组，每组两个 -&gt; 拆分成8组，每组1个成员。</p>
+<p>此时每个组都是包含一个成员的有序数组，将1,2个有序组合并成2个成员的有序组A，</p>
+<p>将第3,4个有序组合并成2个成员的有序组B，再将有序组A,B合并，如此返回</p>
+<h2 id="实现-4"><a href="#实现-4" class="headerlink" title="实现"></a>实现</h2><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//归并排序</span></div><div class="line"><span class="comment">//将起，中，止范围的数组分为两部分，将这两部分合并</span></div><div class="line"><span class="keyword">void</span> merge(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> p, <span class="keyword">int</span> q, <span class="keyword">int</span> r)</div><div class="line">&#123;</div><div class="line">	<span class="comment">//第一部分的起止</span></div><div class="line">	<span class="keyword">int</span> begin1 = p, end1 = q;</div><div class="line">	<span class="comment">//第二部分的起止</span></div><div class="line">	<span class="keyword">int</span> begin2 = q + <span class="number">1</span>, end2 = r;</div><div class="line">	<span class="keyword">int</span> k = <span class="number">0</span>;</div><div class="line">	<span class="comment">//临时数组，存放p到r之间排序好的数组</span></div><div class="line">	<span class="keyword">int</span> *temp = <span class="keyword">new</span> <span class="keyword">int</span>[r - p + <span class="number">1</span>];</div><div class="line">	<span class="built_in">while</span>(begin1 &lt;= end1 &amp;&amp; begin2 &lt;= end2)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">if</span>(<span class="keyword">array</span>[begin1] &lt; <span class="keyword">array</span>[begin2])</div><div class="line">			temp[k++] = <span class="keyword">array</span>[begin1++];</div><div class="line">		<span class="built_in">else</span></div><div class="line">			temp[k++] = <span class="keyword">array</span>[begin2++];</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">while</span>(begin1 &lt;= end1)</div><div class="line">		temp[k++] = <span class="keyword">array</span>[begin1++];</div><div class="line">	<span class="built_in">while</span>(begin2 &lt;= end2)</div><div class="line">		temp[k++] = <span class="keyword">array</span>[begin2++];</div><div class="line">	<span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; ++i)</div><div class="line">		<span class="keyword">array</span>[p + i] = temp[i];</div><div class="line">	<span class="keyword">delete</span> []temp;</div><div class="line">&#125;</div><div class="line"><span class="keyword">void</span> mergeSort(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">begin</span>, <span class="keyword">int</span> <span class="built_in">end</span>)</div><div class="line">&#123;</div><div class="line">	<span class="built_in">if</span>(<span class="built_in">begin</span> &lt; <span class="built_in">end</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> mid = (<span class="built_in">begin</span> + <span class="built_in">end</span>)/<span class="number">2</span>;</div><div class="line">		mergeSort(<span class="keyword">array</span>, <span class="built_in">begin</span>, mid);</div><div class="line">		mergeSort(<span class="keyword">array</span>, mid + <span class="number">1</span>, <span class="built_in">end</span>);</div><div class="line">		printf(<span class="string">"begin:%d, mid:%d, end:%d\n"</span>, <span class="built_in">begin</span>, mid, <span class="built_in">end</span>);</div><div class="line">		merge(<span class="keyword">array</span>, <span class="built_in">begin</span>, mid, <span class="built_in">end</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>原数组为{9, 3, 1, 7, 2, 5, 4, 10}，上述打印如下<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">begin</span><span class="selector-pseudo">:0</span>, <span class="selector-tag">mid</span><span class="selector-pseudo">:0</span>, <span class="selector-tag">end</span><span class="selector-pseudo">:1</span></div><div class="line"><span class="selector-tag">begin</span><span class="selector-pseudo">:2</span>, <span class="selector-tag">mid</span><span class="selector-pseudo">:2</span>, <span class="selector-tag">end</span><span class="selector-pseudo">:3</span></div><div class="line"><span class="selector-tag">begin</span><span class="selector-pseudo">:0</span>, <span class="selector-tag">mid</span><span class="selector-pseudo">:1</span>, <span class="selector-tag">end</span><span class="selector-pseudo">:3</span></div><div class="line"><span class="selector-tag">begin</span><span class="selector-pseudo">:4</span>, <span class="selector-tag">mid</span><span class="selector-pseudo">:4</span>, <span class="selector-tag">end</span><span class="selector-pseudo">:5</span></div><div class="line"><span class="selector-tag">begin</span><span class="selector-pseudo">:6</span>, <span class="selector-tag">mid</span><span class="selector-pseudo">:6</span>, <span class="selector-tag">end</span><span class="selector-pseudo">:7</span></div><div class="line"><span class="selector-tag">begin</span><span class="selector-pseudo">:4</span>, <span class="selector-tag">mid</span><span class="selector-pseudo">:5</span>, <span class="selector-tag">end</span><span class="selector-pseudo">:7</span></div><div class="line"><span class="selector-tag">begin</span><span class="selector-pseudo">:0</span>, <span class="selector-tag">mid</span><span class="selector-pseudo">:3</span>, <span class="selector-tag">end</span><span class="selector-pseudo">:7</span></div></pre></td></tr></table></figure></p>
+<p>可以看到大致的归并过程</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>上述在merge函数中每次去new,delete数组是非常耗时的，可以考虑在排序之前new好一个大数组，排序之后再delete一次就行了。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//归并排序-临时数组优化</span></div><div class="line"><span class="keyword">void</span> merge(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> p, <span class="keyword">int</span> q, <span class="keyword">int</span> r, <span class="keyword">int</span> *temp)</div><div class="line">&#123;</div><div class="line">	<span class="comment">//第一部分的起止</span></div><div class="line">	<span class="keyword">int</span> begin1 = p, end1 = q;</div><div class="line">	<span class="comment">//第二部分的起止</span></div><div class="line">	<span class="keyword">int</span> begin2 = q + <span class="number">1</span>, end2 = r;</div><div class="line">	<span class="keyword">int</span> k = <span class="number">0</span>;</div><div class="line">	<span class="built_in">while</span>(begin1 &lt;= end1 &amp;&amp; begin2 &lt;= end2)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">if</span>(<span class="keyword">array</span>[begin1] &lt; <span class="keyword">array</span>[begin2])</div><div class="line">			temp[k++] = <span class="keyword">array</span>[begin1++];</div><div class="line">		<span class="built_in">else</span></div><div class="line">			temp[k++] = <span class="keyword">array</span>[begin2++];</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">while</span>(begin1 &lt;= end1)</div><div class="line">		temp[k++] = <span class="keyword">array</span>[begin1++];</div><div class="line">	<span class="built_in">while</span>(begin2 &lt;= end2)</div><div class="line">		temp[k++] = <span class="keyword">array</span>[begin2++];</div><div class="line">	<span class="built_in">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; ++i)</div><div class="line">		<span class="keyword">array</span>[p + i] = temp[i];</div><div class="line">&#125;</div><div class="line"><span class="keyword">void</span> mergeSort(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">begin</span>, <span class="keyword">int</span> <span class="built_in">end</span>, <span class="keyword">int</span> *temp)</div><div class="line">&#123;</div><div class="line">	<span class="built_in">if</span>(<span class="built_in">begin</span> &lt; <span class="built_in">end</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> mid = (<span class="built_in">begin</span> + <span class="built_in">end</span>)/<span class="number">2</span>;</div><div class="line">		mergeSort(<span class="keyword">array</span>, <span class="built_in">begin</span>, mid, temp);</div><div class="line">		mergeSort(<span class="keyword">array</span>, mid + <span class="number">1</span>, <span class="built_in">end</span>, temp);</div><div class="line">		merge(<span class="keyword">array</span>, <span class="built_in">begin</span>, mid, <span class="built_in">end</span>, temp);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> mergeSort(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> *temp = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="built_in">size</span>];</div><div class="line">	mergeSort(<span class="keyword">array</span>, <span class="number">0</span>, <span class="built_in">size</span> - <span class="number">1</span>, temp);</div><div class="line">	<span class="keyword">delete</span> []temp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="引申：将n个已排序的数组合并成一个有序数组"><a href="#引申：将n个已排序的数组合并成一个有序数组" class="headerlink" title="引申：将n个已排序的数组合并成一个有序数组"></a>引申：将n个已排序的数组合并成一个有序数组</h2><p>注：不能使用std的list等类型</p>
+<p>先定义一些初始化的值，假设需要合并8个有序数组<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> array1[] = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>&#125;;</div><div class="line"><span class="keyword">int</span> array2[] = &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">9</span>&#125;;</div><div class="line"><span class="keyword">int</span> array3[] = &#123;<span class="number">8</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">19</span>, <span class="number">23</span>, <span class="number">56</span>&#125;;</div><div class="line"><span class="keyword">int</span> array4[] = &#123;<span class="number">0</span>, <span class="number">3</span>&#125;;</div><div class="line"><span class="keyword">int</span> array5[] = &#123;<span class="number">13</span>&#125;;</div><div class="line"><span class="keyword">int</span> array6[] = &#123;<span class="number">32</span>, <span class="number">42</span>, <span class="number">52</span>, <span class="number">79</span>, <span class="number">86</span>, <span class="number">111</span>, <span class="number">222</span>, <span class="number">333</span>&#125;;</div><div class="line"><span class="keyword">int</span> array7[] = &#123;<span class="number">23</span>, <span class="number">25</span>, <span class="number">27</span>&#125;;</div><div class="line"><span class="keyword">int</span> array8[] = &#123;<span class="number">-10</span>, <span class="number">-1</span>, <span class="number">7</span>, <span class="number">10</span>&#125;;</div><div class="line"><span class="comment">//存放n个数组的数组，因为每个数组大小不一定一样，所以不能使用2维数组</span></div><div class="line"><span class="keyword">int</span> *arrays[] = &#123;array1, array2, array3, array4,</div><div class="line">	             array5, array6, array7, array8&#125;;</div><div class="line"><span class="comment">//存放每个数组size的数组</span></div><div class="line"><span class="keyword">int</span> sizes[] = &#123;<span class="keyword">sizeof</span>(array1)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>), <span class="keyword">sizeof</span>(array2)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>),</div><div class="line">	           <span class="keyword">sizeof</span>(array3)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>), <span class="keyword">sizeof</span>(array4)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>),</div><div class="line">	           <span class="keyword">sizeof</span>(array5)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>), <span class="keyword">sizeof</span>(array6)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>),</div><div class="line">	           <span class="keyword">sizeof</span>(array7)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>), <span class="keyword">sizeof</span>(array8)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>)</div><div class="line">	          &#125;;</div><div class="line"><span class="comment">//数组的个数</span></div><div class="line"><span class="keyword">int</span> <span class="built_in">size</span> = <span class="keyword">sizeof</span>(arrays)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>*);</div></pre></td></tr></table></figure></p>
+<h3 id="方法一：两两合并"><a href="#方法一：两两合并" class="headerlink" title="方法一：两两合并"></a>方法一：两两合并</h3><p>即第一个和第二个合并，合并好的大数组和第三个合并，以此类推。</p>
+<p>这种方法比较好想，但是也比较效率低。就和排序的时候第1,2个数先排序，</p>
+<p>再和第三个数排序一样。</p>
+<p>实现<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//函数功能：合并两个已排序数组</span></div><div class="line"><span class="comment">//其中array2足够大，可以存放两个数组中的全部元素。</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeTwoArray</span><span class="params">(<span class="keyword">int</span> *array1, <span class="keyword">int</span> size1, <span class="keyword">int</span> *array2, <span class="keyword">int</span> size2)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, k = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> *temp = <span class="keyword">new</span> <span class="keyword">int</span>[size1 + size2];</div><div class="line">	<span class="keyword">while</span>(i &lt; size1 &amp;&amp; j &lt; size2)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span>(array1[i] &lt; array2[j])</div><div class="line">			temp[k++] = array1[i++];</div><div class="line">		<span class="keyword">else</span></div><div class="line">			temp[k++] = array2[j++];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span>(i &lt; size1)</div><div class="line">		temp[k++] = array1[i++];</div><div class="line">	<span class="keyword">while</span>(j &lt; size2)</div><div class="line">		temp[k++] = array2[j++];</div><div class="line"></div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; ++i)</div><div class="line">		array2[i] = temp[i];</div><div class="line"></div><div class="line">	<span class="keyword">delete</span> []temp;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeArrays</span><span class="params">(<span class="keyword">int</span> *arrays[], <span class="keyword">int</span> size, <span class="keyword">int</span> sizes[])</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> totalSize = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i)</div><div class="line">	&#123;</div><div class="line">		totalSize += sizes[i];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> *totalArray = <span class="keyword">new</span> <span class="keyword">int</span>[totalSize];</div><div class="line">	<span class="keyword">int</span> currentSize = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i)</div><div class="line">	&#123;</div><div class="line">		mergeTwoArray(arrays[i], sizes[i], totalArray, currentSize);</div><div class="line">		currentSize += sizes[i];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; totalSize; ++i)</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>, totalArray[i]);</div><div class="line">	<span class="keyword">delete</span> []totalArray;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中合并两个数组的方法可以优化成如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//反过来想，从最后一个元素往前遍历</span></div><div class="line"><span class="comment">//参考http://blog.csdn.net/f81892461/article/details/8583983</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeTwoArray</span><span class="params">(<span class="keyword">int</span> *array1, <span class="keyword">int</span> size1, <span class="keyword">int</span> *array2, <span class="keyword">int</span> size2)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">//第一个数组的最后一个元素</span></div><div class="line">	<span class="keyword">int</span> i = size1 - <span class="number">1</span>;</div><div class="line">	<span class="comment">//第二个数组的最后一个元素</span></div><div class="line">	<span class="keyword">int</span> j = size2 - <span class="number">1</span>;</div><div class="line">	<span class="comment">//合成新数组的最后一个元素</span></div><div class="line">	<span class="keyword">int</span> k = size1 + size2 - <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span>(i &gt;= <span class="number">0</span> &amp;&amp; j &gt;= <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//从后往前遍历</span></div><div class="line">		<span class="keyword">if</span>(array1[i] &gt; array2[j])</div><div class="line">			array2[k--] = array1[i--];</div><div class="line">		<span class="keyword">else</span></div><div class="line">			array2[k--] = array2[j--];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span>(i &gt;= <span class="number">0</span>)</div><div class="line">		array2[k--] = array1[i--];</div><div class="line">	<span class="comment">//注意这里不需要再遍历array2中的元素，因为他们已经在array2中</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="方法二：利用分治归并的思想"><a href="#方法二：利用分治归并的思想" class="headerlink" title="方法二：利用分治归并的思想"></a>方法二：利用分治归并的思想</h3><p>待续~</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2017/12/30/常见排序算法C++实现/" data-title="常见排序算法C++实现 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/12/24/C++常用知识点/"  title="C++常用知识点">
+ <strong>下一篇：</strong><br/> 
+ <span>C++常用知识点
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#冒泡排序"><span class="toc-number">1.</span> <span class="toc-text">冒泡排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-number">1.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#鸡尾酒排序"><span class="toc-number">2.</span> <span class="toc-text">鸡尾酒排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-1"><span class="toc-number">2.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-1"><span class="toc-number">2.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#选择排序"><span class="toc-number">3.</span> <span class="toc-text">选择排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-2"><span class="toc-number">3.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-2"><span class="toc-number">3.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#直接插入排序"><span class="toc-number">4.</span> <span class="toc-text">直接插入排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-3"><span class="toc-number">4.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-3"><span class="toc-number">4.2.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#归并排序"><span class="toc-number">5.</span> <span class="toc-text">归并排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理-4"><span class="toc-number">5.1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现-4"><span class="toc-number">5.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化"><span class="toc-number">5.3.</span> <span class="toc-text">优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引申：将n个已排序的数组合并成一个有序数组"><span class="toc-number">5.4.</span> <span class="toc-text">引申：将n个已排序的数组合并成一个有序数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一：两两合并"><span class="toc-number">5.4.1.</span> <span class="toc-text">方法一：两两合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法二：利用分治归并的思想"><span class="toc-number">5.4.2.</span> <span class="toc-text">方法二：利用分治归并的思想</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>14</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
