@@ -1,0 +1,539 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>几种实现socket例子 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="使用C/C++，Python分别实现 tcp，udp通信。包括windows和linux系统下。顺便提到WebSocket">
+<meta name="keywords" content="C++,Python,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几种实现socket例子">
+<meta property="og:url" content="http://yoursite.com/2018/01/05/几种语言实现socket例子/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="使用C/C++，Python分别实现 tcp，udp通信。包括windows和linux系统下。顺便提到WebSocket">
+<meta property="og:updated_time" content="2018-01-21T04:04:40.799Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="几种实现socket例子">
+<meta name="twitter:description" content="使用C/C++，Python分别实现 tcp，udp通信。包括windows和linux系统下。顺便提到WebSocket">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/01/05/几种语言实现socket例子/" title="几种实现socket例子" itemprop="url">几种实现socket例子</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-01-05T12:23:51.000Z" itemprop="datePublished"> 发表于 2018-01-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP服务器"><span class="toc-number">1.1.</span> <span class="toc-text">TCP服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP客户端"><span class="toc-number">1.2.</span> <span class="toc-text">TCP客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP服务器"><span class="toc-number">1.3.</span> <span class="toc-text">UDP服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP客户端"><span class="toc-number">1.4.</span> <span class="toc-text">UDP客户端</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP"><span class="toc-number">2.</span> <span class="toc-text">TCP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows"><span class="toc-number">2.1.</span> <span class="toc-text">windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端"><span class="toc-number">2.1.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端"><span class="toc-number">2.1.2.</span> <span class="toc-text">客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux"><span class="toc-number">2.2.</span> <span class="toc-text">linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">客户端</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#udp"><span class="toc-number">3.</span> <span class="toc-text">udp</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-1"><span class="toc-number">3.1.</span> <span class="toc-text">windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端-2"><span class="toc-number">3.1.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端-2"><span class="toc-number">3.1.2.</span> <span class="toc-text">客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux-1"><span class="toc-number">3.2.</span> <span class="toc-text">linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端-3"><span class="toc-number">3.2.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端-3"><span class="toc-number">3.2.2.</span> <span class="toc-text">客户端</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<p>参考：</p>
+<ul>
+<li><a href="http://blog.csdn.net/xiaoquantouer/article/details/58001960" target="_blank" rel="external">windows环境下用c++实现socket编</a></li>
+<li><a href="http://blog.csdn.net/u012234115/article/details/54142273" target="_blank" rel="external">linux下C/C++网络编程基本：socket实现tcp和udp的例子</a></li>
+<li><a href="http://blog.csdn.net/bulreed/article/details/19161103" target="_blank" rel="external">Windows Socket TCP/UDP</a><h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1>参考《Python核心编程》中关于TCP、UDP介绍的例子。不管用什么语言，在什么系统下，万变不离其宗，都是类似于下面伪代码的逻辑。<h2 id="TCP服务器"><a href="#TCP服务器" class="headerlink" title="TCP服务器"></a>TCP服务器</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ss = <span class="built_in">socket</span>()                 <span class="comment"># 创建服务器套接字</span></div><div class="line">ss.bind()                     <span class="comment"># 套接字与地址绑定</span></div><div class="line">ss.listen()                   <span class="comment"># 监听连接</span></div><div class="line">inf_loop:                     <span class="comment"># 服务器无限循环</span></div><div class="line">    cs = ss.accept()          <span class="comment"># 接收客户端连接</span></div><div class="line">    comm_loop:                <span class="comment"># 通信循环</span></div><div class="line">        cs.recv/cs.<span class="built_in">send</span>()     <span class="comment"># 对话（接收/发送）</span></div><div class="line">    cs.<span class="built_in">close</span>()                <span class="comment"># 关闭客户端套接字</span></div><div class="line">ss.<span class="built_in">close</span>()                    <span class="comment"># 关闭服务器套接字（可选）</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="TCP客户端"><a href="#TCP客户端" class="headerlink" title="TCP客户端"></a>TCP客户端</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cs = <span class="built_in">socket</span>()             <span class="comment"># 创建客户端套接字</span></div><div class="line">cs.connect()              <span class="comment"># 尝试连接服务器</span></div><div class="line">comm_loop:                <span class="comment"># 通信循环</span></div><div class="line">    cs.<span class="built_in">send</span>()/cs.recv()   <span class="comment"># 对话（发送/接收）</span></div><div class="line">cs.<span class="built_in">close</span>()                <span class="comment"># 关闭客户端套接字</span></div></pre></td></tr></table></figure>
+<h2 id="UDP服务器"><a href="#UDP服务器" class="headerlink" title="UDP服务器"></a>UDP服务器</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ss = <span class="built_in">socket</span>()                        <span class="comment"># 创建服务器套接字</span></div><div class="line">ss.bind()                            <span class="comment"># 绑定服务器套接字</span></div><div class="line">inf_loop:                            <span class="comment"># 服务器无限循环</span></div><div class="line">    cs = ss.recvfrom()/ss.sendto()   <span class="comment"># 对话（接收/发送）</span></div><div class="line">ss.<span class="built_in">close</span>()                           <span class="comment"># 关闭服务器套接字</span></div></pre></td></tr></table></figure>
+<h2 id="UDP客户端"><a href="#UDP客户端" class="headerlink" title="UDP客户端"></a>UDP客户端</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cs = <span class="built_in">socket</span>()                    <span class="comment"># 创建客户端套接字</span></div><div class="line">comm_loop:                       <span class="comment"># 通信循环</span></div><div class="line">    cs.sendto()/cs.recvfrom()    <span class="comment"># 对话（发送/接收）</span></div><div class="line">cs.<span class="built_in">close</span>()                       <span class="comment"># 关闭客户端套接字</span></div></pre></td></tr></table></figure>
+<p>下面实现的例子功能都是</p>
+<ul>
+<li>客户端发送一条消息之后</li>
+<li>服务端在原消息基础上增加时间戳并返回给客户端</li>
+<li>客户端发送#之后退出</li>
+</ul>
+<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;winsock2.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"><span class="meta"># <span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"ws2_32.lib"</span>)</span></div><div class="line"></div><div class="line"><span class="meta"># <span class="meta-keyword">define</span> BUFFSIZE 255</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">char</span> *<span class="title">getCurrentTime</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">time_t</span> timer = time(<span class="literal">NULL</span>);</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">tm</span> *<span class="title">tblock</span> = <span class="title">localtime</span>(&amp;<span class="title">timer</span>);</span></div><div class="line">    <span class="keyword">return</span> asctime(tblock);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">//step-1:加载套接字库（WSAStartup()）;</span></div><div class="line">	WORD sockVersion = MAKEWORD(<span class="number">2</span>, <span class="number">2</span>);</div><div class="line">	WSADATA wsaData;</div><div class="line">	<span class="keyword">if</span>(WSAStartup(sockVersion, &amp;wsaData) != <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"init socket fail\n"</span>);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">	&#125;</div><div class="line">    <span class="comment">//step-2:创建服务器套接字(socket())</span></div><div class="line">	SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</div><div class="line">	<span class="keyword">if</span>(serverSocket == INVALID_SOCKET)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"socket error!\n"</span>);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	sockaddr_in <span class="built_in">sin</span>;</div><div class="line">	<span class="built_in">memset</span>(&amp;<span class="built_in">sin</span>, <span class="number">0</span>, <span class="keyword">sizeof</span>(sockaddr_in));</div><div class="line">	<span class="built_in">sin</span>.sin_family = AF_INET;</div><div class="line">	<span class="built_in">sin</span>.sin_port = htons(<span class="number">8888</span>);</div><div class="line">	<span class="built_in">sin</span>.sin_addr.S_un.S_addr = INADDR_ANY;</div><div class="line">	<span class="comment">//step-3:绑定套接字到一个IP地址和一个端口上(bind())</span></div><div class="line">	<span class="comment">//这里绑定到任意的ip和固定的8888端口</span></div><div class="line">	<span class="keyword">if</span>(bind(serverSocket, (sockaddr*)&amp;<span class="built_in">sin</span>, <span class="keyword">sizeof</span>(<span class="built_in">sin</span>))</div><div class="line">	   == SOCKET_ERROR)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"bind error\n"</span>);</div><div class="line">		closesocket(serverSocket);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">	&#125;</div><div class="line">    <span class="comment">//step-4:将套接字设置为监听模式等待连接请求(listen())</span></div><div class="line">	<span class="keyword">if</span>(listen(serverSocket, <span class="number">5</span>) == SOCKET_ERROR)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"listen error\n"</span>);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</div><div class="line">	&#125;</div><div class="line">    <span class="keyword">char</span> recvData[BUFFSIZE] = <span class="string">"\0"</span>;</div><div class="line">    <span class="keyword">char</span> sendData[BUFFSIZE] = <span class="string">"\0"</span>;</div><div class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)  <span class="comment">//服务器无限循环</span></div><div class="line">    &#123;</div><div class="line">    	<span class="built_in">printf</span>(<span class="string">"waiting for connect...\n"</span>);</div><div class="line">    	<span class="comment">//step-5:等待连接请求，并返回对应于此连接的socket(accept())</span></div><div class="line">    	sockaddr_in remoteAddr;</div><div class="line">        <span class="keyword">int</span> nAddrLen = <span class="keyword">sizeof</span>(remoteAddr);</div><div class="line">    	SOCKET clientSocket = accept(serverSocket, (SOCKADDR*)&amp;remoteAddr,</div><div class="line">    		                         &amp;nAddrLen);</div><div class="line">    	<span class="keyword">if</span>(clientSocket == INVALID_SOCKET)</div><div class="line">    	&#123;</div><div class="line">    		<span class="built_in">printf</span>(<span class="string">"accept error\n"</span>);</div><div class="line">    		<span class="keyword">continue</span>;</div><div class="line">    	&#125;</div><div class="line">    	<span class="built_in">printf</span>(<span class="string">"receive a connect :%s\n"</span>, inet_ntoa(remoteAddr.sin_addr));</div><div class="line">        <span class="keyword">while</span>(<span class="literal">true</span>) <span class="comment">//对话循环</span></div><div class="line">        &#123;</div><div class="line">        	<span class="built_in">memset</span>(recvData, <span class="string">'\0'</span>, BUFFSIZE);</div><div class="line">        	<span class="built_in">memset</span>(sendData, <span class="string">'\0'</span>, BUFFSIZE);</div><div class="line">        	<span class="comment">//step-5:等待接收客户端发送过来的数据（recv()）</span></div><div class="line">        	<span class="keyword">int</span> len = recv(clientSocket, recvData, <span class="number">255</span>, <span class="number">0</span>);</div><div class="line">            <span class="keyword">if</span>(len &gt; <span class="number">0</span>)</div><div class="line">            &#123;</div><div class="line">        	    recvData[len] = <span class="string">'\0'</span>;</div><div class="line">        	    <span class="comment">//收到#则退出本次对话</span></div><div class="line">        	    <span class="keyword">if</span>(<span class="built_in">strcmp</span>(recvData,<span class="string">"#"</span>) == <span class="number">0</span>)</div><div class="line">        	    &#123;</div><div class="line">        	    	<span class="built_in">printf</span>(<span class="string">"recv exit symbol, exit...\n"</span>);</div><div class="line">        	    	<span class="keyword">break</span>;</div><div class="line">        	    &#125;</div><div class="line">        	    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, recvData);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">            	<span class="built_in">printf</span>(<span class="string">"recv data fail\n"</span>);</div><div class="line">            	<span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">const</span> <span class="keyword">char</span> *curTime = getCurrentTime();</div><div class="line">            <span class="comment">//这里去掉最后的换行符</span></div><div class="line">            <span class="keyword">char</span> tmp[<span class="number">100</span>] = <span class="string">"\0"</span>;</div><div class="line">            <span class="built_in">memcpy</span>(tmp, curTime, <span class="built_in">strlen</span>(curTime) - <span class="number">1</span>);</div><div class="line">            <span class="built_in">sprintf</span>(sendData, <span class="string">"[%s] "</span>, tmp);</div><div class="line">            <span class="built_in">strcat</span>(sendData, recvData);</div><div class="line">            <span class="comment">//step-5:向客户端发送响应（send()）</span></div><div class="line">            <span class="keyword">if</span>(send(clientSocket, sendData, <span class="built_in">strlen</span>(sendData), <span class="number">0</span>)</div><div class="line">            	== SOCKET_ERROR)</div><div class="line">            &#123;</div><div class="line">            	<span class="built_in">printf</span>(<span class="string">"send data fail\n"</span>);</div><div class="line">            	<span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">//step-6:关闭此次连接请求的socket</span></div><div class="line">        closesocket(clientSocket);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//step-7：关闭服务端socket</span></div><div class="line">    closesocket(serverSocket);</div><div class="line">    <span class="comment">//step-8：关闭加载的socket库</span></div><div class="line">    WSACleanup();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#include &lt;stdio.h&gt;</span></div><div class="line"><span class="comment">#include &lt;winsock2.h&gt;</span></div><div class="line"><span class="comment">#include &lt;string&gt;</span></div><div class="line"><span class="comment">#pragma comment(lib, "ws2_32.lib")</span></div><div class="line"></div><div class="line"><span class="comment">#define BUFFSIZE 255</span></div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	WORD sockVersion = MAKEWORD(<span class="number">2</span>, <span class="number">2</span>);</div><div class="line">	WSADATA wsaData;</div><div class="line">	<span class="regexp">//</span>step-<span class="number">1</span>:加载套接字库</div><div class="line">	<span class="keyword">if</span>(WSAStartup(sockVersion, &amp;wsaData) != <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		printf(<span class="string">"socket start fail\n"</span>);</div><div class="line">		<span class="keyword">exit</span>(-<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="regexp">//</span>step-<span class="number">2</span>:创建套接字</div><div class="line">    SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</div><div class="line">	<span class="keyword">if</span>(clientSocket == INVALID_SOCKET)</div><div class="line">	&#123;</div><div class="line">		printf(<span class="string">"invalid socket\n"</span>);</div><div class="line">		<span class="keyword">exit</span>(-<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	sockaddr_in serAddr;</div><div class="line">	memset(&amp;serAddr, <span class="number">0</span>, sizeof(sockaddr_in));</div><div class="line">	serAddr.sin_family = AF_INET;</div><div class="line">	serAddr.sin_port = htons(<span class="number">8888</span>);</div><div class="line">	serAddr.sin_addr.S_un.S_addr = inet_addr(<span class="string">"127.0.0.1"</span>);</div><div class="line">	<span class="regexp">//</span>step-<span class="number">3</span>:向服务端发送连接请求</div><div class="line">	<span class="keyword">if</span>(connect(clientSocket, (sockaddr*)&amp;serAddr, sizeof(serAddr))</div><div class="line">		== SOCKET_ERROR)</div><div class="line">	&#123;</div><div class="line">		printf(<span class="string">"connect error\n"</span>);</div><div class="line">		closesocket(clientSocket);</div><div class="line">		<span class="keyword">exit</span>(-<span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	char recvData[BUFFSIZE] = <span class="string">"\0"</span>;</div><div class="line">	char sendData[BUFFSIZE] = <span class="string">"\0"</span>;</div><div class="line">	<span class="keyword">while</span>(true)</div><div class="line">	&#123;</div><div class="line">		memset(sendData, <span class="string">'\0'</span>, BUFFSIZE);</div><div class="line">		memset(recvData, <span class="string">'\0'</span>, BUFFSIZE);</div><div class="line">        scanf(<span class="string">"%s"</span>, &amp;sendData);</div><div class="line">        <span class="regexp">//</span>step-<span class="number">4</span>:向服务端发送数据</div><div class="line">        <span class="keyword">if</span>(send(clientSocket, sendData, strlen(sendData), <span class="number">0</span>)</div><div class="line">        	== SOCKET_ERROR)</div><div class="line">        &#123;</div><div class="line">            printf(<span class="string">"send data fail\n"</span>);</div><div class="line">            <span class="keyword">exit</span>(-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="regexp">//</span>输入<span class="comment">#则退出</span></div><div class="line">        <span class="keyword">if</span>(strcmp(sendData, <span class="string">"#"</span>) == <span class="number">0</span>)</div><div class="line">        &#123;</div><div class="line">        	<span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">		<span class="regexp">//</span>step-<span class="number">5</span>:收到服务器的响应</div><div class="line">		int len = recv(clientSocket, recvData, BUFFSIZE, <span class="number">0</span>);</div><div class="line">		<span class="keyword">if</span>(len &gt; <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			recvData[len] = <span class="number">0</span>x00;</div><div class="line">			printf(<span class="string">"%s\n"</span>, recvData);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="regexp">//</span>step-<span class="number">6</span>:关闭本次连接socket</div><div class="line">	closesocket(clientSocket);</div><div class="line">	<span class="regexp">//</span>step-<span class="number">7</span>:关闭加载的套接字库</div><div class="line">	WSACleanup();</div><div class="line">	return <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="服务端-1"><a href="#服务端-1" class="headerlink" title="服务端"></a>服务端</h3><h3 id="客户端-1"><a href="#客户端-1" class="headerlink" title="客户端"></a>客户端</h3><h1 id="udp"><a href="#udp" class="headerlink" title="udp"></a>udp</h1><h2 id="windows-1"><a href="#windows-1" class="headerlink" title="windows"></a>windows</h2><h3 id="服务端-2"><a href="#服务端-2" class="headerlink" title="服务端"></a>服务端</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;winsock2.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"ws2_32.lib"</span>)</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    WSADATA wsaData;</div><div class="line">    WORD sockVersion = MAKEWORD(<span class="number">2</span>, <span class="number">2</span>);</div><div class="line">    <span class="keyword">if</span>(WSAStartup(sockVersion, &amp;wsaData) != <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">    	<span class="built_in">printf</span>(<span class="string">"init socket fail\n"</span>);</div><div class="line">    	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    SOCKET serSoket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);</div><div class="line">    <span class="keyword">if</span>(serSoket == INVALID_SOCKET)</div><div class="line">    &#123;</div><div class="line">    	<span class="built_in">printf</span>(<span class="string">"socket error\n"</span>);</div><div class="line">    	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    sockaddr_in serAddr;</div><div class="line">    serAddr.sin_family = AF_INET;</div><div class="line">    serAddr.sin_port = htons(<span class="number">8888</span>);</div><div class="line">    serAddr.sin_addr.S_un.S_addr = INADDR_ANY;</div><div class="line">    <span class="keyword">if</span>(bind(serSoket, (sockaddr*)&amp;serAddr, <span class="keyword">sizeof</span>(serAddr))</div><div class="line">    	== SOCKET_ERROR)</div><div class="line">    &#123;</div><div class="line">    	<span class="built_in">printf</span>(<span class="string">"bind error\n"</span>);</div><div class="line">    	closesocket(serSoket);</div><div class="line">    	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    sockaddr_in remoteAddr;</div><div class="line">    <span class="keyword">int</span> nAddrLen = <span class="keyword">sizeof</span>(remoteAddr);</div><div class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)</div><div class="line">    &#123;</div><div class="line">    	<span class="keyword">char</span> revData[<span class="number">255</span>];</div><div class="line">    	<span class="keyword">int</span> ret = recvfrom(serSoket, revData, <span class="number">255</span>, <span class="number">0</span>,</div><div class="line">    		               (sockaddr*)&amp;remoteAddr, &amp;nAddrLen);</div><div class="line">    	<span class="keyword">if</span>(ret &gt; <span class="number">0</span>)</div><div class="line">    	&#123;</div><div class="line">    		revData[ret] = <span class="number">0x00</span>;</div><div class="line">    		<span class="built_in">printf</span>(<span class="string">"recieve a connect :%s\n"</span>,</div><div class="line">    			    inet_ntoa(remoteAddr.sin_addr));</div><div class="line">    		<span class="built_in">printf</span>(<span class="string">"%s\n"</span>, revData);</div><div class="line">    	&#125;</div><div class="line">    	<span class="keyword">const</span> <span class="keyword">char</span> *senData = <span class="string">"udp packet from server\n"</span>;</div><div class="line">    	sendto(serSoket, senData, <span class="built_in">strlen</span>(senData), <span class="number">0</span>,</div><div class="line">    		   (sockaddr*)&amp;remoteAddr, nAddrLen);</div><div class="line">    &#125;</div><div class="line">    closesocket(serSoket);</div><div class="line">    WSACleanup();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="客户端-2"><a href="#客户端-2" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;winsock2.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib, <span class="meta-string">"ws2_32.lib"</span>)</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	WORD sockVersion = MAKEWORD(<span class="number">2</span>, <span class="number">2</span>);</div><div class="line">	WSADATA wsaData;</div><div class="line">	<span class="keyword">if</span>(WSAStartup(sockVersion, &amp;wsaData) != <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"init socket fail\n"</span>);</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	SOCKET sClient = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);</div><div class="line"></div><div class="line">	sockaddr_in <span class="built_in">sin</span>;</div><div class="line">	<span class="built_in">sin</span>.sin_family = AF_INET;</div><div class="line">	<span class="built_in">sin</span>.sin_port = htons(<span class="number">8888</span>);</div><div class="line">	<span class="built_in">sin</span>.sin_addr.S_un.S_addr = inet_addr(<span class="string">"127.0.0.1"</span>);</div><div class="line">	<span class="keyword">int</span> len = <span class="keyword">sizeof</span>(<span class="built_in">sin</span>);</div><div class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">char</span> sendData[<span class="number">255</span>];</div><div class="line">		<span class="built_in">scanf</span>(<span class="string">"%s"</span>, &amp;sendData);</div><div class="line">		sendto(sClient, sendData, <span class="built_in">strlen</span>(sendData), <span class="number">0</span>, </div><div class="line">			   (sockaddr*)&amp;<span class="built_in">sin</span>, len);</div><div class="line"></div><div class="line">		<span class="keyword">char</span> revData[<span class="number">255</span>];</div><div class="line">		<span class="keyword">int</span> ret = recvfrom(sClient, revData, <span class="number">255</span>, <span class="number">0</span>,</div><div class="line">			               (sockaddr*)&amp;<span class="built_in">sin</span>, &amp;len);</div><div class="line">		<span class="keyword">if</span>(ret &gt; <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			revData[ret] = <span class="number">0x00</span>;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%s\n"</span>, revData);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">    closesocket(sClient);</div><div class="line">    WSACleanup();</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="linux-1"><a href="#linux-1" class="headerlink" title="linux"></a>linux</h2><h3 id="服务端-3"><a href="#服务端-3" class="headerlink" title="服务端"></a>服务端</h3><h3 id="客户端-3"><a href="#客户端-3" class="headerlink" title="客户端"></a>客户端</h3>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a><a href="/tags/Python/">Python</a><a href="/tags/Web/">Web</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/01/05/几种语言实现socket例子/" data-title="几种实现socket例子 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/01/05/C++中常见数据结构的实现/" title="C++中常见数据结构的实现">
+  <strong>上一篇：</strong><br/>
+  <span>
+  C++中常见数据结构的实现</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/12/30/常见排序算法C++实现/"  title="常见排序算法C++实现">
+ <strong>下一篇：</strong><br/> 
+ <span>常见排序算法C++实现
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP服务器"><span class="toc-number">1.1.</span> <span class="toc-text">TCP服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP客户端"><span class="toc-number">1.2.</span> <span class="toc-text">TCP客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP服务器"><span class="toc-number">1.3.</span> <span class="toc-text">UDP服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP客户端"><span class="toc-number">1.4.</span> <span class="toc-text">UDP客户端</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP"><span class="toc-number">2.</span> <span class="toc-text">TCP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows"><span class="toc-number">2.1.</span> <span class="toc-text">windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端"><span class="toc-number">2.1.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端"><span class="toc-number">2.1.2.</span> <span class="toc-text">客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux"><span class="toc-number">2.2.</span> <span class="toc-text">linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">客户端</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#udp"><span class="toc-number">3.</span> <span class="toc-text">udp</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-1"><span class="toc-number">3.1.</span> <span class="toc-text">windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端-2"><span class="toc-number">3.1.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端-2"><span class="toc-number">3.1.2.</span> <span class="toc-text">客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#linux-1"><span class="toc-number">3.2.</span> <span class="toc-text">linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端-3"><span class="toc-number">3.2.1.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端-3"><span class="toc-number">3.2.2.</span> <span class="toc-text">客户端</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>17</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
