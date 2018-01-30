@@ -4,24 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>利用Python进行数据分析 | 飞翔的pig</title>
+    <title>72法则 | 飞翔的pig</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Kongdb">
     
 
     
-    <meta name="description" content="kongdb的小站">
-<meta name="keywords" content="vi, nodejs, robotframework">
+    <meta name="description" content="金融中的72法则">
+<meta name="keywords" content="金融">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用Python进行数据分析">
-<meta property="og:url" content="http://yoursite.com/2017/08/23/利用Python进行数据分析/index.html">
+<meta property="og:title" content="72法则">
+<meta property="og:url" content="http://yoursite.com/2018/01/30/72法则/index.html">
 <meta property="og:site_name" content="飞翔的pig">
-<meta property="og:description" content="kongdb的小站">
-<meta property="og:updated_time" content="2017-08-22T23:32:21.260Z">
+<meta property="og:description" content="金融中的72法则">
+<meta property="og:image" content="http://yoursite.com/images/72法则/72法则图示.png">
+<meta property="og:updated_time" content="2018-01-30T13:20:42.637Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用Python进行数据分析">
-<meta name="twitter:description" content="kongdb的小站">
+<meta name="twitter:title" content="72法则">
+<meta name="twitter:description" content="金融中的72法则">
+<meta name="twitter:image" content="http://yoursite.com/images/72法则/72法则图示.png">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -81,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/08/23/利用Python进行数据分析/" title="利用Python进行数据分析" itemprop="url">利用Python进行数据分析</a>
+      <a href="/2018/01/30/72法则/" title="72法则" itemprop="url">72法则</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
 		
   <p class="article-time">
-    <time datetime="2017-08-22T23:32:21.000Z" itemprop="datePublished"> 发表于 2017-08-23</time>
+    <time datetime="2018-01-30T06:23:51.000Z" itemprop="datePublished"> 发表于 2018-01-30</time>
     
   </p>
 </header>
@@ -97,15 +99,87 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是72法则"><span class="toc-number">1.</span> <span class="toc-text">什么是72法则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#验证"><span class="toc-number">2.</span> <span class="toc-text">验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#好神奇，做个图吧"><span class="toc-number">3.</span> <span class="toc-text">好神奇，做个图吧</span></a></li></ol>
 		
 		</div>
 		
-		  
+		<h1 id="什么是72法则"><a href="#什么是72法则" class="headerlink" title="什么是72法则"></a>什么是72法则</h1><p>编程珠玑中无意看到了关于72法则的描述，兴趣突然来了</p>
+<p>假设以年利率r%投资一笔钱y年，“72法则”指出，如果r×y=72，那么投资差不多会翻倍</p>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>下面我试了几种常见收益下的情况</p>
+<table>
+<thead>
+<tr>
+<th>r(收益率%)</th>
+<th>y(年数)</th>
+<th>总收益率(%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3</td>
+<td>24</td>
+<td>(1 + 0.03)<sup>24</sup> ≈ 203.28</td>
+</tr>
+<tr>
+<td>4</td>
+<td>18</td>
+<td>(1 + 0.04)<sup>18</sup> ≈ 202.58</td>
+</tr>
+<tr>
+<td>6</td>
+<td>12</td>
+<td>(1 + 0.06)<sup>12</sup> ≈ 201.22</td>
+</tr>
+<tr>
+<td>8</td>
+<td>9</td>
+<td>(1 + 0.08)<sup>9</sup> ≈ 199.9</td>
+</tr>
+<tr>
+<td>9</td>
+<td>8</td>
+<td>(1 + 0.09)<sup>8</sup> ≈ 199.26</td>
+</tr>
+<tr>
+<td>12</td>
+<td>6</td>
+<td>(1 + 0.12)<sup>6</sup> ≈ 197.38</td>
+</tr>
+<tr>
+<td>18</td>
+<td>4</td>
+<td>(1 + 0.18)<sup>4</sup> ≈ 193.88</td>
+</tr>
+<tr>
+<td>24</td>
+<td>3</td>
+<td>(1 + 0.24)<sup>3</sup> ≈ 190.66</td>
+</tr>
+</tbody>
+</table>
+<p>可以看出来，确实非常接近，特别是收益率在6%到12%之间的时候。</p>
+<h1 id="好神奇，做个图吧"><a href="#好神奇，做个图吧" class="headerlink" title="好神奇，做个图吧"></a>好神奇，做个图吧</h1><p>用matplotlib做一个关系图。其中x为年化收益率，在1到30变化</p>
+<p>y为总收益率(1 + x/100)<sup>(72/x)</sup></p>
+<p>如下图所示</p>
+<p><img src="/images/72法则/72法则图示.png" alt="image"></p>
+<p>相应代码如下</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line">RATIO = <span class="number">72</span></div><div class="line"></div><div class="line">x = np.linspace(<span class="number">1</span>, <span class="number">30</span>, <span class="number">100</span>)</div><div class="line">y = np.power(<span class="number">1</span> + x/<span class="number">100</span>, RATIO / x) * <span class="number">100</span></div><div class="line"></div><div class="line">plt.plot(x, y, <span class="built_in">color</span>=<span class="string">'red'</span>, linewidth=<span class="number">3</span>)</div><div class="line">plt.xlabel(<span class="string">'年化收益率(%)'</span>, fontproperties=<span class="string">'SimHei'</span>, fontsize=<span class="number">10</span>)</div><div class="line">plt.ylabel(<span class="string">'总收益率(%)'</span>, fontproperties=<span class="string">'SimHei'</span>, fontsize=<span class="number">10</span>)</div><div class="line">plt.<span class="built_in">title</span>(<span class="string">'72/x年总收益率变化情况'</span>, fontproperties=<span class="string">'SimHei'</span>, fontsize=<span class="number">10</span>)</div><div class="line">plt.ylim(<span class="number">150</span>, <span class="number">250</span>)</div><div class="line">plt.legend()</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p>复利的力量！！！</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/理财/">理财</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/金融/">金融</a>
+  </div>
 
 </div>
 
@@ -113,7 +187,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/08/23/利用Python进行数据分析/" data-title="利用Python进行数据分析 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2018/01/30/72法则/" data-title="72法则 | 飞翔的pig" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -126,19 +200,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/09/07/Python常用知识点/" title="Python常用知识点">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Python常用知识点</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/08/15/深入浅出MySQL/"  title="MySQL基础知识">
+<a href="/2018/01/27/循环移位问题解析/"  title="循环移位问题解析">
  <strong>下一篇：</strong><br/> 
- <span>MySQL基础知识
+ <span>循环移位问题解析
 </span>
 </a>
 </div>
@@ -154,7 +220,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是72法则"><span class="toc-number">1.</span> <span class="toc-text">什么是72法则</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#验证"><span class="toc-number">2.</span> <span class="toc-text">验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#好神奇，做个图吧"><span class="toc-number">3.</span> <span class="toc-text">好神奇，做个图吧</span></a></li></ol>
  
   </div>
 
