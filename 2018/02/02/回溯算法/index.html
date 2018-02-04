@@ -1,0 +1,537 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>回溯算法 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="回溯算法解决常见的问题">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回溯算法">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/回溯算法/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="回溯算法解决常见的问题">
+<meta property="og:updated_time" content="2018-02-03T02:01:06.549Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="回溯算法">
+<meta name="twitter:description" content="回溯算法解决常见的问题">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/02/回溯算法/" title="回溯算法" itemprop="url">回溯算法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-02T12:08:46.000Z" itemprop="datePublished"> 发表于 2018-02-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#是什么"><span class="toc-number">1.</span> <span class="toc-text">是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题一：8皇后问题"><span class="toc-number">2.</span> <span class="toc-text">问题一：8皇后问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#描述"><span class="toc-number">2.1.</span> <span class="toc-text">描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各种解法"><span class="toc-number">2.2.</span> <span class="toc-text">各种解法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题二：数独问题"><span class="toc-number">3.</span> <span class="toc-text">问题二：数独问题</span></a></li></ol>
+		
+		</div>
+		
+		<p>以前听到这个名字挺害怕的，其实也就那么回事</p>
+<h1 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h1><p>回溯（backtracking）,在多数情况下，相当于穷举搜索的巧妙实现。</p>
+<p>一般是在搜索尝试过程中寻找问题的解，当发现已不满足求解条件时，就“回溯”返回，尝试别的路径</p>
+<p>下面来看几个使用回溯算法的经典问题</p>
+<h1 id="问题一：8皇后问题"><a href="#问题一：8皇后问题" class="headerlink" title="问题一：8皇后问题"></a>问题一：8皇后问题</h1><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>在8×8的国际象棋上摆放8个皇后，使其不能相互攻击，即任意两个皇后都不能处于同一行，同一列或同一斜线</p>
+<h2 id="各种解法"><a href="#各种解法" class="headerlink" title="各种解法"></a>各种解法</h2><ul>
+<li>递归解法<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> QUEENS 8</span></div><div class="line"></div><div class="line"><span class="comment">//通过前depth-1个元素，检查当前元素的放置是否合法</span></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> depth)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; depth; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(arr[i] == arr[depth] ||                 <span class="comment">//两个元素相等</span></div><div class="line">           (arr[i] - arr[depth]) == (i - depth) || <span class="comment">//两个元素在正对角线</span></div><div class="line">           (arr[i] - arr[depth]) == (depth - i))   <span class="comment">//两个元素在反对角线</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> k = <span class="number">1</span>;</div><div class="line"><span class="comment">//arr表示放置皇后的结果数组，depth表示放置第几个（行）的皇后</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">backtracking</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> depth)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(depth &lt;= QUEENS)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= QUEENS; ++i)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">//第depth个元素分别放置[1..QUEENS]的元素来试探</span></div><div class="line">            arr[depth] = i;</div><div class="line">            <span class="comment">//若检查合法则放置下一个元素</span></div><div class="line">            <span class="keyword">if</span>(check(arr, depth))</div><div class="line">                backtracking(arr, depth + <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="comment">//表示前8个元素全部放置成功，得到结果</span></div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"solution %2d: "</span>, k++);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= QUEENS; ++i)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%d "</span>, arr[i]);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//以数组表示8皇后问题的解，数组中每个元素的索引代表行，值代表列</span></div><div class="line">    <span class="comment">//比如a[2] = 3表示第二行第三列放置一个皇后</span></div><div class="line">    <span class="keyword">int</span> <span class="built_in">array</span>[QUEENS + <span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">    backtracking(<span class="built_in">array</span>, <span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>此方法虽然条理较清晰，但是并没有让人感觉到回溯的思想</p>
+<ul>
+<li>非递归解法<figure class="highlight rsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">void queen_norecursive(int arr[])</div><div class="line">&#123;</div><div class="line">    int <span class="built_in">depth</span> = <span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(<span class="built_in">depth</span> &gt;= <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        arr[<span class="built_in">depth</span>] += <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(arr[<span class="built_in">depth</span>] &lt;= QUEENS &amp;&amp; !check(arr, <span class="built_in">depth</span>))</div><div class="line">            arr[<span class="built_in">depth</span>] += <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(arr[<span class="built_in">depth</span>] &lt;= QUEENS &amp;&amp; <span class="built_in">depth</span> == QUEENS)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"solution %2d: "</span>, k++);</div><div class="line">            <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt;= QUEENS; ++i)</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"%d "</span>, arr[i]);</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(arr[<span class="built_in">depth</span>] &lt;= QUEENS &amp;&amp; <span class="built_in">depth</span> &lt; QUEENS)</div><div class="line">            <span class="built_in">depth</span> += <span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            arr[<span class="built_in">depth</span>] = <span class="number">0</span>;</div><div class="line">            --<span class="built_in">depth</span>;</div><div class="line">        &#125; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="问题二：数独问题"><a href="#问题二：数独问题" class="headerlink" title="问题二：数独问题"></a>问题二：数独问题</h1>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/02/02/回溯算法/" data-title="回溯算法 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/02/04/C++中交换两个元素/" title="C++中交换两个元素值">
+  <strong>上一篇：</strong><br/>
+  <span>
+  C++中交换两个元素值</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/01/30/72法则/"  title="72法则">
+ <strong>下一篇：</strong><br/> 
+ <span>72法则
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#是什么"><span class="toc-number">1.</span> <span class="toc-text">是什么</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题一：8皇后问题"><span class="toc-number">2.</span> <span class="toc-text">问题一：8皇后问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#描述"><span class="toc-number">2.1.</span> <span class="toc-text">描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#各种解法"><span class="toc-number">2.2.</span> <span class="toc-text">各种解法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题二：数独问题"><span class="toc-number">3.</span> <span class="toc-text">问题二：数独问题</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>21</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
