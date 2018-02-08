@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>C++中交换两个元素值 | 飞翔的pig</title>
+    <title>随机化算法 | 飞翔的pig</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Kongdb">
     
 
     
-    <meta name="description" content="交换两个元素的各种方法，以及注意点">
+    <meta name="description" content="《数据结构与算法分析C++描述》中10.4节关于随机化算法的描述">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++中交换两个元素值">
-<meta property="og:url" content="http://yoursite.com/2018/02/04/C++中交换两个元素/index.html">
+<meta property="og:title" content="随机化算法">
+<meta property="og:url" content="http://yoursite.com/2018/02/07/随机化算法/index.html">
 <meta property="og:site_name" content="飞翔的pig">
-<meta property="og:description" content="交换两个元素的各种方法，以及注意点">
-<meta property="og:updated_time" content="2018-02-04T05:25:45.579Z">
+<meta property="og:description" content="《数据结构与算法分析C++描述》中10.4节关于随机化算法的描述">
+<meta property="og:updated_time" content="2018-02-07T12:20:12.786Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++中交换两个元素值">
-<meta name="twitter:description" content="交换两个元素的各种方法，以及注意点">
+<meta name="twitter:title" content="随机化算法">
+<meta name="twitter:description" content="《数据结构与算法分析C++描述》中10.4节关于随机化算法的描述">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/02/04/C++中交换两个元素/" title="C++中交换两个元素值" itemprop="url">C++中交换两个元素值</a>
+      <a href="/2018/02/07/随机化算法/" title="随机化算法" itemprop="url">随机化算法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
 		
   <p class="article-time">
-    <time datetime="2018-02-04T04:23:51.000Z" itemprop="datePublished"> 发表于 2018-02-04</time>
+    <time datetime="2018-02-07T12:23:51.000Z" itemprop="datePublished"> 发表于 2018-02-07</time>
     
   </p>
 </header>
@@ -97,26 +97,15 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一般方法"><span class="toc-number">1.</span> <span class="toc-text">一般方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#不使用临时变量"><span class="toc-number">2.</span> <span class="toc-text">不使用临时变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#位运算"><span class="toc-number">2.1.</span> <span class="toc-text">位运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算术运算"><span class="toc-number">2.2.</span> <span class="toc-text">算术运算</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性同余数生成器"><span class="toc-number">1.</span> <span class="toc-text">线性同余数生成器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li></ol>
 		
 		</div>
 		
-		<p>首先，交换变量值的函数传值肯定不行，要么传引用，要么传指针，以传引用为例</p>
-<h1 id="一般方法"><a href="#一般方法" class="headerlink" title="一般方法"></a>一般方法</h1><p>使用临时变量<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void <span class="keyword">swap(int </span>&amp;a, int &amp;<span class="keyword">b)</span></div><div class="line">&#123;</div><div class="line">    int t = a<span class="comment">;</span></div><div class="line">    a = <span class="keyword">b;</span></div><div class="line">    <span class="keyword">b </span>= t<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="不使用临时变量"><a href="#不使用临时变量" class="headerlink" title="不使用临时变量"></a>不使用临时变量</h1><h2 id="位运算"><a href="#位运算" class="headerlink" title="位运算"></a>位运算</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">void</span> swap(int &amp;a, int &amp;b)</div><div class="line">&#123;</div><div class="line">    <span class="attribute">a</span> = a<span class="regexp"> ^</span> b;</div><div class="line">    <span class="attribute">b</span> = a<span class="regexp"> ^</span> b;</div><div class="line">    <span class="attribute">a</span> = a<span class="regexp"> ^</span> b;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以这么理解<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span><span class="type">a</span> = olda ^ oldb</div><div class="line"><span class="keyword">new</span><span class="type">b</span> = <span class="keyword">new</span><span class="type">a</span> ^ oldb = olda ^ oldb ^ oldb = olda</div><div class="line"><span class="keyword">new</span><span class="type">a</span> = <span class="keyword">new</span><span class="type">a</span> ^ <span class="keyword">new</span><span class="type">b</span> = olda ^ oldb ^ olda = oldb</div></pre></td></tr></table></figure></p>
-<p>如此完成交换。</p>
-<p>但是该位运算存在一个问题，对于数组的交换要注意。</p>
-<p>有一次写快速排序的时候使用了位运算的swap，结果数组里出现了好多0。分析之后原因如下</p>
-<p>比如数组为a = {3, 1, 2}，然后调用了swap(a[1], a[1])，那这样会导致什么呢</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">a</span>[<span class="number">1</span>] = <span class="selector-tag">a</span>[<span class="number">1</span>] ^ <span class="selector-tag">a</span>[<span class="number">1</span>] = <span class="number">0</span></div></pre></td></tr></table></figure>
-<p>即a[1]会被置为0。</p>
-<p>当然，调用者本就应该来判断待交换的索引是否相同，如果相同就不交换了。但函数本身最好也要加上不等性判断<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(a == b)</div><div class="line">    <span class="keyword">return</span>;</div></pre></td></tr></table></figure></p>
-<h2 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">void <span class="keyword">swap(int </span>&amp;a, int &amp;<span class="keyword">b)</span></div><div class="line">&#123;</div><div class="line">    a = a + <span class="keyword">b;</span></div><div class="line">    <span class="keyword">b </span>= a - <span class="keyword">b;</span></div><div class="line">    a = a - <span class="keyword">b;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以这么理解</p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span><span class="type">a</span> = olda + oldb</div><div class="line"><span class="keyword">new</span><span class="type">b</span> = <span class="keyword">new</span><span class="type">a</span> - oldb = olda + oldb - oldb = olda</div><div class="line"><span class="keyword">new</span><span class="type">a</span> = <span class="keyword">new</span><span class="type">a</span> - <span class="keyword">new</span><span class="type">b</span> = olda + oldb - olda = oldb</div></pre></td></tr></table></figure>
-<p>同样存在上面的问题</p>
-  
+		<h1 id="线性同余数生成器"><a href="#线性同余数生成器" class="headerlink" title="线性同余数生成器"></a>线性同余数生成器</h1><p>数x<sub>1</sub>,x<sub>2</sub>…的生成满足</p>
+<p>x<sub>i+1</sub> = Ax<sub>i</sub>mod M</p>
+<p>需要给出x<sub>0</sub>作为种子，比如x<sub>0</sub> = 1, M = 11, A = 7时生成的数为<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">7</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">10</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">5.</span>..</div></pre></td></tr></table></figure></p>
+<p>经验总结，建议M取2<sup>31</sup> - 1 = 2147483647, A取48271</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> M = <span class="number">2147483647</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> A = <span class="number">48271</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> Q = M / A;</div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> R = M % A;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Random</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Random</span><span class="params">(<span class="keyword">int</span> initialValue = <span class="number">1</span>)</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">randomInt</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">random0_1</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">randomInt</span><span class="params">(<span class="keyword">int</span> low, <span class="keyword">int</span> high)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> state_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Random::Random(<span class="keyword">int</span> initialValue)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(initialValue &lt; <span class="number">0</span>)</div><div class="line">        initialValue += M;</div><div class="line">    state_ = initialValue;</div><div class="line">    <span class="keyword">if</span>(state_ == <span class="number">0</span>)</div><div class="line">        state_ = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Random::randomInt()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> tempState = A * (state_ % Q) - R*(state_ / Q);</div><div class="line">    <span class="keyword">if</span>(tempState &gt;= <span class="number">0</span>)</div><div class="line">        state_ = tempState;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        state_ = tempState + M;</div><div class="line">    <span class="keyword">return</span> state_;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">double</span> Random::random0_1()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">double</span>)randomInt() / M;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Random::randomInt(<span class="keyword">int</span> low, <span class="keyword">int</span> high)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(low &gt; high)</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    <span class="keyword">return</span> randomInt() % (high - low + <span class="number">1</span>) + low;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    Random r;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, r.randomInt());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%f\n"</span>, r.random0_1());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, r.randomInt(<span class="number">3</span>, <span class="number">10</span>));</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -138,7 +127,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2018/02/04/C++中交换两个元素/" data-title="C++中交换两个元素值 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2018/02/07/随机化算法/" data-title="随机化算法 | 飞翔的pig" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -151,19 +140,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/02/07/随机化算法/" title="随机化算法">
-  <strong>上一篇：</strong><br/>
-  <span>
-  随机化算法</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/02/02/回溯算法/"  title="回溯算法">
+<a href="/2018/02/04/C++中交换两个元素/"  title="C++中交换两个元素值">
  <strong>下一篇：</strong><br/> 
- <span>回溯算法
+ <span>C++中交换两个元素值
 </span>
 </a>
 </div>
@@ -179,7 +160,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一般方法"><span class="toc-number">1.</span> <span class="toc-text">一般方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#不使用临时变量"><span class="toc-number">2.</span> <span class="toc-text">不使用临时变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#位运算"><span class="toc-number">2.1.</span> <span class="toc-text">位运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算术运算"><span class="toc-number">2.2.</span> <span class="toc-text">算术运算</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线性同余数生成器"><span class="toc-number">1.</span> <span class="toc-text">线性同余数生成器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-number">2.</span> <span class="toc-text">实现</span></a></li></ol>
  
   </div>
 
