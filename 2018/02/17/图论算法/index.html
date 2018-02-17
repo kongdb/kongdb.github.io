@@ -4,24 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>日常记录备忘 | 飞翔的pig</title>
+    <title>图论算法 | 飞翔的pig</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Kongdb">
     
 
     
-    <meta name="description" content="日常记录备忘">
-<meta name="keywords" content="Python">
+    <meta name="description" content="摘自《数据结构与算法分析C++实现》">
+<meta name="keywords" content="C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="日常记录备忘">
-<meta property="og:url" content="http://yoursite.com/2017/07/01/日常记录备忘/index.html">
+<meta property="og:title" content="图论算法">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/图论算法/index.html">
 <meta property="og:site_name" content="飞翔的pig">
-<meta property="og:description" content="日常记录备忘">
-<meta property="og:updated_time" content="2017-12-24T14:25:27.028Z">
+<meta property="og:description" content="摘自《数据结构与算法分析C++实现》">
+<meta property="og:updated_time" content="2018-02-17T03:12:25.247Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="日常记录备忘">
-<meta name="twitter:description" content="日常记录备忘">
+<meta name="twitter:title" content="图论算法">
+<meta name="twitter:description" content="摘自《数据结构与算法分析C++实现》">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/07/01/日常记录备忘/" title="日常记录备忘" itemprop="url">日常记录备忘</a>
+      <a href="/2018/02/17/图论算法/" title="图论算法" itemprop="url">图论算法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
 		
   <p class="article-time">
-    <time datetime="2017-07-01T07:38:26.000Z" itemprop="datePublished"> 发表于 2017-07-01</time>
+    <time datetime="2018-02-17T02:23:51.000Z" itemprop="datePublished"> 发表于 2018-02-17</time>
     
   </p>
 </header>
@@ -97,22 +97,18 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统同时配置了py2和py3环境，运行rf脚本无反应"><span class="toc-number">1.</span> <span class="toc-text">系统同时配置了py2和py3环境，运行rf脚本无反应</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用uiautomatorviewer-bat时提示unable-connect-to-adb"><span class="toc-number">2.</span> <span class="toc-text">使用uiautomatorviewer.bat时提示unable connect to adb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#android相关命令"><span class="toc-number">3.</span> <span class="toc-text">android相关命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取已安装的应用的包名"><span class="toc-number">3.1.</span> <span class="toc-text">获取已安装的应用的包名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取包名对应的路径"><span class="toc-number">3.2.</span> <span class="toc-text">获取包名对应的路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看已安装应用的Activity"><span class="toc-number">3.3.</span> <span class="toc-text">查看已安装应用的Activity</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#表示方法"><span class="toc-number">1.</span> <span class="toc-text">表示方法</span></a></li></ol>
 		
 		</div>
 		
-		<h1 id="系统同时配置了py2和py3环境，运行rf脚本无反应"><a href="#系统同时配置了py2和py3环境，运行rf脚本无反应" class="headerlink" title="系统同时配置了py2和py3环境，运行rf脚本无反应"></a>系统同时配置了py2和py3环境，运行rf脚本无反应</h1><p>因为ride不支持py3，只能使用py2<br>需要将Python27\Scripts\pybot.bat中[python]替换为[python2]</p>
-<h1 id="使用uiautomatorviewer-bat时提示unable-connect-to-adb"><a href="#使用uiautomatorviewer-bat时提示unable-connect-to-adb" class="headerlink" title="使用uiautomatorviewer.bat时提示unable connect to adb"></a>使用uiautomatorviewer.bat时提示unable connect to adb</h1><p>修改前：</p>
-<p>-Dcom.android.uiautomator.bindir=%prog_dir%</p>
-<p>修改后：</p>
-<p>-Dcom.android.uiautomator.bindir=%ANDROID_HOME%\tools</p>
-<h1 id="android相关命令"><a href="#android相关命令" class="headerlink" title="android相关命令"></a>android相关命令</h1><h2 id="获取已安装的应用的包名"><a href="#获取已安装的应用的包名" class="headerlink" title="获取已安装的应用的包名"></a>获取已安装的应用的包名</h2><p>adb shell pm list packages</p>
-<h2 id="获取包名对应的路径"><a href="#获取包名对应的路径" class="headerlink" title="获取包名对应的路径"></a>获取包名对应的路径</h2><p>adb shell pm path com.huawei.ca</p>
-<p>其中com.huawei.ca为相应的包名</p>
-<h2 id="查看已安装应用的Activity"><a href="#查看已安装应用的Activity" class="headerlink" title="查看已安装应用的Activity"></a>查看已安装应用的Activity</h2><p>先打开应用，再输入以下命令</p>
-<p>adb shell dumpsys window w |findstr \/ | findstr name=</p>
-<p>或者：</p>
-<p>adb shell dumpsys window windows | findstr mFocusedApp</p>
+		<p># </p>
+<h2 id="表示方法"><a href="#表示方法" class="headerlink" title="表示方法"></a>表示方法</h2><ul>
+<li>邻接矩阵，即二维数组<br>数组的项默认为false，对于每条边，置A[u][v]=true;如果变有权，则可置A[u][v]等于该权，使用很大或很小的权表示不存在的边</li>
+</ul>
+<p>这种表示法的优点是非常简单，但空间需求过大，如果图的边不是很多，则这种表示法的代价太大。</p>
+<ul>
+<li>邻接表<br>对于每个顶点，使用一个表存放所有邻接的顶点</li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -120,13 +116,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/编程/">编程</a>►<a class="article-category-link" href="/categories/编程/备忘/">备忘</a>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Python/">Python</a>
+  <span></span> <a href="/tags/C/">C++</a>
   </div>
 
 </div>
@@ -135,7 +131,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2017/07/01/日常记录备忘/" data-title="日常记录备忘 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2018/02/17/图论算法/" data-title="图论算法 | 飞翔的pig" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -148,19 +144,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/07/12/Python核心编程学习笔记/" title="Python核心编程学习笔记">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Python核心编程学习笔记</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/06/28/Python爬虫学习笔记/"  title="Python爬虫学习笔记">
+<a href="/2018/02/07/随机化算法/"  title="随机化算法">
  <strong>下一篇：</strong><br/> 
- <span>Python爬虫学习笔记
+ <span>随机化算法
 </span>
 </a>
 </div>
@@ -176,7 +164,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统同时配置了py2和py3环境，运行rf脚本无反应"><span class="toc-number">1.</span> <span class="toc-text">系统同时配置了py2和py3环境，运行rf脚本无反应</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用uiautomatorviewer-bat时提示unable-connect-to-adb"><span class="toc-number">2.</span> <span class="toc-text">使用uiautomatorviewer.bat时提示unable connect to adb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#android相关命令"><span class="toc-number">3.</span> <span class="toc-text">android相关命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#获取已安装的应用的包名"><span class="toc-number">3.1.</span> <span class="toc-text">获取已安装的应用的包名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取包名对应的路径"><span class="toc-number">3.2.</span> <span class="toc-text">获取包名对应的路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看已安装应用的Activity"><span class="toc-number">3.3.</span> <span class="toc-text">查看已安装应用的Activity</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#表示方法"><span class="toc-number">1.</span> <span class="toc-text">表示方法</span></a></li></ol>
  
   </div>
 
