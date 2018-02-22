@@ -1,0 +1,618 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>经典算法系列（一） | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="汉诺塔、斐波那契数列、杨辉三角、三色旗问题等">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典算法系列（一）">
+<meta property="og:url" content="http://yoursite.com/2018/02/22/经典算法系列（一）/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="汉诺塔、斐波那契数列、杨辉三角、三色旗问题等">
+<meta property="og:updated_time" content="2018-02-22T11:34:26.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典算法系列（一）">
+<meta name="twitter:description" content="汉诺塔、斐波那契数列、杨辉三角、三色旗问题等">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/22/经典算法系列（一）/" title="经典算法系列（一）" itemprop="url">经典算法系列（一）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-22T00:23:51.000Z" itemprop="datePublished"> 发表于 2018-02-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#汉诺塔问题"><span class="toc-number">1.</span> <span class="toc-text">汉诺塔问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#斐波那契数列"><span class="toc-number">2.</span> <span class="toc-text">斐波那契数列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#杨辉三角"><span class="toc-number">3.</span> <span class="toc-text">杨辉三角</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三色旗问题"><span class="toc-number">4.</span> <span class="toc-text">三色旗问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#老鼠走迷宫（一）"><span class="toc-number">5.</span> <span class="toc-text">老鼠走迷宫（一）</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="汉诺塔问题"><a href="#汉诺塔问题" class="headerlink" title="汉诺塔问题"></a>汉诺塔问题</h1><ul>
+<li>描述<br>有三根柱子依次排列，第一根柱子上有n个从小到大盘子，需要将这n个盘子移动到第三个根柱子上，要求</li>
+</ul>
+<ol>
+<li>每次只能移动一个盘子</li>
+<li>大盘子不能放到小盘子之上</li>
+</ol>
+<ul>
+<li>解法一：递归解法</li>
+</ul>
+<ol>
+<li>假设需要将[1]一个盘子，从柱A借助柱B移动到柱C。则直接将[1]从A移动到C即可</li>
+<li>假设需要将[1,2]两个盘子，从柱A借助柱B移动到柱C。则先将[1]从A-&gt;B，再将[2]从A-&gt;C，再将[1]从B-&gt;C</li>
+<li>假设需要将[1,2,3]三个盘子，从柱A借助柱B移动到柱C。先想办法把[1,2]从A-&gt;B(借助C)，再将[3]从A-&gt;C，再将[1,2]从B-&gt;C(借助A)</li>
+</ol>
+<p>上面推理的过程，即为递归的逆过程。实现代码如下<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#include &lt;stdio.h&gt;</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">move</span>(<span class="params"><span class="keyword">int</span> n, <span class="keyword">char</span> <span class="keyword">from</span>, <span class="keyword">char</span> to</span>)</span></div><div class="line">&#123;</div><div class="line">    printf(<span class="string">"[%d]: %c-&gt;%c\n"</span>, n, <span class="keyword">from</span>, to);</div><div class="line">    counter++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">hanoi_recursive</span>(<span class="params"><span class="keyword">int</span> depth, <span class="keyword">char</span> <span class="keyword">from</span>, <span class="keyword">char</span> <span class="keyword">by</span>, <span class="keyword">char</span> to</span>)</span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(depth == <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        move(<span class="number">1</span>, <span class="keyword">from</span>, to);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        hanoi_recursive(depth - <span class="number">1</span>, <span class="keyword">from</span>, to, <span class="keyword">by</span>);</div><div class="line">        move(depth, <span class="keyword">from</span>, to);</div><div class="line">        hanoi_recursive(depth - <span class="number">1</span>, <span class="keyword">by</span>, <span class="keyword">from</span>, to);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span>(<span class="params"></span>)</span></div><div class="line">&#123;</div><div class="line">    hanoi(<span class="number">3</span>, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出如下<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[<span class="symbol">1</span>]: <span class="link">A-&gt;C</span></div><div class="line">[<span class="symbol">2</span>]: <span class="link">A-&gt;B</span></div><div class="line">[<span class="symbol">1</span>]: <span class="link">C-&gt;B   &#123;1,2,3&#125;行的作用为将[1,2]从A-&gt;B(借助C)</span></div><div class="line">[<span class="symbol">3</span>]: <span class="link">A-&gt;C   将[3]从A-&gt;C</span></div><div class="line">[<span class="symbol">1</span>]: <span class="link">B-&gt;A</span></div><div class="line">[<span class="symbol">2</span>]: <span class="link">B-&gt;C</span></div><div class="line">[<span class="symbol">1</span>]: <span class="link">A-&gt;C   &#123;5,6,7&#125;行的作用为将[1,2]从B-&gt;C(借助A)</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>解法二：非递归解法<br>递归解法很清晰，也好实现，规律找到，代码容易写出。如果不是不能使用递归，就不要自寻烦恼了。<br>对于很多问题，如果不能使用递归，就需要利用栈等特殊的数据结构（二叉树遍历也是）</li>
+</ul>
+<p>先看实现代码<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//struct的5个值分别代表:</span></div><div class="line"><span class="comment">//depth:当前层数，为1则不需要再迭代</span></div><div class="line"><span class="comment">//n:当前移动盘子编号</span></div><div class="line"><span class="comment">//from:起始柱子，by：经过柱子，to：目的柱子</span></div><div class="line"><span class="keyword">struct</span> hanoiData</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> depth;</div><div class="line">    <span class="keyword">int</span> n;</div><div class="line">    <span class="keyword">char</span> <span class="keyword">from</span>;</div><div class="line">    <span class="keyword">char</span> <span class="keyword">by</span>;</div><div class="line">    <span class="keyword">char</span> to;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">hanoi_stack</span>(<span class="params"><span class="keyword">int</span> depth, <span class="keyword">char</span> <span class="keyword">from</span>, <span class="keyword">char</span> <span class="keyword">by</span>, <span class="keyword">char</span> to</span>)</span></div><div class="line">&#123;</div><div class="line">    stack&lt;hanoiData&gt; stk;</div><div class="line">    stk.push(&#123;depth, depth, <span class="keyword">from</span>, <span class="keyword">by</span>, to&#125;);</div><div class="line">    <span class="keyword">while</span>(!stk.empty())</div><div class="line">    &#123;</div><div class="line">        hanoiData d = stk.top();</div><div class="line">        stk.pop();</div><div class="line">        <span class="keyword">if</span>(d.depth == <span class="number">1</span>)</div><div class="line">            move(d.n, d.<span class="keyword">from</span>, d.to);</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            stk.push(&#123;d.depth - <span class="number">1</span>, d.depth - <span class="number">1</span>,</div><div class="line">                      d.<span class="keyword">by</span>, d.<span class="keyword">from</span>, d.to&#125;);</div><div class="line">            stk.push(&#123;<span class="number">1</span>, d.depth, d.<span class="keyword">from</span>,</div><div class="line">                      d.<span class="keyword">by</span>, d.to&#125;);</div><div class="line">            stk.push(&#123;d.depth - <span class="number">1</span>, d.depth - <span class="number">1</span>,</div><div class="line">                      d.<span class="keyword">from</span>, d.to, d.<span class="keyword">by</span>&#125;);    </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我的思路<br>还是将整个过程且切分为3个部分</p>
+<ol>
+<li>将前n - 1个盘子A-&gt;B</li>
+<li>将盘子n从A-&gt;C</li>
+<li>将n - 1个盘子从B-&gt;C<br>因为栈后进先出的关系，索引将操作3,2,1依次入栈<br>这样执行顺序就是1,2,3了</li>
+<li>将操作1出栈执行时，发现深度为n-1，重复执行上面的步骤</li>
+</ol>
+<p>和网上<a href="https://www.cnblogs.com/wuxiaotianC/p/5806588.html" target="_blank" rel="external">这位兄台</a>想到一块去了，事先真没参考</p>
+<ul>
+<li>递归非递归性能比较<br>很遗憾，我的这种非递归解法和递归解法性能差了不止一个数量级<figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hanoi recursive, <span class="literal">result</span>:<span class="number">1048575</span>      elapse <span class="built_in">time</span> :<span class="number">7011</span> microseconds</div><div class="line">hanoi stack, <span class="literal">result</span>:<span class="number">1048575</span>      elapse <span class="built_in">time</span> :<span class="number">917490</span> microseconds</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h1><ul>
+<li>描述<br>fn = fn-1 + fn-2 if n &gt; 1<br>fn = n if n = 0, 1<br>求fn</li>
+<li>解法<br>参考<a href="../../../../2017/12/24/C++常用知识点/#递归的性能到底有多差">递归的性能</a></li>
+</ul>
+<h1 id="杨辉三角"><a href="#杨辉三角" class="headerlink" title="杨辉三角"></a>杨辉三角</h1><ul>
+<li><p>描述<br>按如下规律打印</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">                     <span class="number">1</span></div><div class="line">                  <span class="number">1</span>     <span class="number">1</span></div><div class="line">               <span class="number">1</span>     <span class="number">2</span>     <span class="number">1</span></div><div class="line">            <span class="number">1</span>     <span class="number">3</span>     <span class="number">3</span>     <span class="number">1</span></div><div class="line">         <span class="number">1</span>     <span class="number">4</span>     <span class="number">6</span>     <span class="number">4</span>     <span class="number">1</span></div><div class="line">      <span class="number">1</span>     <span class="number">5</span>    <span class="number">10</span>    <span class="number">10</span>     <span class="number">5</span>     <span class="number">1</span></div><div class="line">   <span class="number">1</span>     <span class="number">6</span>    <span class="number">15</span>    <span class="number">20</span>    <span class="number">15</span>     <span class="number">6</span>     <span class="number">1</span></div><div class="line"><span class="number">1</span>     <span class="number">7</span>    <span class="number">21</span>    <span class="number">35</span>    <span class="number">35</span>    <span class="number">21</span>     <span class="number">7</span>     <span class="number">1</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>解法<br>主要是打印有点麻烦，规律还是好找的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> N 13</span></div><div class="line"><span class="keyword">int</span> arr[N][N] = &#123;<span class="number">0</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">yanghui</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    &#123;</div><div class="line">        arr[i][<span class="number">0</span>] = arr[i][i] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i; ++j)</div><div class="line">        &#123;</div><div class="line">            arr[i][j] = arr[i - <span class="number">1</span>][j - <span class="number">1</span>] +</div><div class="line">                        arr[i - <span class="number">1</span>][j];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; (N - i)*<span class="number">3</span>; k++)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">" "</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(arr[i][j] == <span class="number">0</span>)</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%6d"</span>, arr[i][j]);</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="三色旗问题"><a href="#三色旗问题" class="headerlink" title="三色旗问题"></a>三色旗问题</h1><ul>
+<li><p>描述<br>假设有一条绳子，上面有红、白、蓝三种颜色的旗子，起初绳子上的旗子颜色并没有顺序（旗子个数也未知），您<br>希望将之分类，并排列为蓝、白、红的顺序，要如何移动次数才会最少，注意您只能在绳子上<br>进行这个动作，而且一次只能调换两个旗子。</p>
+</li>
+<li><p>解法<br>参考<br><a href="http://blog.csdn.net/u011200844/article/details/43227301" target="_blank" rel="external">三色旗问题</a><br><a href="https://leetcode.com/problems/sort-colors/discuss/26760/C++-solution-in-8-lines:-an-instance-of-the-Dutch-national-flag-problem-by-Edsger-Dijkstra" target="_blank" rel="external">Dutch national flag problem</a><br><a href="http://users.monash.edu/~lloyd/tildeAlgDS/Sort/Flag/" target="_blank" rel="external">Dutch National Flag</a><br>很迷惑人的错误解法</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> swap(<span class="built_in">char</span> <span class="built_in">color</span>[], <span class="built_in">int</span> indexA, <span class="built_in">int</span> indexB)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(indexA == indexB)</div><div class="line">    &#123;</div><div class="line">        printf(<span class="string">"index is equal\n"</span>);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">char</span> temp = <span class="built_in">color</span>[indexA];</div><div class="line">    <span class="built_in">color</span>[indexA] = <span class="built_in">color</span>[indexB];</div><div class="line">    <span class="built_in">color</span>[indexB] = temp;</div><div class="line">&#125;</div><div class="line"><span class="keyword">void</span> threeColor_error(<span class="built_in">char</span> <span class="built_in">color</span>[], <span class="built_in">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">int</span> bflag = <span class="number">0</span>, wflag = <span class="number">0</span>, rflag = <span class="built_in">size</span> - <span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(wflag &lt;= rflag)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">color</span>[wflag] == <span class="string">'b'</span>)</div><div class="line">            swap(<span class="built_in">color</span>, bflag++, wflag++);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">color</span>[wflag] == <span class="string">'r'</span>)</div><div class="line">            swap(<span class="built_in">color</span>, wflag++, rflag--);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            wflag++;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">char</span> <span class="built_in">color</span>[] = &#123;<span class="string">'r'</span>,<span class="string">'w'</span>,<span class="string">'b'</span>,<span class="string">'w'</span>,<span class="string">'w'</span>,<span class="string">'b'</span>,</div><div class="line">                    <span class="string">'r'</span>,<span class="string">'b'</span>,<span class="string">'r'</span>,<span class="string">'w'</span>&#125;;</div><div class="line"><span class="built_in">int</span> <span class="built_in">size</span> = sizeof(<span class="built_in">color</span>);</div><div class="line">threeColor_error(<span class="built_in">color</span>, <span class="built_in">size</span>);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>错误过程重现如下<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">r &lt;-bF &lt;-wF   w &lt;-bF   w &lt;-bF   <span class="selector-tag">b</span>        <span class="selector-tag">b</span></div><div class="line">w             w &lt;-wF   w        w &lt;-bF   w &lt;-bF</div><div class="line"><span class="selector-tag">b</span>             <span class="selector-tag">b</span>        <span class="selector-tag">b</span> &lt;-wF   w        w</div><div class="line">w             w        w        w &lt;-wF   w</div><div class="line">w             w        w        w        w</div><div class="line"><span class="selector-tag">b</span>             <span class="selector-tag">b</span>        <span class="selector-tag">b</span>        <span class="selector-tag">b</span>        <span class="selector-tag">b</span> &lt;-wF</div><div class="line">r             r        r        r        r</div><div class="line"><span class="selector-tag">b</span>             <span class="selector-tag">b</span>        <span class="selector-tag">b</span>        <span class="selector-tag">b</span>        <span class="selector-tag">b</span></div><div class="line">r             r &lt;-rF   r &lt;-rF   r &lt;-rF   r &lt;-rF</div><div class="line">w &lt;-rF        r        r        r        r</div></pre></td></tr></table></figure></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">b</span>         <span class="selector-tag">b</span>             <span class="selector-tag">b</span></div><div class="line"><span class="selector-tag">b</span>         <span class="selector-tag">b</span>             <span class="selector-tag">b</span></div><div class="line">w &lt;-bF    w &lt;-bF        <span class="selector-tag">b</span></div><div class="line">w         w             w &lt;-bF</div><div class="line">w         w             w</div><div class="line">w         w             w</div><div class="line">r &lt;-wF    r             r</div><div class="line"><span class="selector-tag">b</span>         <span class="selector-tag">b</span> &lt;-wf &lt;-rF   w &lt;-rF</div><div class="line">r &lt;-rF    r             r &lt;-wF</div><div class="line">r         r             r</div></pre></td></tr></table></figure>
+<p>错误原因：<br>将swap(color, wflag++, rflag–)修改成swap(color, wflag, rflag–)即可<br>为什么呢？<br>先看正确的过程如下<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">r &lt;-bF &lt;-wF   w &lt;-bF &lt;-wF   w &lt;-bF   <span class="selector-tag">b</span>        <span class="selector-tag">b</span></div><div class="line">w             w             w        w &lt;-bF   w &lt;-bF</div><div class="line"><span class="selector-tag">b</span>             <span class="selector-tag">b</span>             <span class="selector-tag">b</span> &lt;-wF   w        w</div><div class="line">w             w             w        w &lt;-wF   w</div><div class="line">w             w             w        w        w</div><div class="line"><span class="selector-tag">b</span>             <span class="selector-tag">b</span>             <span class="selector-tag">b</span>        <span class="selector-tag">b</span>        <span class="selector-tag">b</span> &lt;-wF</div><div class="line">r             r             r        r        r</div><div class="line"><span class="selector-tag">b</span>             <span class="selector-tag">b</span>             <span class="selector-tag">b</span>        <span class="selector-tag">b</span>        <span class="selector-tag">b</span></div><div class="line">r             r &lt;-rF        r &lt;-rF   r &lt;-rF   r &lt;-rF</div><div class="line">w &lt;-rF        r             r        r        r</div></pre></td></tr></table></figure></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">b</span>         <span class="selector-tag">b</span>          <span class="selector-tag">b</span>             <span class="selector-tag">b</span></div><div class="line"><span class="selector-tag">b</span>         <span class="selector-tag">b</span>          <span class="selector-tag">b</span>             <span class="selector-tag">b</span></div><div class="line">w &lt;-bF    w &lt;-bF     w &lt;-bF        <span class="selector-tag">b</span></div><div class="line">w         w          w             w &lt;-bF</div><div class="line">w         w          w             w</div><div class="line">w         w          w             w</div><div class="line">r &lt;-wF    r &lt;-wf     <span class="selector-tag">b</span> &lt;-wF &lt;-rF   w &lt;-rF</div><div class="line"><span class="selector-tag">b</span>         <span class="selector-tag">b</span> &lt;-rF     r             r &lt;-wF</div><div class="line">r &lt;-rF    r          r             r</div><div class="line">r         r          r             r</div></pre></td></tr></table></figure>
+<p>所以我总结，如果将wFlag指向的红旗子和rFlag指向的旗子（未知颜色）交换时，wFlag自增了，而此时rFlag本来指向的就是红旗子时，wFlag就会错过一枚红旗子</p>
+<p><a href="http://users.monash.edu/~lloyd/tildeAlgDS/Sort/Flag/" target="_blank" rel="external">优雅的分析</a></p>
+<h1 id="老鼠走迷宫（一）"><a href="#老鼠走迷宫（一）" class="headerlink" title="老鼠走迷宫（一）"></a>老鼠走迷宫（一）</h1><p><a href="http://blog.csdn.net/u011200844/article/details/43230477" target="_blank" rel="external">参考</a></p>
+<ul>
+<li><p>描述<br>我们在二维阵列中使用2表示迷宫墙壁，使用1来表<br>示老鼠的行走路径，求出由入口至出口的路径。</p>
+</li>
+<li><p>递归解法<br>完全参考之前8皇后问题的回溯解法<br>完整代码如下</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">#define N <span class="number">9</span></div><div class="line">int maze[N][N] = &#123;  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>&#125;,  </div><div class="line">    &#123;<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>&#125;  </div><div class="line">&#125;;</div><div class="line"></div><div class="line">void print()</div><div class="line">&#123;</div><div class="line">    for (int i = <span class="number">0</span> ; i &lt; N ; i++)</div><div class="line">    &#123;</div><div class="line">        for (int j = <span class="number">0</span> ; j &lt; N ; j++)</div><div class="line">        &#123;</div><div class="line">            if(maze[i][j] == <span class="number">2</span>) </div><div class="line">                printf(<span class="string">"▉"</span>);</div><div class="line">            else if(maze[i][j] == <span class="number">1</span>)  </div><div class="line">                printf(<span class="string">"◇"</span>);</div><div class="line">            else </div><div class="line">                printf(<span class="string">"  "</span>);</div><div class="line">        &#125;</div><div class="line">        printf(<span class="string">"<span class="subst">\n</span>"</span>);  </div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bool check(int row, int col)</div><div class="line">&#123;</div><div class="line">    if(maze[row][col] == <span class="number">0</span>)</div><div class="line">        return true;</div><div class="line">    return false;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static int counter = <span class="number">0</span>;</div><div class="line">void backtrack(int row, int col)</div><div class="line">&#123;</div><div class="line">    maze[row][col] = <span class="number">1</span>;</div><div class="line">    if(row == N - <span class="number">2</span> &amp;&amp; col == N - <span class="number">2</span>)</div><div class="line">    &#123;</div><div class="line">        printf(<span class="string">"solution:%d<span class="subst">\n</span>"</span>, ++counter);</div><div class="line">        print();</div><div class="line">    &#125;</div><div class="line">    else</div><div class="line">    &#123;</div><div class="line">        int direction[<span class="number">4</span>][<span class="number">2</span>] = &#123;&#123;row, col - <span class="number">1</span>&#125;,</div><div class="line">                               &#123;row - <span class="number">1</span>, col&#125;,</div><div class="line">                               &#123;row, col + <span class="number">1</span>&#125;,</div><div class="line">                               &#123;row + <span class="number">1</span>, col&#125;&#125;;</div><div class="line">        for(int i = <span class="number">0</span>; i &lt; <span class="number">4</span>; ++i)</div><div class="line">        &#123;</div><div class="line">            int newRow = direction[i][<span class="number">0</span>],</div><div class="line">                newCol = direction[i][<span class="number">1</span>];</div><div class="line">            if(check(newRow, newCol))</div><div class="line">            &#123;</div><div class="line">                backtrack(newRow, newCol);</div><div class="line">                maze[newRow][newCol] = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    printf(<span class="string">"original:<span class="subst">\n</span>"</span>);</div><div class="line">    print();</div><div class="line">    backtrack(<span class="number">1</span>, <span class="number">1</span>);</div><div class="line">    return <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>输出如下<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">original:</span></div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line">▉　　　　　　　▉</div><div class="line">▉　▉▉　▉▉　▉</div><div class="line">▉　▉　　▉　　▉</div><div class="line">▉　▉　▉　▉　▉</div><div class="line">▉　　　　　▉　▉</div><div class="line">▉▉　▉▉　▉▉▉</div><div class="line">▉　　　　　　　▉</div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line"><span class="symbol">solution:</span><span class="number">1</span></div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line">▉◇◇◇◇　　　▉</div><div class="line">▉　▉▉◇▉▉　▉</div><div class="line">▉　▉◇◇▉　　▉</div><div class="line">▉　▉◇▉　▉　▉</div><div class="line">▉　◇◇　　▉　▉</div><div class="line">▉▉◇▉▉　▉▉▉</div><div class="line">▉　◇◇◇◇◇◇▉</div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line"><span class="symbol">solution:</span><span class="number">2</span></div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line">▉◇◇◇◇　　　▉</div><div class="line">▉　▉▉◇▉▉　▉</div><div class="line">▉　▉◇◇▉　　▉</div><div class="line">▉　▉◇▉　▉　▉</div><div class="line">▉　　◇◇◇▉　▉</div><div class="line">▉▉　▉▉◇▉▉▉</div><div class="line">▉　　　　◇◇◇▉</div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line"><span class="symbol">solution:</span><span class="number">3</span></div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line">▉◇　　　　　　▉</div><div class="line">▉◇▉▉　▉▉　▉</div><div class="line">▉◇▉　　▉　　▉</div><div class="line">▉◇▉　▉　▉　▉</div><div class="line">▉◇◇◇◇◇▉　▉</div><div class="line">▉▉　▉▉◇▉▉▉</div><div class="line">▉　　　　◇◇◇▉</div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line"><span class="symbol">solution:</span><span class="number">4</span></div><div class="line">▉▉▉▉▉▉▉▉▉</div><div class="line">▉◇　　　　　　▉</div><div class="line">▉◇▉▉　▉▉　▉</div><div class="line">▉◇▉　　▉　　▉</div><div class="line">▉◇▉　▉　▉　▉</div><div class="line">▉◇◇　　　▉　▉</div><div class="line">▉▉◇▉▉　▉▉▉</div><div class="line">▉　◇◇◇◇◇◇▉</div><div class="line">▉▉▉▉▉▉▉▉▉</div></pre></td></tr></table></figure></p>
+<p>需要注意第62行清空当前状态是必须的</p>
+<ul>
+<li>非递归解法<br>参考8皇后的<a href="../../../../2018/02/02/回溯算法/#各种解法">非递归解法</a>，应该也是可以做的，暂时没想好</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/经典算法系列/">经典算法系列</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/02/22/经典算法系列（一）/" data-title="经典算法系列（一） | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/02/22/关于C++11for循环的问题/" title="关于C++11for循环的问题">
+  <strong>上一篇：</strong><br/>
+  <span>
+  关于C++11for循环的问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/02/17/图解排序算法之冒泡排序/"  title="图解排序算法之冒泡排序">
+ <strong>下一篇：</strong><br/> 
+ <span>图解排序算法之冒泡排序
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#汉诺塔问题"><span class="toc-number">1.</span> <span class="toc-text">汉诺塔问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#斐波那契数列"><span class="toc-number">2.</span> <span class="toc-text">斐波那契数列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#杨辉三角"><span class="toc-number">3.</span> <span class="toc-text">杨辉三角</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三色旗问题"><span class="toc-number">4.</span> <span class="toc-text">三色旗问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#老鼠走迷宫（一）"><span class="toc-number">5.</span> <span class="toc-text">老鼠走迷宫（一）</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>23</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>14</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -18,10 +18,14 @@
 <meta property="og:url" content="http://yoursite.com/2018/02/17/图论算法/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="摘自《数据结构与算法分析C++实现》">
-<meta property="og:updated_time" content="2018-02-17T03:12:25.247Z">
+<meta property="og:image" content="http://yoursite.com/images/图论算法/有向图.png">
+<meta property="og:image" content="http://yoursite.com/images/图论算法/拓扑排序结果.png">
+<meta property="og:image" content="http://yoursite.com/images/图论算法/无权最短路径算法.png">
+<meta property="og:updated_time" content="2018-02-20T05:37:06.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图论算法">
 <meta name="twitter:description" content="摘自《数据结构与算法分析C++实现》">
+<meta name="twitter:image" content="http://yoursite.com/images/图论算法/有向图.png">
 
     
     <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
@@ -97,17 +101,70 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#表示方法"><span class="toc-number">1.</span> <span class="toc-text">表示方法</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#若干定义"><span class="toc-number">1.</span> <span class="toc-text">若干定义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#图的表示"><span class="toc-number">1.1.</span> <span class="toc-text">图的表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拓扑排序"><span class="toc-number">2.</span> <span class="toc-text">拓扑排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最短路径算法"><span class="toc-number">3.</span> <span class="toc-text">最短路径算法</span></a></li></ol>
 		
 		</div>
 		
-		<p># </p>
-<h2 id="表示方法"><a href="#表示方法" class="headerlink" title="表示方法"></a>表示方法</h2><ul>
+		<h1 id="若干定义"><a href="#若干定义" class="headerlink" title="若干定义"></a>若干定义</h1><ul>
+<li>图（graph）G=(V,E)右顶点（vertex）的集V和边（edge）的集E组成</li>
+<li>每一条边就是一个点对(v, w)，其中v,w∈V，有时也把边称作弧（arc）</li>
+<li>如果点对是有序的，那么图就叫做有向的图，也叫做有向图（digraph）</li>
+<li>顶点v和w邻接（adjacent）当且仅当(v,w)∈E。在无向图中有边(v,w)，则w和v邻接，且v和w邻接</li>
+<li>有时候边还具有第三种成分，称作权(weight)或值(cost)</li>
+<li>图的一条路径(path)是一个顶点序列w<sub>1</sub>,w<sub>2</sub>,..,w<sub>N</sub>，其中(w<sub>i</sub>,w<sub>i+1</sub>)∈E。<br>路径的长(length)是该路径的边数，为N-1</li>
+<li>有向图的回路(cycle)是满足w<sub>1</sub>=w<sub>N</sub>且长度至少为1的一条路径。对于无向图，我们要求变是互异的</li>
+<li>如果一个有向图没有回路，则称其为无环的(acyclic)，简称为DAG</li>
+<li>如果无向图中每个顶点到每个其他顶点都存在一条路径，则称该无向图是连通的(connected)。具有这样性质的有向图称为强连通的（strongly connected）。</li>
+<li>如果有向图不是强连通的，但基础图（underlying graph，弧上去掉方向所形成的图）是连通的，则称该有向图为弱连通的（weakly connected）</li>
+<li>完全图（complete graph）是其每一对顶点间都存在一条边的图</li>
+</ul>
+<h2 id="图的表示"><a href="#图的表示" class="headerlink" title="图的表示"></a>图的表示</h2><ul>
 <li>邻接矩阵，即二维数组<br>数组的项默认为false，对于每条边，置A[u][v]=true;如果变有权，则可置A[u][v]等于该权，使用很大或很小的权表示不存在的边</li>
 </ul>
 <p>这种表示法的优点是非常简单，但空间需求过大，如果图的边不是很多，则这种表示法的代价太大。</p>
 <ul>
 <li>邻接表<br>对于每个顶点，使用一个表存放所有邻接的顶点</li>
+</ul>
+<p>邻接表是图的标准表示方法</p>
+<h1 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h1><p>拓扑排序（topological sort）是对有向无环图的顶点的一种排序，它使得如果存在一条从v<sub>i</sub>到v<sub>j</sub>的路径，那么在排序种v<sub>j</sub>出现在v<sub>i</sub>的后面。<br>注意拓扑排序不必是唯一的：任何合理的排序都是可以的。</p>
+<ol>
+<li>简单拓扑排序</li>
+</ol>
+<ul>
+<li>先找出任意一个没有入边的顶点，显示出该顶点</li>
+<li>将该顶点和他的边一起从图中删除</li>
+<li>对图的其余部分应用同样的方法处理</li>
+</ul>
+<p>把顶点v的入度（indegree）定义为边(u,v)的条数，假设每一个顶点的入度被存储且图被读入一个邻接表中。</p>
+<p>伪代码<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> <span class="string">Graph:</span>:topsort()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> counter = <span class="number">0</span>; counter &lt; NUM_VETICES; counter++)</div><div class="line">    &#123;</div><div class="line">        Vertex v = findNewVertexOfIndegreeZero();</div><div class="line">        <span class="keyword">if</span>(v == NOT_A_VERTEX)</div><div class="line">            <span class="keyword">throw</span> CycleFoundException();</div><div class="line">        v.topNum = counter;</div><div class="line">        <span class="keyword">for</span> each Vertex w adjacent to <span class="string">v:</span></div><div class="line">            w.indegree--;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>函数findNewVertexOfIndegreeZero扫描数组，寻找一个尚未被分配拓扑编号的入度为0的顶点，如果不存在这样的顶点，返回NOT_A_VERTEX，意味着图有回路。<br>由于findNewVertexOfIndegreeZero函数是对顶点的数组的一个简单顺序扫描，索引每次调用花费O(|V|)时间，总运行时间为O(|V|<sup>2</sup>)</p>
+<ol>
+<li>利用队列的拓扑排序</li>
+</ol>
+<ul>
+<li>计算每个顶点的入度，将所有入度为0的顶点放入一个初始为空的队列</li>
+<li>当队列不空时，删除一个顶点v，并将于v邻接的所有顶点入度减1</li>
+<li>只要顶点的入度将为0，就把该顶点放入队列</li>
+<li>拓扑排序就是顶点出队的顺序</li>
+</ul>
+<p>伪代码<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> Graph::topsort()</div><div class="line">&#123;</div><div class="line">    Queue&lt;Vertex&gt; q;</div><div class="line">    <span class="keyword">int</span> counter = <span class="number">0</span>;</div><div class="line">    q.makeEmpty();</div><div class="line">    <span class="keyword">for</span> <span class="keyword">each</span> Vertex v</div><div class="line">        <span class="keyword">if</span>(v.indegree == <span class="number">0</span>)</div><div class="line">            q.enqueue(v);</div><div class="line">    <span class="keyword">while</span>(!q.isEmpty())</div><div class="line">    &#123;</div><div class="line">        Vertex v = q.dequeue();</div><div class="line">        v.topNum = ++counter; <span class="comment">//Assign next number</span></div><div class="line"></div><div class="line">        <span class="keyword">for</span> <span class="keyword">each</span> Vertex w adjacent to v</div><div class="line">            <span class="keyword">if</span>(--w.indegree == <span class="number">0</span>)</div><div class="line">                q.enqueue(w);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(counter != NUM_VERTICES)</div><div class="line">        <span class="keyword">throw</span> CycleFoundException();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>书中给出示例如下<br><img src="/images/图论算法/有向图.png" alt="image"><br><img src="/images/图论算法/拓扑排序结果.png" alt="image"></p>
+<h1 id="最短路径算法"><a href="#最短路径算法" class="headerlink" title="最短路径算法"></a>最短路径算法</h1><p>输入为加权图</p>
+<p>单元最短路径问题：给定一个加权图G=(V,E)和一个特定顶点s作为 输入，找出s到G中每一个其他顶点的最短加权路径</p>
+<ul>
+<li>无权最短路径</li>
+</ul>
+<ol>
+<li><p>广度优先搜索<br>类似于数的层序遍历</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> Graph::unweighted(Vertex s)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span> each Vertex v</div><div class="line">    &#123;</div><div class="line">        v.<span class="built_in">dist</span> = INFINITY;</div><div class="line">        v.known = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    s.<span class="built_in">dist</span> = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> currDist = <span class="number">0</span>; currDist &lt; NUM_VERTICES; currDist++)</div><div class="line">        <span class="keyword">for</span> each Vertex v</div><div class="line">            <span class="keyword">if</span>(!v.known &amp;&amp; v.<span class="built_in">dist</span> == currDist)</div><div class="line">            &#123;</div><div class="line">                v.known = <span class="keyword">true</span></div><div class="line">                <span class="keyword">for</span> each Vertex w adjacent to v</div><div class="line">                    <span class="keyword">if</span>(w.<span class="built_in">dist</span> == INFINITY)</div><div class="line">                    &#123;</div><div class="line">                        w.<span class="built_in">dist</span> = currDist + <span class="number">1</span>;</div><div class="line">                        w.path = v;</div><div class="line">                    &#125;</div><div class="line">            &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>利用队列优化</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">void Graph::unweighted(Vertex s)</div><div class="line">&#123;</div><div class="line">    Queue&lt;Vertex&gt; q<span class="comment">;</span></div><div class="line">    for each Vertex v</div><div class="line">        v.<span class="keyword">dist </span>= INFINITY<span class="comment">;</span></div><div class="line">    s.<span class="keyword">dist </span>= <span class="number">0</span><span class="comment">;</span></div><div class="line">    q.enqueue(s)</div><div class="line">    while(!q.isEmpty())</div><div class="line">    &#123;</div><div class="line">        Vertex v = q.dequeue()<span class="comment">;</span></div><div class="line">        for each Vertex w adjacent to v</div><div class="line">            if(w.<span class="keyword">dist </span>== INFINITY)</div><div class="line">            &#123;</div><div class="line">                w.<span class="keyword">dist </span>= v.<span class="keyword">dist </span>+ <span class="number">1</span><span class="comment">;</span></div><div class="line">                w.path = v<span class="comment">;</span></div><div class="line">                q.enqueue(w)<span class="comment">;</span></div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="/images/图论算法/无权最短路径算法.png" alt="image"></p>
+<ul>
+<li>Dijkstra算法<br>好难，待续~</li>
 </ul>
   
 	</div>
@@ -172,7 +229,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#表示方法"><span class="toc-number">1.</span> <span class="toc-text">表示方法</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#若干定义"><span class="toc-number">1.</span> <span class="toc-text">若干定义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#图的表示"><span class="toc-number">1.1.</span> <span class="toc-text">图的表示</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拓扑排序"><span class="toc-number">2.</span> <span class="toc-text">拓扑排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最短路径算法"><span class="toc-number">3.</span> <span class="toc-text">最短路径算法</span></a></li></ol>
  
   </div>
 
@@ -197,7 +254,15 @@
 		  
 		
 		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>1</sup></a></li>
 		  
 		
 		  
@@ -230,11 +295,7 @@
 			
 		
 			
-				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
 			
 		
 			
@@ -246,7 +307,15 @@
 			
 		
 			
-				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
 			
 		
 			
@@ -254,11 +323,15 @@
 			
 		
 			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
 			
 		
 		</ul>
