@@ -1,0 +1,582 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>经典算法系列（二） | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="骑士走棋盘问题等">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典算法系列（二）">
+<meta property="og:url" content="http://yoursite.com/2018/02/25/经典算法系列（二）/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="骑士走棋盘问题等">
+<meta property="og:image" content="http://yoursite.com/images/经典算法系列/eightdirection.png">
+<meta property="og:image" content="http://yoursite.com/images/经典算法系列/onesolution.gif">
+<meta property="og:image" content="http://yoursite.com/images/经典算法系列/gamelife.gif">
+<meta property="og:updated_time" content="2018-02-25T06:57:58.369Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典算法系列（二）">
+<meta name="twitter:description" content="骑士走棋盘问题等">
+<meta name="twitter:image" content="http://yoursite.com/images/经典算法系列/eightdirection.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/25/经典算法系列（二）/" title="经典算法系列（二）" itemprop="url">经典算法系列（二）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-02-25T01:23:51.000Z" itemprop="datePublished"> 发表于 2018-02-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#骑士走棋盘问题"><span class="toc-number">1.</span> <span class="toc-text">骑士走棋盘问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生命游戏"><span class="toc-number">2.</span> <span class="toc-text">生命游戏</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="骑士走棋盘问题"><a href="#骑士走棋盘问题" class="headerlink" title="骑士走棋盘问题"></a>骑士走棋盘问题</h1><p>骑士游历（Knight tour）,即骑士（走“日”字，类似于马）在8x8的棋盘上，从任意位置出发，如何走完所有的位置<br>骑士的走法如下：<br><img src="/images/经典算法系列/eightdirection.png" alt="eightdirection"><br>一种可能的解法如下：<br><img src="/images/经典算法系列/onesolution.gif" alt="onesolution"></p>
+<ul>
+<li>递归+回溯解法<br>依然是类似于之前8皇后的解法<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> N 8</span></div><div class="line"><span class="keyword">int</span> arr[N][N] = &#123;<span class="number">0</span>&#125;;</div><div class="line"><span class="keyword">int</span> dirX[] = &#123;<span class="number">2</span>,  <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-2</span>, <span class="number">-1</span>,  <span class="number">1</span>,  <span class="number">2</span>&#125;;</div><div class="line"><span class="keyword">int</span> dirY[] = &#123;<span class="number">1</span>,  <span class="number">2</span>,  <span class="number">2</span>,  <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-2</span>, <span class="number">-1</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(x &lt; <span class="number">0</span> || x &gt;= N ||</div><div class="line">        y &lt; <span class="number">0</span> ||  y &gt;= N || arr[x][y] != <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printSolution</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"solution %d:\n"</span>, ++count);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%3d"</span>, arr[i][j]);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">backtrack</span><span class="params">(<span class="keyword">int</span> curX, <span class="keyword">int</span> curY, <span class="keyword">int</span> depth)</span></span></div><div class="line">&#123;</div><div class="line">    arr[curX][curY] = depth;</div><div class="line">    <span class="keyword">if</span>(depth == N * N)</div><div class="line">    &#123;</div><div class="line">        printSolution();</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> nextX = curX + dirX[i],</div><div class="line">            nextY = curY + dirY[i];</div><div class="line">        <span class="keyword">if</span>(check(nextX, nextY))</div><div class="line">        &#123;</div><div class="line">            backtrack(nextX, nextY, depth + <span class="number">1</span>);</div><div class="line">            arr[nextX][nextY] = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">knightTour</span><span class="params">(<span class="keyword">int</span> srcX, <span class="keyword">int</span> srcY)</span></span></div><div class="line">&#123;</div><div class="line">    backtrack(srcX, srcY, <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    knightTour(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>一个可能的输出如下<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> <span class="number">1</span> <span class="number">60</span> <span class="number">39</span> <span class="number">34</span> <span class="number">31</span> <span class="number">18</span>  <span class="number">9</span> <span class="number">64</span></div><div class="line"><span class="number">38</span> <span class="number">35</span> <span class="number">32</span> <span class="number">61</span> <span class="number">10</span> <span class="number">63</span> <span class="number">30</span> <span class="number">17</span></div><div class="line"><span class="number">59</span>  <span class="number">2</span> <span class="number">37</span> <span class="number">40</span> <span class="number">33</span> <span class="number">28</span> <span class="number">19</span>  <span class="number">8</span></div><div class="line"><span class="number">36</span> <span class="number">49</span> <span class="number">42</span> <span class="number">27</span> <span class="number">62</span> <span class="number">11</span> <span class="number">16</span> <span class="number">29</span></div><div class="line"><span class="number">43</span> <span class="number">58</span>  <span class="number">3</span> <span class="number">50</span> <span class="number">41</span> <span class="number">24</span>  <span class="number">7</span> <span class="number">20</span></div><div class="line"><span class="number">48</span> <span class="number">51</span> <span class="number">46</span> <span class="number">55</span> <span class="number">26</span> <span class="number">21</span> <span class="number">12</span> <span class="number">15</span></div><div class="line"><span class="number">57</span> <span class="number">44</span> <span class="number">53</span>  <span class="number">4</span> <span class="number">23</span> <span class="number">14</span> <span class="number">25</span>  <span class="number">6</span></div><div class="line"><span class="number">52</span> <span class="number">47</span> <span class="number">56</span> <span class="number">45</span> <span class="number">54</span>  <span class="number">5</span> <span class="number">22</span> <span class="number">13</span></div></pre></td></tr></table></figure></p>
+<p>参考<br><a href="https://www.geeksforgeeks.org/backtracking-set-1-the-knights-tour-problem/" target="_blank" rel="external">The Knight’s tour problem</a></p>
+<p>这种解法对于回溯问题比较通用，但对于该问题相当没有效率。<br>初始点为(0,0)时可以很快找出很多解，但是初始点设为(0,4)时，速度就很慢了</p>
+<ul>
+<li>Warnsdorff最优算法优化<br>规则如下</li>
+</ul>
+<ol>
+<li>We can start from any initial position of the knight on the board.</li>
+<li>We always move to an adjacent, unvisited square with minimal degree (minimum number of unvisited adjacent).</li>
+</ol>
+<p>翻译一下就是</p>
+<ol>
+<li>可以从棋盘的任意位置出发</li>
+<li>总是移动到相邻未访问的，“度”最小的格子。这里“度”指的是某一个相邻未访问的格子个数</li>
+</ol>
+<p>虽然不能参透其精髓，但直观感受是：如果一个格子的相邻格子很少（比如只有一个了），那么这个格子比较“难”访问到了（只剩下一条路），所以要优先访问掉。相反，比较容易访问到的节点，可以放到后面</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#include &lt;stdio.h&gt;</span></div><div class="line"></div><div class="line"><span class="meta">#define N 8</span></div><div class="line">int arr[N][N] = &#123;<span class="number">0</span>&#125;;</div><div class="line">int dirX[] = &#123;<span class="number">2</span>,  <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-2</span>, <span class="number">-1</span>,  <span class="number">1</span>,  <span class="number">2</span>&#125;;</div><div class="line">int dirY[] = &#123;<span class="number">1</span>,  <span class="number">2</span>,  <span class="number">2</span>,  <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-2</span>, <span class="number">-1</span>&#125;;</div><div class="line"></div><div class="line">void printSolution()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">static</span> int count = <span class="number">0</span>;</div><div class="line">    printf(<span class="string">"solution %d:\n"</span>, ++count);</div><div class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(int j = <span class="number">0</span>; j &lt; N; ++j)</div><div class="line">            printf(<span class="string">"%3d"</span>, arr[i][j]);</div><div class="line">        printf(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bool check(int x, int y)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(x &lt; <span class="number">0</span> || x &gt;= N ||</div><div class="line">        y &lt; <span class="number">0</span> ||  y &gt;= N || arr[x][y] != <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int degree(int x, int y)</div><div class="line">&#123;</div><div class="line">    int d = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i)</div><div class="line">    &#123;</div><div class="line">        int <span class="keyword">new</span><span class="type">X</span> = x + dirX[i],</div><div class="line">            <span class="keyword">new</span><span class="type">Y</span> = y + dirY[i];</div><div class="line">        <span class="keyword">if</span>(check(<span class="keyword">new</span><span class="type">X</span>, <span class="keyword">new</span><span class="type">Y</span>))</div><div class="line">            ++d;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> d;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void minDegreeAdjacent(int &amp;x, int &amp;y)</div><div class="line">&#123;</div><div class="line">    int curX = x, curY = y;</div><div class="line">    int minDegree = N + <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; <span class="number">8</span>; ++i)</div><div class="line">    &#123;</div><div class="line">        int <span class="keyword">new</span><span class="type">X</span> = x + dirX[i],</div><div class="line">            <span class="keyword">new</span><span class="type">Y</span> = y + dirY[i];</div><div class="line">        <span class="keyword">if</span>(!check(<span class="keyword">new</span><span class="type">X</span>, <span class="keyword">new</span><span class="type">Y</span>))</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        int d = degree(<span class="keyword">new</span><span class="type">X</span>, <span class="keyword">new</span><span class="type">Y</span>);</div><div class="line">        <span class="keyword">if</span>(d &lt; minDegree)</div><div class="line">        &#123;</div><div class="line">            minDegree = d;</div><div class="line">            curX = <span class="keyword">new</span><span class="type">X</span>;</div><div class="line">            curY = <span class="keyword">new</span><span class="type">Y</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    x = curX;</div><div class="line">    y = curY;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void backtrack(int curX, int curY, int depth)</div><div class="line">&#123;</div><div class="line">    arr[curX][curY] = depth;</div><div class="line">    <span class="keyword">if</span>(depth == N * N)</div><div class="line">    &#123;</div><div class="line">        printSolution();</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    int <span class="keyword">new</span><span class="type">X</span> = curX, <span class="keyword">new</span><span class="type">Y</span> = curY;</div><div class="line">    minDegreeAdjacent(<span class="keyword">new</span><span class="type">X</span>, <span class="keyword">new</span><span class="type">Y</span>);</div><div class="line">    printf(<span class="string">"newX:%d, newY:%d\n"</span>, <span class="keyword">new</span><span class="type">X</span>, <span class="keyword">new</span><span class="type">Y</span>);</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">new</span><span class="type">X</span> != curX &amp;&amp; <span class="keyword">new</span><span class="type">Y</span> != curY)</div><div class="line">    &#123;</div><div class="line">        backtrack(<span class="keyword">new</span><span class="type">X</span>, <span class="keyword">new</span><span class="type">Y</span>, depth + <span class="number">1</span>);</div><div class="line">        arr[<span class="keyword">new</span><span class="type">X</span>][<span class="keyword">new</span><span class="type">Y</span>] = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void knightTour(int srcX, int srcY)</div><div class="line">&#123;</div><div class="line">    backtrack(srcX, srcY, <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">    knightTour(<span class="number">0</span>, <span class="number">4</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>相应输出如下<br><figure class="highlight basic"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">47 </span><span class="number">14</span> <span class="number">61</span> <span class="number">32</span>  <span class="number">1</span> <span class="number">16</span> <span class="number">19</span> <span class="number">34</span></div><div class="line"><span class="symbol">64 </span><span class="number">31</span> <span class="number">46</span> <span class="number">15</span> <span class="number">60</span> <span class="number">33</span>  <span class="number">2</span> <span class="number">17</span></div><div class="line"><span class="symbol">13 </span><span class="number">48</span> <span class="number">57</span> <span class="number">62</span> <span class="number">45</span> <span class="number">18</span> <span class="number">35</span> <span class="number">20</span></div><div class="line"><span class="symbol">30 </span><span class="number">63</span> <span class="number">42</span> <span class="number">53</span> <span class="number">56</span> <span class="number">59</span> <span class="number">40</span>  <span class="number">3</span></div><div class="line"><span class="symbol">49 </span><span class="number">12</span> <span class="number">55</span> <span class="number">58</span> <span class="number">41</span> <span class="number">44</span> <span class="number">21</span> <span class="number">36</span></div><div class="line"><span class="symbol">26 </span><span class="number">29</span> <span class="number">52</span> <span class="number">43</span> <span class="number">54</span> <span class="number">39</span>  <span class="number">4</span>  <span class="number">7</span></div><div class="line"><span class="symbol">11 </span><span class="number">50</span> <span class="number">27</span> <span class="number">24</span>  <span class="number">9</span>  <span class="number">6</span> <span class="number">37</span> <span class="number">22</span></div><div class="line"><span class="symbol">28 </span><span class="number">25</span> <span class="number">10</span> <span class="number">51</span> <span class="number">38</span> <span class="number">23</span>  <span class="number">8</span>  <span class="number">5</span></div></pre></td></tr></table></figure></p>
+<p>有一点没想明白，之前的回溯法相当于遍历所有情况，如果结果存在肯定能找到。现在的方法总是找最优的情况。会不会导致找不到结果了？？</p>
+<p>参考<a href="https://www.geeksforgeeks.org/warnsdorffs-algorithm-knights-tour-problem/" target="_blank" rel="external">Warnsdorff’s algorithm for Knight’s tour problem</a><br>Algorithm:</p>
+<ol>
+<li>Set P to be a random initial position on the board</li>
+<li>Mark the board at P with the move number “1”</li>
+<li>Do following for each move number from 2 to the number of squares on the board:<br> – let S be the set of positions accessible from P.<br> – Set P to be the position in S with minimum accessibility<br> – Mark the board at P with the current move number<br>Return the marked board — each square will be marked with the move number on which it is visited.</li>
+</ol>
+<p>翻译过来其实就很简单两句话</p>
+<ol>
+<li>设置任意点为起始点P</li>
+<li>查找P的相邻点集S中的“度”最小的点，并设为P</li>
+<li>继续2</li>
+</ol>
+<h1 id="生命游戏"><a href="#生命游戏" class="headerlink" title="生命游戏"></a>生命游戏</h1><p>题目和解法参考<a href="https://leetcode.com/problems/game-of-life/discuss/73223/Easiest-JAVA-solution-with-explanation" target="_blank" rel="external">Game of Life</a><br>原文解释超赞了，不班门弄斧了，用C++实现一下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> M 10</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> N 10</span></div><div class="line"><span class="keyword">int</span> board[M][N] = &#123;<span class="number">0</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">initBoard</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    srand(time(<span class="literal">NULL</span>));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</div><div class="line">            board[i][j] = rand() % <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%2d"</span>, board[i][j]);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">liveNeighbors</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> lives = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> x = <span class="built_in">std</span>::max(i<span class="number">-1</span>, <span class="number">0</span>); x &lt;= <span class="built_in">std</span>::min(i+<span class="number">1</span>, M<span class="number">-1</span>); x++)</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> y = <span class="built_in">std</span>::max(j<span class="number">-1</span>, <span class="number">0</span>); y &lt;= <span class="built_in">std</span>::min(j+<span class="number">1</span>, N<span class="number">-1</span>); y++)</div><div class="line">            lives += board[x][y] &amp; <span class="number">1</span>;</div><div class="line">    lives -= board[i][j] &amp; <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> lives;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">gameLife</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> lives = liveNeighbors(i, j);</div><div class="line">            <span class="keyword">if</span>(board[i][j] == <span class="number">1</span> &amp;&amp; (lives == <span class="number">2</span> || lives == <span class="number">3</span>))</div><div class="line">                board[i][j] = <span class="number">3</span>;  <span class="comment">//01 -&gt; 11</span></div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(board[i][j] == <span class="number">0</span> &amp;&amp; lives == <span class="number">3</span>)</div><div class="line">                board[i][j] = <span class="number">2</span>;  <span class="comment">//00 -&gt; 10</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; ++i)</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; N; ++j)</div><div class="line">            board[i][j] &gt;&gt;= <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    initBoard();</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"init state:\n"</span>);</div><div class="line">    print();</div><div class="line">    gameLife();</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"next state:\n"</span>);</div><div class="line">    print();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>原题算结束了，突然想用turtle来表示一下游戏中的实时状态<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line"></div><div class="line">from turtle import *</div><div class="line">from <span class="built_in">random</span> import randrange</div><div class="line">from <span class="built_in">time</span> import sleep</div><div class="line"></div><div class="line">M = <span class="number">10</span></div><div class="line">N = <span class="number">10</span></div><div class="line"><span class="built_in">radius</span> = <span class="number">10</span></div><div class="line">gap = <span class="number">8</span></div><div class="line">board = []</div><div class="line">cells = []</div><div class="line"></div><div class="line">def init():</div><div class="line">    y = (<span class="built_in">radius</span> + gap)*(M / <span class="number">2</span>)</div><div class="line">    tracer(False)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(M):</div><div class="line">        board.<span class="built_in">append</span>([randrange(<span class="number">0</span>,<span class="number">2</span>) <span class="keyword">for</span> <span class="symbol">_</span> <span class="keyword">in</span> <span class="built_in">range</span>(N)])</div><div class="line">        rows = []</div><div class="line">        x = - (<span class="built_in">radius</span> + gap)*(N / <span class="number">2</span>)</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(M):</div><div class="line">            t = Turtle()</div><div class="line">            t.ht()</div><div class="line">            t.pensize(<span class="number">2</span>)</div><div class="line">            t.penup()</div><div class="line">            t.setx(x)</div><div class="line">            t.sety(y - <span class="built_in">radius</span>)</div><div class="line">            t.pendown()</div><div class="line">            rows.<span class="built_in">append</span>(t)</div><div class="line">            x += (<span class="number">2</span> * <span class="built_in">radius</span> + gap)</div><div class="line">        cells.<span class="built_in">append</span>(rows)</div><div class="line">        y -= (<span class="number">2</span> * <span class="built_in">radius</span> + gap)</div><div class="line">    tracer(True)</div><div class="line"></div><div class="line">def <span class="built_in">show</span>():</div><div class="line">    tracer(False)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(M):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(N):</div><div class="line">            b = board[i][j]</div><div class="line">            t = cells[i][j]</div><div class="line">            t.clear()</div><div class="line">            <span class="keyword">if</span> b == <span class="number">0</span>:</div><div class="line">                t.pencolor('red')</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                t.pencolor('green')</div><div class="line">            t.circle(<span class="built_in">radius</span>)</div><div class="line">    tracer(True)</div><div class="line"></div><div class="line">def gamelife():</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(M):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(N):</div><div class="line">            lives = liveneighbors(i, j)</div><div class="line">            <span class="keyword">if</span> board[i][j] == <span class="number">1</span> <span class="keyword">and</span> (lives == <span class="number">2</span> <span class="keyword">or</span> lives == <span class="number">3</span>):</div><div class="line">                board[i][j] = <span class="number">3</span></div><div class="line">            elif board[i][j] == <span class="number">0</span> <span class="keyword">and</span> lives == <span class="number">3</span>:</div><div class="line">                board[i][j] = <span class="number">2</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(M):</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(N):</div><div class="line">            board[i][j] &gt;&gt;= <span class="number">1</span></div><div class="line">    <span class="built_in">show</span>()</div><div class="line"></div><div class="line">def liveneighbors(i, j):</div><div class="line">    lives = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">max</span>(i - <span class="number">1</span>, <span class="number">0</span>), <span class="built_in">min</span>(i + <span class="number">2</span>, M)):</div><div class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">max</span>(j - <span class="number">1</span>, <span class="number">0</span>), <span class="built_in">min</span>(j + <span class="number">2</span>, N)):</div><div class="line">            lives += board[x][y] &amp; <span class="number">1</span></div><div class="line">    lives -= board[i][j] &amp; <span class="number">1</span></div><div class="line">    <span class="built_in">return</span> lives</div><div class="line"></div><div class="line">def main():</div><div class="line">    init()</div><div class="line">    <span class="built_in">show</span>()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</div><div class="line">        gamelife()</div><div class="line">        sleep(<span class="number">2</span>)</div><div class="line">    mainloop()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == '__main__':</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+<p>结果大概就是这么个样子<br><img src="/images/经典算法系列/gamelife.gif" alt="gamelife"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/经典算法系列/">经典算法系列</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/02/25/经典算法系列（二）/" data-title="经典算法系列（二） | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/02/22/关于C++11for循环的问题/"  title="关于C++11for循环的问题">
+ <strong>下一篇：</strong><br/> 
+ <span>关于C++11for循环的问题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#骑士走棋盘问题"><span class="toc-number">1.</span> <span class="toc-text">骑士走棋盘问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生命游戏"><span class="toc-number">2.</span> <span class="toc-text">生命游戏</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>23</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>14</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
