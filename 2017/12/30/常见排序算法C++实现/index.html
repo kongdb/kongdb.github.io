@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/12/30/常见排序算法C++实现/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="C++中经常遇到的排序算法，记录备忘。">
-<meta property="og:updated_time" content="2018-01-22T14:09:42.477Z">
+<meta property="og:updated_time" content="2018-03-01T12:58:26.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常见排序算法C++实现">
 <meta name="twitter:description" content="C++中经常遇到的排序算法，记录备忘。">
@@ -184,7 +184,8 @@
 </ul>
 <h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><h3 id="原理-6"><a href="#原理-6" class="headerlink" title="原理"></a>原理</h3><p>是一种复杂的插入排序。简单插入排序是每次步长都为1的，而希尔排序选取的步进是一个递减的序列，最后一个值为1。<br>为什么希尔排序比较快还是没搞懂，参考知乎：<a href="https://www.zhihu.com/question/24637339" target="_blank" rel="external">https://www.zhihu.com/question/24637339</a></p>
 <h3 id="实现-6"><a href="#实现-6" class="headerlink" title="实现"></a>实现</h3><p>有两种排序方法，类似<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> shellSort1(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> gap = <span class="built_in">size</span>/<span class="number">2</span>;</div><div class="line">	<span class="built_in">while</span>(gap &gt;= <span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">        <span class="comment">//下面这部分逻辑和简单插入排序是类似的</span></div><div class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = gap; i &lt; <span class="built_in">size</span>; ++i)</div><div class="line">        &#123;</div><div class="line">        	<span class="built_in">for</span>(<span class="keyword">int</span> j = i - gap; (j &gt;= <span class="number">0</span>) &amp;&amp; (<span class="keyword">array</span>[j] &gt; <span class="keyword">array</span>[j + gap]);</div><div class="line">        		j -= gap)&#123;</div><div class="line">        		swap(<span class="keyword">array</span>[j + gap] ,<span class="keyword">array</span>[j]);</div><div class="line">        	&#125;</div><div class="line">        &#125;</div><div class="line">		gap /= <span class="number">2</span>; <span class="comment">//步进每次除2，直到步进为1则退化为简单插入排序</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> shellSort2(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="comment">//int gap = size/2;</span></div><div class="line">	<span class="keyword">int</span> gap = <span class="number">1</span>;</div><div class="line">	<span class="built_in">while</span>(gap &gt;= <span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">        <span class="comment">//下面这部分逻辑和简单插入排序是类似的</span></div><div class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = gap; i &lt; <span class="built_in">size</span>; ++i)</div><div class="line">        &#123;</div><div class="line">        	<span class="keyword">int</span> curData = <span class="keyword">array</span>[i];</div><div class="line">        	<span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        	<span class="built_in">for</span>(j = i - gap; j &gt;= <span class="number">0</span> &amp;&amp; <span class="keyword">array</span>[j] &gt; curData; j -= gap)</div><div class="line">        		<span class="keyword">array</span>[j + gap] = <span class="keyword">array</span>[j];		</div><div class="line">        	<span class="keyword">array</span>[j + gap] = curData;</div><div class="line">        &#125;</div><div class="line">		gap /= <span class="number">2</span>; <span class="comment">//步进每次除2，直到步进为1则退化为简单插入排序</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> shellSort2(<span class="keyword">int</span> *<span class="keyword">array</span>, <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> gap = <span class="built_in">size</span>/<span class="number">2</span>;</div><div class="line">	<span class="built_in">while</span>(gap &gt;= <span class="number">1</span>)</div><div class="line">	&#123;</div><div class="line">        <span class="comment">//下面这部分逻辑和简单插入排序是类似的</span></div><div class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = gap; i &lt; <span class="built_in">size</span>; ++i)</div><div class="line">        &#123;</div><div class="line">        	<span class="keyword">int</span> curData = <span class="keyword">array</span>[i];</div><div class="line">        	<span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        	<span class="built_in">for</span>(j = i - gap; j &gt;= <span class="number">0</span> &amp;&amp; <span class="keyword">array</span>[j] &gt; curData; j -= gap)</div><div class="line">        		<span class="keyword">array</span>[j + gap] = <span class="keyword">array</span>[j];		</div><div class="line">        	<span class="keyword">array</span>[j + gap] = curData;</div><div class="line">        &#125;</div><div class="line">		gap /= <span class="number">2</span>; <span class="comment">//步进每次除2，直到步进为1则退化为简单插入排序</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>20180301更新<br>还有一种比较迷惑人的错误写法，被坑几次<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> shellSort_error(<span class="keyword">int</span> arr[], <span class="keyword">int</span> <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> gap = <span class="built_in">size</span> / <span class="number">2</span>;</div><div class="line">    <span class="built_in">while</span>(gap &gt;= <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i = gap; i &lt; <span class="built_in">size</span>; ++i)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> j;</div><div class="line">            <span class="keyword">int</span> temp = arr[i];</div><div class="line">            <span class="comment">//这里可能导致越界</span></div><div class="line">            <span class="comment">//比如gap=4，j = 3时，j&gt;0任然满足，但是j-gap已经越界</span></div><div class="line">            <span class="built_in">for</span>(j = i; j &gt; <span class="number">0</span> &amp;&amp; arr[j - gap] &gt; temp; j -= gap)</div><div class="line">                arr[j] = arr[j - gap];</div><div class="line">            arr[j] = temp;</div><div class="line">        &#125;</div><div class="line">        gap /= <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><h3 id="原理-7"><a href="#原理-7" class="headerlink" title="原理"></a>原理</h3><ul>
 <li>首先什么是堆。堆是一棵完全二叉树，若任意一个节点的值不小于子节点的值，称为大根堆；若任意节点的值不大于子节点的值，称为小根堆。</li>
 <li>堆排序的步骤，以升序为例<br>– 将数组构造成大根堆<br>– 交换根节点的值（最大值）与最后一个节点的值<br>– 调整除最后一个节点之外的n-1个值为大根堆<br>– 重复步骤2</li>
@@ -300,7 +301,7 @@
 		  
 		
 		  
-			<li><a href="/categories/编程/" title="编程">编程<sup>23</sup></a></li>
+			<li><a href="/categories/编程/" title="编程">编程<sup>25</sup></a></li>
 		  
 		
 		  
@@ -317,7 +318,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/C/" title="C++">C++<sup>14</sup></a></li>
+				<li><a href="/tags/C/" title="C++">C++<sup>15</sup></a></li>
 			
 		
 			
@@ -325,19 +326,19 @@
 			
 		
 			
+				<li><a href="/tags/算法/" title="算法">算法<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法/" title="算法">算法<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 			
@@ -353,19 +354,19 @@
 			
 		
 			
-				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
 			
 		
 		</ul>
