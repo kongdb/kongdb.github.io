@@ -1,0 +1,677 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>常见背包问题合集 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="各种背包问题算法，包括01背包等">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见背包问题合集">
+<meta property="og:url" content="http://yoursite.com/2018/03/09/常见背包问题合集/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="各种背包问题算法，包括01背包等">
+<meta property="og:updated_time" content="2018-03-10T00:58:30.407Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见背包问题合集">
+<meta name="twitter:description" content="各种背包问题算法，包括01背包等">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/09/常见背包问题合集/" title="常见背包问题合集" itemprop="url">常见背包问题合集</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-09T11:23:51.000Z" itemprop="datePublished"> 发表于 2018-03-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#01背包问题"><span class="toc-number">1.</span> <span class="toc-text">01背包问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#完全背包问题"><span class="toc-number">2.</span> <span class="toc-text">完全背包问题</span></a></li></ol>
+		
+		</div>
+		
+		<p>各种常见的背包问题，其实算法思想类似，都是利用动态规划（Dynamic Programming，DP）的思想。<br>先来看最经典的01背包问题。</p>
+<h1 id="01背包问题"><a href="#01背包问题" class="headerlink" title="01背包问题"></a>01背包问题</h1><p>参考<a href="http://blog.csdn.net/dapengbusi/article/details/7463968" target="_blank" rel="external">动态规划01背包问题</a></p>
+<ul>
+<li><p>描述<br>给定n种物品和一背包。物品i的重量是wi，其价值为vi，背包的容量为C。<br>问应如何选择装入背包的物品，使得装入背包中物品的总价值最大?<br>对于一种物品，要么装入背包，要么不装。所以对于一种物品的装入状态可以取0和1。</p>
+</li>
+<li><p>示例<br>设物品个数N=5,物品重量weight[n]={0，2，2，6，5，4},物品价值value[n]={0，6，3，5，4，6},背包容量C=10<br>求可以装的最大价值</p>
+</li>
+<li><p>解题思路</p>
+</li>
+</ul>
+<ol>
+<li>建立数组m[N+1][C+1]，其中m[i][j]表示“在容量为j的背包中，放置前i个物品，所能得到的最大价值”，这句话是精髓，把这句话理解了，整个算法就好理解了</li>
+<li>先放置第1个物品，即i=1。则m[1][1]=0，因为在一个容量为1（j=1）的背包中，是放不下物品1（weight[1]=2）的；<br>m[1][2..10]=6，因为在一个容量&gt;=2的背包中，是能放下物品2的（注意01背包问题物品只能放一次），所有最大价值都是6</li>
+<li>再放置物品2。m[2][1]=0，这个容易理解，因为物品1和物品2都不能放置在容量为1的背包。<br>m[2][2]=?,这个有点不太好理解了。存在两种可能<br>①如果放置了物品1，则此时背包剩余容量为0，不能再放置物品2，价值为6（value[1]=6）<br>②如果不放置物品1，则放置物品2，此时背包剩余容量为0，价值为3（value[2]=3）<br>下面所有的推导都是参考这个逻辑（具体公式下面有）</li>
+</ol>
+<p>由上面的推导可以得出公式<br><figure class="highlight prolog"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//求m[i][j]的公式</div><div class="line">if 物品i的重量大于j :</div><div class="line">    //物品i不能放到容量为j的背包中</div><div class="line">    m[i][j] = m[i - <span class="number">1</span>][j] </div><div class="line">else :</div><div class="line">    //物品i可以放到容量为j的背包中，则有两种情况</div><div class="line">    //<span class="number">1.</span> 物品i不放置，此时价值为m[i - <span class="number">1</span>][j]</div><div class="line">    //<span class="number">2.</span> 物品i放置，背包容量为j - weight[i]，此时的总价值为</div><div class="line">    //<span class="string">"在容量为j - weight[i]的背包中放置前i - 1个物品的价值"</span> + <span class="string">"物品i的价值"</span></div><div class="line">    //即m[i - <span class="number">1</span>][j - weight[i]] + value[i]</div><div class="line">    //所以整个的m[i][j]为取这两个中的大者  </div><div class="line">    m[i][j] = max&#123;m[i - <span class="number">1</span>][j], m[i - <span class="number">1</span>][j - weight[i]] + value[i]&#125;</div></pre></td></tr></table></figure></p>
+<p>整个m数组的值推导如下</p>
+<table>
+<thead>
+<tr>
+<th>物品索引i</th>
+<th>物品重量</th>
+<th>物品价值</th>
+<th>j=1</th>
+<th>j=2</th>
+<th>j=3</th>
+<th>j=4</th>
+<th>j=5</th>
+<th>j=6</th>
+<th>j=7</th>
+<th>j=8</th>
+<th>j=9</th>
+<th>j=10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>    1</td>
+<td>2</td>
+<td>6</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>    2</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td></td>
+</tr>
+<tr>
+<td>    3</td>
+<td>6</td>
+<td>5</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>11</td>
+<td>11</td>
+<td>14</td>
+<td></td>
+</tr>
+<tr>
+<td>    4</td>
+<td>5</td>
+<td>4</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>13</td>
+<td>14</td>
+<td></td>
+</tr>
+<tr>
+<td>    5</td>
+<td>4</td>
+<td>6</td>
+<td>0</td>
+<td>6</td>
+<td>6</td>
+<td>9</td>
+<td>9</td>
+<td>12</td>
+<td>12</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>可以得出可放置物品的最大价值即为15，那怎么推算出到底放置了哪几个物品呢？</p>
+<ol>
+<li>初始i为N，j为背包容量C，如果m[i][j]==m[i-1][j]则没有放置了物品i，否则放置了物品i。</li>
+<li>如果没有放置物品i，则令i为i-1往下递推；<br>如果放置了物品i，则令i=i-1,j=j-weight[i]往下递推（参考上面m[i][j]的公式）<br>直到i为1退出循环</li>
+<li>对应第一个物品，若m[1][j] == 0则没有放置物品1，否则放置了物品1</li>
+</ol>
+<p>整体代码如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">5</span>;</div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> C = <span class="number">10</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">package_01</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m[N + <span class="number">1</span>][C + <span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">    <span class="keyword">int</span> weight[N + <span class="number">1</span>] = &#123;<span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>&#125;;</div><div class="line">    <span class="keyword">int</span>  value[N + <span class="number">1</span>] = &#123;<span class="number">0</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">6</span>&#125;;</div><div class="line">    <span class="comment">//放置1..N个物品(注意，因为存在第0行，所以放置第1个物品的过程可以合并到下面)</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//在背包容量j为1..C时，放置第i个物品</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= C; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">//不放置物品i时的价值</span></div><div class="line">            <span class="keyword">int</span> not_put_i = m[i - <span class="number">1</span>][j];</div><div class="line">            <span class="keyword">if</span>(j &lt; weight[i])       <span class="comment">//背包容量j小于物品i的重量</span></div><div class="line">                m[i][j] = not_put_i;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                <span class="comment">//放置物品i时的价值</span></div><div class="line">                <span class="keyword">int</span> put_i = m[i - <span class="number">1</span>][j - weight[i]] + value[i];</div><div class="line">                <span class="comment">//两者取大者</span></div><div class="line">                m[i][j] = put_i &gt;= not_put_i ? put_i : not_put_i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"middle arr is:\n"</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= C; ++j)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%2d "</span>, m[i][j]);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"max sum value: %d\n"</span>, m[N][C]);</div><div class="line">    <span class="keyword">int</span> x[N+<span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">    <span class="comment">//注意这里物品1也不需要单独写，因为第0行全为0</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = N, j = C; i &gt;= <span class="number">1</span>; --i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(m[i][j] == m[i - <span class="number">1</span>][j])</div><div class="line">            x[i] = <span class="number">0</span>;             <span class="comment">//没有放置物品i</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            x[i] = <span class="number">1</span>;             <span class="comment">//放置了物品i</span></div><div class="line">            j -= weight[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"put order is: "</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>, x[i]);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出如下<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">middle arr is:</div><div class="line"><span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span> 6</div><div class="line"><span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span> 9</div><div class="line"><span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span>11<span class="number"> 11 </span>14</div><div class="line"><span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span>10<span class="number"> 11 </span>13 14</div><div class="line"><span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span>12<span class="number"> 12 </span>15<span class="number"> 15 </span>15</div><div class="line">max sum value: 15</div><div class="line">put order is:<span class="number"> 1 </span>1<span class="number"> 0 </span>0 1</div></pre></td></tr></table></figure></p>
+<ul>
+<li>优化<br>参考<a href="http://blog.csdn.net/wbuhuibiandaima/article/details/64923561" target="_blank" rel="external">浅谈DP问题一</a><br>上面的m数组是比较大的，如果只需要求出最大的价值，而不需要反推具体放置了哪些，则可优化为如下<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">package_01_only_max</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> weight[N + <span class="number">1</span>] = &#123;<span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>&#125;;</div><div class="line">    <span class="keyword">int</span>  value[N + <span class="number">1</span>] = &#123;<span class="number">0</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">6</span>&#125;;</div><div class="line">    <span class="keyword">int</span> m[C + <span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = C; j &gt;= weight[i]; --j)</div><div class="line">            m[j] = <span class="built_in">std</span>::max(m[j], m[j - weight[i]] +value[i]);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"max:%d\n"</span>, m[C]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个优化有一点点难理解，特别是为什么j是从C到weight[i]，来看中间数组m的打印<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">i =<span class="number"> 1 </span>: <span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 6 </span> 6</div><div class="line">i =<span class="number"> 2 </span>: <span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span> 9</div><div class="line">i =<span class="number"> 3 </span>: <span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span>11<span class="number"> 11 </span>14</div><div class="line">i =<span class="number"> 4 </span>: <span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span><span class="number"> 9 </span>10<span class="number"> 11 </span>13 14</div><div class="line">i =<span class="number"> 5 </span>: <span class="number"> 0 </span><span class="number"> 6 </span><span class="number"> 6 </span><span class="number"> 9 </span><span class="number"> 9 </span>12<span class="number"> 12 </span>15<span class="number"> 15 </span>15</div></pre></td></tr></table></figure></p>
+<p>可以看到和非优化版是完全一致的，那是怎么得出来的呢，来看以下过程</p>
+<ol>
+<li>i=1时，首先计算m[C]，初始m数组全为0，则m[C-weight[1]]+v[1]较大，为6；<br>同理可得其他m值</li>
+<li>i=2时，还是先计算m[C]值，这时原本的m[C]值可以理解为m[i-1][C]，m[C-weight[i]]可以理解为m[i-1][C-weight[i]]，即为上一轮计算遗留下来的值</li>
+</ol>
+<p>设想如果j是从weight[i]到C，会发生什么？这就引出了下面的完全背包问题</p>
+<h1 id="完全背包问题"><a href="#完全背包问题" class="headerlink" title="完全背包问题"></a>完全背包问题</h1><p>与上面01背包问题的区别在于：每种物品均有无数多个</p>
+<ul>
+<li>优化版本的<br>参考<a href="https://www.cnblogs.com/zpfbuaa/p/4966335.html" target="_blank" rel="external">完全背包问题实例</a>,<a href="https://www.cnblogs.com/tgycoder/p/5329057.html" target="_blank" rel="external">完全背包问题</a>,<a href="http://blog.csdn.net/yumerina/article/details/55098880" target="_blank" rel="external">完全背包问题讲解（dp）</a><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">for(int i = <span class="number">1</span><span class="comment">; i &lt;= N; ++i)</span></div><div class="line">&#123;</div><div class="line">    for(int <span class="keyword">j </span>= weight[i]<span class="comment">; j &lt;= C; ++j)</span></div><div class="line">        m[<span class="keyword">j] </span>= std::max(m[<span class="keyword">j], </span>m[<span class="keyword">j </span>- weight[i]] +value[i])<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以看到，相比于01背包问题，仅仅内存循环的j变成了weight[i]到C。真的很神奇。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/03/09/常见背包问题合集/" data-title="常见背包问题合集 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/03/04/经典算法系列（三）/"  title="经典算法系列（三）">
+ <strong>下一篇：</strong><br/> 
+ <span>经典算法系列（三）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#01背包问题"><span class="toc-number">1.</span> <span class="toc-text">01背包问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#完全背包问题"><span class="toc-number">2.</span> <span class="toc-text">完全背包问题</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>25</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

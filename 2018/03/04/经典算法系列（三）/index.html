@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/03/04/经典算法系列（三）/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="背包问题等">
-<meta property="og:updated_time" content="2018-03-04T08:28:05.006Z">
+<meta property="og:updated_time" content="2018-03-09T11:13:47.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经典算法系列（三）">
 <meta name="twitter:description" content="背包问题等">
@@ -101,7 +101,8 @@
 		
 		</div>
 		
-		<h1 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h1><h1 id="蒙地卡罗法求PI"><a href="#蒙地卡罗法求PI" class="headerlink" title="蒙地卡罗法求PI"></a>蒙地卡罗法求PI</h1><figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> calcPI()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;</div><div class="line">    <span class="keyword">double</span> x, y;</div><div class="line">    srand(time(NULL));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    &#123;</div><div class="line">        x = (<span class="keyword">double</span>)rand() / RAND_MAX;</div><div class="line">        y = (<span class="keyword">double</span>)rand() / RAND_MAX;</div><div class="line">        <span class="keyword">if</span>(x * x + y * y &lt; <span class="number">1</span>)</div><div class="line">            <span class="keyword">sum</span>++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">double</span>)<span class="keyword">sum</span> / N * <span class="number">4</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+		<h1 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h1><p>参考<a href="../../../../2018/03/09/常见背包问题合集/">常见背包问题合集</a></p>
+<h1 id="蒙地卡罗法求PI"><a href="#蒙地卡罗法求PI" class="headerlink" title="蒙地卡罗法求PI"></a>蒙地卡罗法求PI</h1><figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> calcPI()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> <span class="keyword">sum</span> = <span class="number">0</span>;</div><div class="line">    <span class="keyword">double</span> x, y;</div><div class="line">    srand(time(NULL));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; ++i)</div><div class="line">    &#123;</div><div class="line">        x = (<span class="keyword">double</span>)rand() / RAND_MAX;</div><div class="line">        y = (<span class="keyword">double</span>)rand() / RAND_MAX;</div><div class="line">        <span class="keyword">if</span>(x * x + y * y &lt; <span class="number">1</span>)</div><div class="line">            <span class="keyword">sum</span>++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">double</span>)<span class="keyword">sum</span> / N * <span class="number">4</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>主要是利用概率的思想</p>
 <h1 id="Eratosthenes筛选求质数"><a href="#Eratosthenes筛选求质数" class="headerlink" title="Eratosthenes筛选求质数"></a>Eratosthenes筛选求质数</h1><p>基本的思想流程如下（假设要求21以内的质数）：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">初始时</div><div class="line"><span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span> <span class="number">11</span> <span class="number">12</span> <span class="number">13</span> <span class="number">14</span> <span class="number">15</span> <span class="number">16</span> <span class="number">17</span> <span class="number">18</span> <span class="number">19</span> <span class="number">20</span> <span class="number">21</span></div><div class="line">筛选因子为<span class="number">2</span>，即将所有<span class="number">2</span>的倍数筛去(除了<span class="number">2</span>以外)</div><div class="line"><span class="number">2</span>  <span class="number">3</span>     <span class="number">5</span>     <span class="number">7</span>     <span class="number">9</span> <span class="number">11</span>    <span class="number">13</span>    <span class="number">15</span>    <span class="number">17</span>    <span class="number">19</span>    <span class="number">21</span></div><div class="line">筛选因子为<span class="number">3</span>，将所有<span class="number">3</span>的倍数筛去</div><div class="line"><span class="number">2</span>  <span class="number">3</span>     <span class="number">5</span>     <span class="number">7</span>       <span class="number">11</span>    <span class="number">13</span>          <span class="number">17</span>    <span class="number">19</span></div><div class="line">...</div><div class="line">按此过程，直到筛选因子i*i &gt; N结束</div></pre></td></tr></table></figure></p>
 <p>代码如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1000</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">printPrime</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//if primeArr[i]==true, then i is prime</span></div><div class="line">    <span class="keyword">bool</span> primeArr[N + <span class="number">1</span>];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; ++i)</div><div class="line">        primeArr[i] = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i * i &lt;= N; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">while</span>(primeArr[i] != <span class="literal">true</span>)</div><div class="line">            i++;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i * <span class="number">2</span>; j &lt;= N; ++j)</div><div class="line">            <span class="keyword">if</span>(j % i == <span class="number">0</span>)</div><div class="line">                primeArr[j] = <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//output</span></div><div class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(primeArr[i] == <span class="literal">true</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%4d "</span>, i);</div><div class="line">            count++;</div><div class="line">            <span class="keyword">if</span>(count % <span class="number">10</span> == <span class="number">0</span>)</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -154,6 +155,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2018/03/09/常见背包问题合集/" title="常见背包问题合集">
+  <strong>上一篇：</strong><br/>
+  <span>
+  常见背包问题合集</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2018/03/02/C++优先队列的用法/"  title="C++中优先队列的用法">
@@ -236,7 +245,7 @@
 			
 		
 			
-				<li><a href="/tags/算法/" title="算法">算法<sup>4</sup></a></li>
+				<li><a href="/tags/算法/" title="算法">算法<sup>5</sup></a></li>
 			
 		
 			
@@ -244,19 +253,7 @@
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
 			
 		
 			
@@ -264,11 +261,23 @@
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 			
@@ -276,7 +285,7 @@
 			
 		
 			
-				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
 			
 		
 		</ul>
