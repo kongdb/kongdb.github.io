@@ -1,0 +1,587 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>经典算法系列（四） | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="背包问题，筛选求质数等">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典算法系列（四）">
+<meta property="og:url" content="http://yoursite.com/2018/03/10/经典算法系列（四）/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="背包问题，筛选求质数等">
+<meta property="og:updated_time" content="2018-03-14T12:17:42.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典算法系列（四）">
+<meta name="twitter:description" content="背包问题，筛选求质数等">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/10/经典算法系列（四）/" title="经典算法系列（四）" itemprop="url">经典算法系列（四）</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-10T11:23:51.000Z" itemprop="datePublished"> 发表于 2018-03-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#中序转后序"><span class="toc-number">1.</span> <span class="toc-text">中序转后序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#洗扑克牌"><span class="toc-number">2.</span> <span class="toc-text">洗扑克牌</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#赌博游戏"><span class="toc-number">3.</span> <span class="toc-text">赌博游戏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#约瑟夫问题"><span class="toc-number">4.</span> <span class="toc-text">约瑟夫问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#排列组合"><span class="toc-number">5.</span> <span class="toc-text">排列组合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#格雷码"><span class="toc-number">6.</span> <span class="toc-text">格雷码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#产生可能的集合"><span class="toc-number">7.</span> <span class="toc-text">产生可能的集合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生成m元素集合的n个元素子集"><span class="toc-number">8.</span> <span class="toc-text">生成m元素集合的n个元素子集</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="中序转后序"><a href="#中序转后序" class="headerlink" title="中序转后序"></a>中序转后序</h1><p>实现如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 80</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">priority</span><span class="params">(<span class="keyword">char</span> op)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">switch</span>(op)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">case</span> <span class="string">'+'</span>:</div><div class="line">        <span class="keyword">case</span> <span class="string">'-'</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        <span class="keyword">case</span> <span class="string">'*'</span>:</div><div class="line">        <span class="keyword">case</span> <span class="string">'/'</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//中缀表达式转后缀表达式</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">infixToPostfix</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *infix)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//输出后缀式</span></div><div class="line">    <span class="keyword">char</span> postfix[MAX] = &#123;<span class="number">0</span>&#125;;</div><div class="line">    <span class="comment">//模拟栈数据结构</span></div><div class="line">    <span class="keyword">char</span> <span class="built_in">stack</span>[MAX] = &#123;<span class="number">0</span>&#125;;</div><div class="line">    <span class="comment">//栈顶索引</span></div><div class="line">    <span class="keyword">int</span> top = <span class="number">-1</span>;</div><div class="line">    <span class="comment">//输出索引</span></div><div class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; infix[i] != <span class="string">'\0'</span>; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">char</span> ch = infix[i];</div><div class="line">        <span class="keyword">switch</span>(ch)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">case</span> <span class="string">'('</span>:</div><div class="line">                <span class="comment">//'('拥有最高优先级，直接入栈</span></div><div class="line">                <span class="built_in">stack</span>[++top] = ch;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">')'</span>:</div><div class="line">                <span class="comment">//出栈，直到遇到'('</span></div><div class="line">                <span class="keyword">while</span>(<span class="built_in">stack</span>[top] != <span class="string">'('</span>)</div><div class="line">                    postfix[index++] = <span class="built_in">stack</span>[top--];</div><div class="line">                <span class="comment">//'('不输出</span></div><div class="line">                top--;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="string">'+'</span>:</div><div class="line">            <span class="keyword">case</span> <span class="string">'-'</span>:</div><div class="line">            <span class="keyword">case</span> <span class="string">'*'</span>:</div><div class="line">            <span class="keyword">case</span> <span class="string">'/'</span>:</div><div class="line">                <span class="comment">//出栈，直到栈空或者遇到比当前操作符优先级小的操作符</span></div><div class="line">                <span class="keyword">while</span>(top &gt;= <span class="number">0</span> &amp;&amp; priority(<span class="built_in">stack</span>[top]) &gt;= priority(ch))</div><div class="line">                    postfix[index++] = <span class="built_in">stack</span>[top--];</div><div class="line">                <span class="comment">//当前操作符入栈</span></div><div class="line">                <span class="built_in">stack</span>[++top] = ch;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="comment">//其他字符直接输出</span></div><div class="line">                postfix[index++] = ch;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(top &gt;= <span class="number">0</span>)</div><div class="line">        postfix[index++] = <span class="built_in">stack</span>[top--];</div><div class="line"></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"input  infix   :%s\n"</span>, infix);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"output postfix :%s\n"</span>, postfix);</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    infixToPostfix(<span class="string">"a+b*c+(d*e+f)*g"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>和之前<a href="../../../../2018/01/05/C++中常见数据结构的实现/#从中缀转换为后缀表达式">从中缀转换为后缀表达式</a>思路是完全一致的。<br>只是这里没有使用栈对象，而是栈这种数据结构。<br>参考<a href="https://openhome.cc/Gossip/AlgorithmGossip/InFixPostfix.htm" target="_blank" rel="external">中序式轉後序式</a></p>
+<h1 id="洗扑克牌"><a href="#洗扑克牌" class="headerlink" title="洗扑克牌"></a>洗扑克牌</h1><p>将52张扑克牌乱序排列<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">randint</span><span class="params">(<span class="keyword">int</span> low, <span class="keyword">int</span> high)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> rand() % (high - low + <span class="number">1</span>) + low;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> NUM = <span class="number">52</span>;</div><div class="line"><span class="comment">//洗牌，输出乱序排列放的</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">shuffle</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//数组中存放0..51的值</span></div><div class="line">    <span class="keyword">int</span> <span class="built_in">array</span>[NUM];</div><div class="line">    <span class="comment">//数组中的值除以4表示具体的牌数字，模4表示具体的花色</span></div><div class="line">    <span class="comment">//模4的结果0,1,2,3分别表示红心H，方片F，黑桃T，梅花M</span></div><div class="line">    <span class="comment">//比如数字7表示梅花2</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NUM; ++i)</div><div class="line">        <span class="built_in">array</span>[i] = i;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NUM - <span class="number">1</span>; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> j = randint(i, NUM - <span class="number">1</span>);</div><div class="line">        <span class="keyword">int</span> temp = <span class="built_in">array</span>[j];</div><div class="line">        <span class="built_in">array</span>[j] = <span class="built_in">array</span>[i];</div><div class="line">        <span class="built_in">array</span>[i] = temp;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; NUM; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">switch</span>(<span class="built_in">array</span>[i] % <span class="number">4</span>)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"H"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"F"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"T"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> <span class="number">3</span>:</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"M"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> div = <span class="built_in">array</span>[i] / <span class="number">4</span>;</div><div class="line">        <span class="keyword">if</span>(div == <span class="number">0</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"A"</span>);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(div &lt;= <span class="number">9</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%d"</span>, div + <span class="number">1</span>);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(div == <span class="number">10</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"J"</span>);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(div == <span class="number">11</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"Q"</span>);</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(div == <span class="number">12</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"K"</span>);</div><div class="line">        <span class="built_in">printf</span>(<span class="string">" "</span>);</div><div class="line">        <span class="keyword">if</span>((i + <span class="number">1</span>) % <span class="number">13</span> == <span class="number">0</span>)</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    srand(time(<span class="literal">NULL</span>));</div><div class="line">    shuffle();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>需要注意的是洗牌，也就是取得N个随机不重复整数的算法是参考<a href="../../../../2018/01/25/编程珠玑学习笔记/#生成0到n之间k个不同的随机顺序的随机整数">编程珠玑</a><br>再一次证明，这个算法真的很有用啊！</p>
+<h1 id="赌博游戏"><a href="#赌博游戏" class="headerlink" title="赌博游戏"></a>赌博游戏</h1><ul>
+<li>描述</li>
+</ul>
+<p>玩家掷两个骰子，点数为1到6，<br>如果第一次点数和为7或11，则玩家胜<br>如果点数和为2、3或12，则玩家输<br>如果和为其它点数，则记录第一次的点数和，然后继续掷骰，直至点数和等于第一次掷出的点数和，则玩家胜，如果在这之前掷出了点数和为7，则玩家输。</p>
+<ul>
+<li>实现</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getRandPoints</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> t = rand() % <span class="number">6</span> + <span class="number">1</span>;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"get points:%d\n"</span>, t);</div><div class="line">    <span class="keyword">return</span> t;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">diceGame</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> num1 = getRandPoints(),</div><div class="line">        num2 = getRandPoints(),</div><div class="line">        sum  = num1 + num2;</div><div class="line">    <span class="keyword">switch</span>(sum)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">case</span> <span class="number">7</span>:</div><div class="line">        <span class="keyword">case</span> <span class="number">11</span>:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"you win\n"</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">case</span> <span class="number">2</span>:</div><div class="line">        <span class="keyword">case</span> <span class="number">3</span>:</div><div class="line">        <span class="keyword">case</span> <span class="number">12</span>:</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"you lose\n"</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">while</span>(<span class="literal">true</span>)</div><div class="line">            &#123;</div><div class="line">                num1 = getRandPoints();</div><div class="line">                num2 = getRandPoints();</div><div class="line">                <span class="keyword">if</span>(num1 + num2 == <span class="number">7</span>)</div><div class="line">                &#123;</div><div class="line">                    <span class="built_in">printf</span>(<span class="string">"you lose\n"</span>);</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(num1 + num2 == sum)</div><div class="line">                &#123;</div><div class="line">                    <span class="built_in">printf</span>(<span class="string">"you win\n"</span>);</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    srand(time(<span class="literal">NULL</span>));</div><div class="line">    diceGame();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>题目本身没什么难度，但是通过模拟一亿次游戏，发现胜率大概在0.4929，赌博害人啊。</p>
+<h1 id="约瑟夫问题"><a href="#约瑟夫问题" class="headerlink" title="约瑟夫问题"></a>约瑟夫问题</h1><ul>
+<li>描述<br>着名犹太历史学家Josephus有过以下的故事：<br>在罗马人占领乔塔帕特后，39 个犹太人与Josephus及他的朋友躲到一个洞中，39个犹太人决定宁愿死也不要被敌人到，于是决定了一个自杀方式，41个人排成一个圆圈，由第1个人开始报数，每报数到第3人该人就必须自杀，然后再由下一个重新报数，直到所有人都自杀身亡为止。然而Josephus 和他的朋友并不想遵从，Josephus要他的朋友先假装遵从，他将朋友与自己安排在第16个与第31个位置，于是逃过了这场死亡游戏。</li>
+</ul>
+<p>给定N(总人数)，M(间隔)，要求最后一个留着的人</p>
+<ul>
+<li><p>解法1：使用数组</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> const <span class="keyword">int</span> N = <span class="number">41</span>;</div><div class="line"><span class="keyword">static</span> const <span class="keyword">int</span> M = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="keyword">void</span> josephus1()</div><div class="line">&#123;</div><div class="line">    bool arr[N + <span class="number">1</span>];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i)</div><div class="line">        arr[i] = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">int</span> killSum = <span class="number">0</span>, curCount = <span class="number">0</span>, <span class="keyword">index</span> = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">index</span> == N)</div><div class="line">            <span class="keyword">index</span> = <span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">index</span>++;</div><div class="line">        <span class="keyword">if</span>(arr[<span class="keyword">index</span>] == <span class="keyword">true</span>)</div><div class="line">        &#123;</div><div class="line">            curCount++;</div><div class="line">            <span class="keyword">if</span>(curCount == <span class="number">3</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(killSum == N - <span class="number">1</span>)</div><div class="line">                &#123;</div><div class="line">                    printf(<span class="string">"last is:%d\n"</span>, <span class="keyword">index</span>);</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">                arr[<span class="keyword">index</span>] = <span class="keyword">false</span>;</div><div class="line">                killSum++;</div><div class="line">                curCount = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>牛b解法<br>参考<a href="http://blog.csdn.net/tingyun_say/article/details/52343897" target="_blank" rel="external">约瑟夫环问题详解</a>,<a href="http://blog.csdn.net/wusuopubupt/article/details/18214999" target="_blank" rel="external">用递归的思想解决Josephus问题</a></p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//返回人编号（从<span class="number">0</span>开始）</div><div class="line"><span class="built_in">int</span> josephus_recursive(<span class="built_in">int</span> n, <span class="built_in">int</span> m)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> (josephus_recursive(n - <span class="number">1</span>, m) + m) % n;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">int</span> josephus_loop(<span class="built_in">int</span> n, <span class="built_in">int</span> m)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">int</span> <span class="literal">result</span> = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">2</span>; i &lt;= n; ++i)</div><div class="line">        <span class="literal">result</span> = (<span class="literal">result</span> + m) % i;</div><div class="line">    <span class="keyword">return</span> <span class="literal">result</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>大牛还是厉害，啥也不说了，搬砖吧。</p>
+<h1 id="排列组合"><a href="#排列组合" class="headerlink" title="排列组合"></a>排列组合</h1><ul>
+<li><p>描述<br>将一组数字、字母或符号进行排列，以得到不同的组合顺序，例如1 2 3这三个数的排列组合有：<br>1 2 3、1 3 2、2 1 3、2 3 1、3 1 2、3 2 1。</p>
+</li>
+<li><p>实现</p>
+<figure class="highlight rsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">void combination(char src[], int <span class="built_in">depth</span>)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(src[<span class="built_in">depth</span>] == <span class="string">'\0'</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, src);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    combination(src, <span class="built_in">depth</span> + <span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span>(int i = <span class="built_in">depth</span> + <span class="number">1</span>; src[i] != <span class="string">'\0'</span>; ++i)</div><div class="line">    &#123;</div><div class="line">        swap(src[i], src[<span class="built_in">depth</span>]);</div><div class="line">        combination(src, <span class="built_in">depth</span> + <span class="number">1</span>);</div><div class="line">        swap(src[i], src[<span class="built_in">depth</span>]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="格雷码"><a href="#格雷码" class="headerlink" title="格雷码"></a>格雷码</h1><ul>
+<li><p>描述<br>Gray Code是一个数列集合，每个数使用二进位来表示，假设使用n位元来表示每个数好了，任<br>两个数之间只有一个位元值不同，例如以下为3位元的Gray Code：<br>000 001 011 010 110 111 101 100<br>4位元的Gray Code如下：<br>0000 0001 0011 0010 0110 0111 0101 0100<br>1100 1101 1111 1110 1010 1011 1001 1000</p>
+</li>
+<li><p>解法<br>看到这个问题，第一直觉就是找规律，我找到的规律如下（以4位为例）</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">第一次变化(<span class="number">0000</span>-&gt;<span class="number">0001</span>)的比特位为第<span class="number">0</span>位</div><div class="line">第二次变化(<span class="number">0001</span>-&gt;<span class="number">0011</span>)的比特位为第右数第一个<span class="number">1</span>的左边位</div><div class="line">第三次变化(<span class="number">0011</span>-&gt;<span class="number">0010</span>)的比特位为第<span class="number">0</span>位</div><div class="line">第四次变化(<span class="number">0010</span>-&gt;<span class="number">0110</span>)的比特位为第右数第一个<span class="number">1</span>的左边位</div><div class="line">...</div><div class="line">变化的比特位为：</div><div class="line">- 奇数项取反第<span class="number">0</span>位</div><div class="line">- 偶数项取反右数第一个<span class="number">1</span>的左边位</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//print bytes of number</span></div><div class="line"><span class="keyword">void</span> printBytes(<span class="built_in">int</span> <span class="built_in">num</span>, <span class="built_in">int</span> len)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">assert</span>(len &gt; <span class="number">0</span>);</div><div class="line">    <span class="built_in">bool</span> *stack = <span class="keyword">new</span> <span class="built_in">bool</span>[len]&#123;<span class="number">0</span>&#125;;</div><div class="line">    <span class="built_in">int</span> top = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">while</span>(<span class="built_in">num</span> != <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(++top &gt;= len)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        stack[top] = <span class="built_in">num</span> % <span class="number">2</span>;</div><div class="line">        <span class="built_in">num</span> /= <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">    top = len - <span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(top &gt;= <span class="number">0</span>)</div><div class="line">        printf(<span class="string">"%d"</span>, stack[top--]);</div><div class="line">    printf(<span class="string">"\n"</span>);</div><div class="line">    delete []stack;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//获取从右往左数，第一个1的位置</span></div><div class="line"><span class="built_in">int</span> posOfFirst1(<span class="built_in">int</span> <span class="built_in">num</span>)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="built_in">num</span> == <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    <span class="built_in">int</span> pos = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>((<span class="built_in">num</span> &amp; (<span class="number">1</span> &lt;&lt; pos)) == <span class="number">0</span>)</div><div class="line">        pos++;</div><div class="line">    <span class="keyword">return</span> pos;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> printGrayCode(<span class="built_in">int</span> len)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(len &lt;= <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="built_in">int</span> count = <span class="number">0</span>, <span class="built_in">num</span> = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(count % <span class="number">2</span> != <span class="number">0</span>)</div><div class="line">            <span class="built_in">num</span> ^= <span class="number">1</span>;                  <span class="comment">//奇数项总是取反第0位</span></div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            <span class="built_in">int</span> pos = posOfFirst1(<span class="built_in">num</span>);</div><div class="line">            <span class="keyword">if</span>(pos == len - <span class="number">1</span>)</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">if</span>(pos != <span class="number">-1</span>)</div><div class="line">                <span class="built_in">num</span> ^= <span class="number">1</span> &lt;&lt; (pos + <span class="number">1</span>); <span class="comment">//非0偶数项，取反右边第一个1的左边位元</span></div><div class="line">        &#125;</div><div class="line">        printBytes(<span class="built_in">num</span>, len);</div><div class="line">        count++;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="产生可能的集合"><a href="#产生可能的集合" class="headerlink" title="产生可能的集合"></a>产生可能的集合</h1><ul>
+<li>描述<br>给定一组数字或符号，产生所有可能的集合（包括空集合）， 例如给定1 2 3，则可能的集合为：<br>{}、{1}、{1,2}、{1,2,3}、{1,3}、{2}、{2,3}、{3}。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">generateAllSet</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *src)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(src);</div><div class="line">    assert(len &lt;= <span class="number">32</span>);</div><div class="line">    <span class="comment">//以一个整形来表示所有可能的集合</span></div><div class="line">    <span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"&#123;"</span>);</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>((<span class="number">1</span> &lt;&lt; i) &gt; num)</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">if</span>(((<span class="number">1</span> &lt;&lt; i) &amp; num) != <span class="number">0</span>)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">if</span>(count != <span class="number">0</span>)</div><div class="line">                    <span class="built_in">printf</span>(<span class="string">","</span>);</div><div class="line">                <span class="built_in">printf</span>(<span class="string">"%c"</span>, src[i]);</div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"&#125;\n"</span>);</div><div class="line">        <span class="keyword">if</span>(++num &gt;= (<span class="number">1</span> &lt;&lt; len))</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *src = <span class="string">"123"</span>;</div><div class="line">generateAllSet(src);</div></pre></td></tr></table></figure>
+<h1 id="生成m元素集合的n个元素子集"><a href="#生成m元素集合的n个元素子集" class="headerlink" title="生成m元素集合的n个元素子集"></a>生成m元素集合的n个元素子集</h1><ul>
+<li>描述<br>假设有5个元素的集点，取出3个元素的可能子集如下：<br>{1 2 3}、{1 2 4 }、{1 2 5}、{1 3 4}、{1 3 5}、{1 4 5}、{2 3 4}、{2 3 5}、{2 4 5}、<br>{3 4 5}</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/经典算法系列/">经典算法系列</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/03/10/经典算法系列（四）/" data-title="经典算法系列（四） | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/03/09/常见背包问题合集/"  title="常见背包问题合集">
+ <strong>下一篇：</strong><br/> 
+ <span>常见背包问题合集
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#中序转后序"><span class="toc-number">1.</span> <span class="toc-text">中序转后序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#洗扑克牌"><span class="toc-number">2.</span> <span class="toc-text">洗扑克牌</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#赌博游戏"><span class="toc-number">3.</span> <span class="toc-text">赌博游戏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#约瑟夫问题"><span class="toc-number">4.</span> <span class="toc-text">约瑟夫问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#排列组合"><span class="toc-number">5.</span> <span class="toc-text">排列组合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#格雷码"><span class="toc-number">6.</span> <span class="toc-text">格雷码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#产生可能的集合"><span class="toc-number">7.</span> <span class="toc-text">产生可能的集合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#生成m元素集合的n个元素子集"><span class="toc-number">8.</span> <span class="toc-text">生成m元素集合的n个元素子集</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>25</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
