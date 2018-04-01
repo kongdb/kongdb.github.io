@@ -1,0 +1,550 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>C++智能指针 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="简单实现C++ 11中的两种种智能指针。">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++智能指针">
+<meta property="og:url" content="http://yoursite.com/2018/03/31/简单实现自己的C++智能指针/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="简单实现C++ 11中的两种种智能指针。">
+<meta property="og:updated_time" content="2018-03-31T03:43:18.654Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++智能指针">
+<meta name="twitter:description" content="简单实现C++ 11中的两种种智能指针。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/31/简单实现自己的C++智能指针/" title="C++智能指针" itemprop="url">C++智能指针</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-31T02:23:51.000Z" itemprop="datePublished"> 发表于 2018-03-31</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#unique-ptr"><span class="toc-number">1.</span> <span class="toc-text">unique_ptr</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shared-ptr"><span class="toc-number">2.</span> <span class="toc-text">shared_ptr</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#weak-ptr"><span class="toc-number">3.</span> <span class="toc-text">weak_ptr</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="unique-ptr"><a href="#unique-ptr" class="headerlink" title="unique_ptr"></a>unique_ptr</h1><p>简单实现，没有考虑第二个资源释放的模板参数等，慢慢来<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#include &lt;stdio.h&gt;</span></div><div class="line"><span class="meta">#include &lt;assert.h&gt;</span></div><div class="line"><span class="meta">#include "gtest/gtest.h"</span></div><div class="line"></div><div class="line"><span class="title">template</span> &lt;typename <span class="type">T</span>&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Unique_ptr</span></span></div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    explicit <span class="type">Unique_ptr</span>(<span class="type">T</span> *<span class="title">raw</span>)</div><div class="line">        : raw_ptr_(<span class="title">raw</span>)</div><div class="line">    &#123;&#125;</div><div class="line">    <span class="type">Unique_ptr</span>(<span class="title">const</span> <span class="type">Unique_ptr</span> &amp;) = delete;</div><div class="line">    <span class="type">Unique_ptr</span> &amp;operator=(<span class="title">const</span> <span class="type">Unique_ptr</span> &amp;) = delete;</div><div class="line">    <span class="type">Unique_ptr</span>(<span class="type">Unique_ptr</span> &amp;&amp;<span class="title">rhs</span>)</div><div class="line">        : raw_ptr_(<span class="title">rhs</span>.<span class="title">raw_ptr_</span>)</div><div class="line">    &#123;</div><div class="line">        rhs.raw_ptr_ = nullptr;</div><div class="line">    &#125;</div><div class="line">    <span class="type">Unique_ptr</span> &amp;operator=(<span class="type">Unique_ptr</span> &amp;&amp;<span class="title">rhs</span>)</div><div class="line">    &#123;</div><div class="line">        if(<span class="title">this</span> != &amp;<span class="title">rhs</span>)</div><div class="line">        &#123;</div><div class="line">            reset(<span class="title">rhs</span>.<span class="title">raw_ptr_</span>);</div><div class="line">            rhs.raw_ptr_ = nullptr;</div><div class="line">        &#125;</div><div class="line">        return *this;</div><div class="line">    &#125;</div><div class="line">    ~<span class="type">Unique_ptr</span>()</div><div class="line">    &#123;</div><div class="line">        if(<span class="title">raw_ptr_</span>)</div><div class="line">            delete raw_ptr_;</div><div class="line">    &#125;</div><div class="line">    void reset(<span class="type">T</span> *<span class="title">raw</span> = <span class="title">nullptr</span>)</div><div class="line">    &#123;</div><div class="line">        if(<span class="title">raw_ptr_</span>)</div><div class="line">            delete raw_ptr_;</div><div class="line">        raw_ptr_ = raw;</div><div class="line">    &#125;</div><div class="line">    <span class="type">T</span> *release()</div><div class="line">    &#123;</div><div class="line">        <span class="type">T</span> *temp = raw_ptr_;</div><div class="line">        raw_ptr_ = nullptr;</div><div class="line">        return temp;</div><div class="line">    &#125;</div><div class="line">    <span class="type">T</span> &amp;operator *()</div><div class="line">    &#123;</div><div class="line">        assert(<span class="title">raw_ptr_</span> != <span class="title">nullptr</span>);</div><div class="line">        return *raw_ptr_;</div><div class="line">    &#125;</div><div class="line">    <span class="type">T</span> *operator-&gt;()</div><div class="line">    &#123;</div><div class="line">        assert(<span class="title">raw_ptr_</span> != <span class="title">nullptr</span>);</div><div class="line">        return raw_ptr_;</div><div class="line">    &#125;</div><div class="line">private:</div><div class="line">    <span class="type">T</span> *raw_ptr_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">template &lt;typename <span class="type">T</span>, typename ...<span class="type">Args</span>&gt;</div><div class="line"><span class="type">Unique_ptr</span>&lt;<span class="type">T</span>&gt; <span class="type">Make_Unique</span>(<span class="title">const</span> <span class="type">Args</span> &amp;...<span class="title">rest</span>)</div><div class="line">&#123;</div><div class="line">    return <span class="type">Unique_ptr</span>&lt;<span class="type">T</span>&gt;(<span class="title">new</span> <span class="type">T</span>(<span class="title">rest</span>...));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">class</span> <span class="type">Object</span></div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    explicit <span class="type">Object</span>(<span class="title">int</span> <span class="title">id</span>) : id_(<span class="title">id</span>) &#123; instances++; &#125;</div><div class="line">    int operation() const &#123; return id_; &#125;</div><div class="line">    <span class="type">Object</span>(<span class="title">const</span> <span class="type">Object</span> &amp;) = delete;</div><div class="line">    <span class="type">Object</span> &amp;operator=(<span class="title">const</span> <span class="type">Object</span> &amp;) = delete;</div><div class="line">    <span class="type">Object</span>(<span class="type">Object</span> &amp;&amp;<span class="title">rhs</span>) = delete;</div><div class="line">    <span class="type">Object</span> &amp;operator=(<span class="type">Object</span> &amp;&amp;<span class="title">rhs</span>) = delete;</div><div class="line">    ~<span class="type">Object</span>() &#123; instances<span class="comment">--; &#125;</span></div><div class="line">    static int instances;</div><div class="line">private:</div><div class="line">    int id_;</div><div class="line">&#125;;</div><div class="line">int <span class="type">Object</span>::instances = 0;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">UniquePtrTest</span>, <span class="type">NullPointer</span>)</div><div class="line">&#123;</div><div class="line">    auto pnull = <span class="type">Unique_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">nullptr</span>);</div><div class="line">    <span class="type">ASSERT_EQ</span>(0, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">UniquePtrTest</span>, <span class="type">AutoRelease</span>)</div><div class="line">&#123;</div><div class="line">    &#123;</div><div class="line">        auto pobj1 = <span class="type">Unique_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="type">ASSERT_EQ</span>(0, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">UniquePtrTest</span>, <span class="type">MoveCopy</span>)</div><div class="line">&#123;</div><div class="line">    auto pobj1 = <span class="type">Unique_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">    auto pobj2(<span class="title">std</span>::<span class="title">move</span>(<span class="title">pobj1</span>));</div><div class="line">    <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">UniquePtrTest</span>, <span class="type">MoveOperator</span>)</div><div class="line">&#123;</div><div class="line">    auto pobj1 = <span class="type">Unique_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">    auto pobj2 = std::move(<span class="title">pobj1</span>);</div><div class="line">    <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">UniquePtrTest</span>, <span class="type">Reset</span>)</div><div class="line">&#123;</div><div class="line">    auto pobj1 = <span class="type">Unique_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">    pobj1.reset();</div><div class="line">    <span class="type">ASSERT_EQ</span>(0, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">    pobj1.reset(<span class="title">new</span> <span class="type">Object(1)</span>);</div><div class="line">    <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">UniquePtrTest</span>, <span class="type">Release</span>)</div><div class="line">&#123;</div><div class="line">    auto pobj1 = <span class="type">Unique_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">    <span class="type">Object</span> *p = pobj1.release();</div><div class="line">    <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">    <span class="type">ASSERT_EQ</span>(3, <span class="title">p</span>-&gt;<span class="title">operation</span>());</div><div class="line">    delete p;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">UniquePtrTest</span>, <span class="type">Operator</span>)</div><div class="line">&#123;</div><div class="line">    auto pobj1 = <span class="type">Unique_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">    <span class="type">ASSERT_EQ</span>(3, (*<span class="title">pobj1</span>).operation());</div><div class="line">    <span class="type">ASSERT_EQ</span>(3, <span class="title">pobj1</span>-&gt;<span class="title">operation</span>());</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">int main(<span class="title">int</span> <span class="title">argc</span>, <span class="title">char</span> **<span class="title">argv</span>)</div><div class="line">&#123;</div><div class="line">    ::testing::<span class="type">InitGoogleTest</span>(&amp;<span class="title">argc</span>, <span class="title">argv</span>);</div><div class="line">    return <span class="type">RUN_ALL_TESTS</span>();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h1><p>依然是简单实现，意思一下。没有考虑传递第二个函数指针的功能<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#include &lt;stdio.h&gt;</span></div><div class="line"><span class="meta">#include &lt;assert.h&gt;</span></div><div class="line"><span class="meta">#include "gtest/gtest.h"</span></div><div class="line"></div><div class="line"><span class="title">template</span> &lt;typename <span class="type">T</span>&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="type">Shared_ptr</span></span></div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    explicit <span class="type">Shared_ptr</span>(<span class="type">T</span> *<span class="title">raw</span>)</div><div class="line">        : raw_ptr_(<span class="title">raw</span>)</div><div class="line">    &#123;</div><div class="line">        if(<span class="title">raw_ptr_</span>)</div><div class="line">            users_ = new int(1);</div><div class="line">        else</div><div class="line">            users_ = new int(0);</div><div class="line">    &#125;</div><div class="line">    //注意这里一定是浅拷贝</div><div class="line">    <span class="type">Shared_ptr</span>(<span class="title">const</span> <span class="type">Shared_ptr</span> &amp;<span class="title">rhs</span>)</div><div class="line">    &#123;</div><div class="line">        shallow_copy(<span class="title">rhs</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="type">Shared_ptr</span> &amp;operator=(<span class="title">const</span> <span class="type">Shared_ptr</span> &amp;<span class="title">rhs</span>)</div><div class="line">    &#123;</div><div class="line">        if(<span class="title">this</span> != &amp;<span class="title">rhs</span>)</div><div class="line">        &#123;</div><div class="line">            checkIsLast();</div><div class="line">            shallow_copy(<span class="title">rhs</span>);</div><div class="line">        &#125;</div><div class="line">        return *this;   </div><div class="line">    &#125;</div><div class="line">    ~<span class="type">Shared_ptr</span>()</div><div class="line">    &#123;</div><div class="line">        checkIsLast();</div><div class="line">    &#125;</div><div class="line">    int use_count() const</div><div class="line">    &#123;</div><div class="line">        return users_ == nullptr ? 0 : *users_;</div><div class="line">    &#125;</div><div class="line">    <span class="type">T</span> &amp;operator*()</div><div class="line">    &#123;</div><div class="line">        assert(<span class="title">raw_ptr_</span> != <span class="title">nullptr</span>);</div><div class="line">        return *raw_ptr_;</div><div class="line">    &#125;</div><div class="line">    <span class="type">T</span> *operator-&gt;()</div><div class="line">    &#123;</div><div class="line">        assert(<span class="title">raw_ptr_</span> != <span class="title">nullptr</span>);</div><div class="line">        return raw_ptr_;</div><div class="line">    &#125;</div><div class="line">private:</div><div class="line">    void shallow_copy(<span class="title">const</span> <span class="type">Shared_ptr</span> &amp;<span class="title">rhs</span>)</div><div class="line">    &#123;</div><div class="line">        raw_ptr_ = rhs.raw_ptr_;</div><div class="line">        users_ = rhs.users_;</div><div class="line">        ++(*<span class="title">users_</span>);</div><div class="line">    &#125;</div><div class="line">    void checkIsLast()</div><div class="line">    &#123;</div><div class="line">        if(<span class="comment">--(*users_) == 0)</span></div><div class="line">        &#123;</div><div class="line">            <span class="title">delete</span> <span class="title">raw_ptr_</span>;</div><div class="line">            <span class="title">raw_ptr_</span> = <span class="title">nullptr</span>;</div><div class="line">            <span class="title">delete</span> <span class="title">users_</span>;</div><div class="line">            <span class="title">users_</span> = <span class="title">nullptr</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="type">T</span> *<span class="title">raw_ptr_</span>;</div><div class="line">    <span class="title">int</span> *<span class="title">users_</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">SharedPtrTest</span>, <span class="type">NullPointer</span>)</div><div class="line">&#123;</div><div class="line">    auto pnull = <span class="type">Shared_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">nullptr</span>);</div><div class="line">    <span class="type">ASSERT_EQ</span>(0, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">SharedPtrTest</span>, <span class="type">AutoRelease</span>)</div><div class="line">&#123;</div><div class="line">    &#123;</div><div class="line">        auto pobj1 = <span class="type">Shared_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(1, <span class="title">pobj1</span>.<span class="title">use_count</span>());</div><div class="line">    &#125;</div><div class="line">    <span class="type">ASSERT_EQ</span>(0, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">SharedPtrTest</span>, <span class="type">CopyCtr</span>)</div><div class="line">&#123;</div><div class="line">    &#123;</div><div class="line">        auto pobj1 = <span class="type">Shared_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">        auto pobj2(<span class="title">pobj1</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(2, <span class="title">pobj2</span>.<span class="title">use_count</span>());</div><div class="line">    &#125;</div><div class="line">    <span class="type">ASSERT_EQ</span>(0, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">TEST</span>(<span class="type">SharedPtrTest</span>, <span class="type">Assignment</span>)</div><div class="line">&#123;</div><div class="line">    &#123;</div><div class="line">        auto pobj1 = <span class="type">Shared_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(3)</span>);</div><div class="line">        auto pobj2 = <span class="type">Shared_ptr</span>&lt;<span class="type">Object</span>&gt;(<span class="title">new</span> <span class="type">Object(4)</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(2, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(1, <span class="title">pobj1</span>.<span class="title">use_count</span>());</div><div class="line">        <span class="type">ASSERT_EQ</span>(1, <span class="title">pobj2</span>.<span class="title">use_count</span>());</div><div class="line">        pobj1 = pobj2;</div><div class="line">        <span class="type">ASSERT_EQ</span>(1, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">        <span class="type">ASSERT_EQ</span>(2, <span class="title">pobj1</span>.<span class="title">use_count</span>());</div><div class="line">        <span class="type">ASSERT_EQ</span>(2, <span class="title">pobj2</span>.<span class="title">use_count</span>());</div><div class="line">        <span class="type">ASSERT_EQ</span>(4, <span class="title">pobj1</span>-&gt;<span class="title">operation</span>());</div><div class="line">    &#125;</div><div class="line">    <span class="type">ASSERT_EQ</span>(0, <span class="type">Object</span>::<span class="title">instances</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main(<span class="title">int</span> <span class="title">argc</span>, <span class="title">char</span> **<span class="title">argv</span>)</div><div class="line">&#123;</div><div class="line">    ::testing::<span class="type">InitGoogleTest</span>(&amp;<span class="title">argc</span>, <span class="title">argv</span>);</div><div class="line">    return <span class="type">RUN_ALL_TESTS</span>();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="weak-ptr"><a href="#weak-ptr" class="headerlink" title="weak_ptr"></a>weak_ptr</h1><p>待续</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/03/31/简单实现自己的C++智能指针/" data-title="C++智能指针 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/03/31/图论算法/" title="图论算法">
+  <strong>上一篇：</strong><br/>
+  <span>
+  图论算法</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/03/10/经典算法系列（四）/"  title="经典算法系列（四）">
+ <strong>下一篇：</strong><br/> 
+ <span>经典算法系列（四）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#unique-ptr"><span class="toc-number">1.</span> <span class="toc-text">unique_ptr</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shared-ptr"><span class="toc-number">2.</span> <span class="toc-text">shared_ptr</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#weak-ptr"><span class="toc-number">3.</span> <span class="toc-text">weak_ptr</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>26</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
