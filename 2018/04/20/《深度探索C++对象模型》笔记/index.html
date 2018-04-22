@@ -1,0 +1,797 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>《深度探索C++对象模型》读书笔记 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="把读书过程中的一些要点，心得，测试例子记录下来。">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《深度探索C++对象模型》读书笔记">
+<meta property="og:url" content="http://yoursite.com/2018/04/20/《深度探索C++对象模型》笔记/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="把读书过程中的一些要点，心得，测试例子记录下来。">
+<meta property="og:image" content="http://yoursite.com/images/C++对象模型/1.3.png">
+<meta property="og:image" content="http://yoursite.com/images/C++对象模型/1.4.png">
+<meta property="og:image" content="http://yoursite.com/images/C++对象模型/1.5.png">
+<meta property="og:image" content="http://yoursite.com/images/C++对象模型/1.6.png">
+<meta property="og:image" content="http://yoursite.com/images/C++对象模型/2.2.1.png">
+<meta property="og:image" content="http://yoursite.com/images/C++对象模型/2.2.2.png">
+<meta property="og:updated_time" content="2018-04-22T09:25:44.750Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《深度探索C++对象模型》读书笔记">
+<meta name="twitter:description" content="把读书过程中的一些要点，心得，测试例子记录下来。">
+<meta name="twitter:image" content="http://yoursite.com/images/C++对象模型/1.3.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/20/《深度探索C++对象模型》笔记/" title="《深度探索C++对象模型》读书笔记" itemprop="url">《深度探索C++对象模型》读书笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-20T12:23:51.000Z" itemprop="datePublished"> 发表于 2018-04-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#第一章：关于对象"><span class="toc-number">1.</span> <span class="toc-text">第一章：关于对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-对象模式"><span class="toc-number">1.1.</span> <span class="toc-text">C++对象模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键词带来的差异"><span class="toc-number">1.2.</span> <span class="toc-text">关键词带来的差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的差异"><span class="toc-number">1.3.</span> <span class="toc-text">对象的差异</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针的类型"><span class="toc-number">1.3.1.</span> <span class="toc-text">指针的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加上多态之后"><span class="toc-number">1.3.2.</span> <span class="toc-text">加上多态之后</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构造函数语意学"><span class="toc-number">2.</span> <span class="toc-text">构造函数语意学</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Default-Constructor的建构操作"><span class="toc-number">2.1.</span> <span class="toc-text">Default Constructor的建构操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Copy-Constructor的建构操作"><span class="toc-number">2.2.</span> <span class="toc-text">Copy Constructor的建构操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序转换语意学（Program-Transformation-Semantics）"><span class="toc-number">2.3.</span> <span class="toc-text">程序转换语意学（Program Transformation Semantics）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#成员们的初始化队伍（Member-Initialization-Semantics）"><span class="toc-number">2.4.</span> <span class="toc-text">成员们的初始化队伍（Member Initialization Semantics）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Data语意学"><span class="toc-number">3.</span> <span class="toc-text">Data语意学</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Member的绑定（The-Binding-of-a-Data-Member）"><span class="toc-number">3.1.</span> <span class="toc-text">Data Member的绑定（The Binding of a Data Member）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Member的布局（Data-Member-Layout）"><span class="toc-number">3.2.</span> <span class="toc-text">Data Member的布局（Data Member Layout）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Member的存取"><span class="toc-number">3.3.</span> <span class="toc-text">Data Member的存取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承与Data-Member"><span class="toc-number">3.4.</span> <span class="toc-text">继承与Data Member</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象成员的效率（Object-Member-Efficency）"><span class="toc-number">3.5.</span> <span class="toc-text">对象成员的效率（Object Member Efficency）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指向Data-Members的指针（Pointer-to-Data-Members）"><span class="toc-number">3.6.</span> <span class="toc-text">指向Data Members的指针（Pointer to Data Members）</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>以下所有程序的测试环境为：win10 x64及Linux x86_64</p>
+<h1 id="第一章：关于对象"><a href="#第一章：关于对象" class="headerlink" title="第一章：关于对象"></a>第一章：关于对象</h1><h2 id="C-对象模式"><a href="#C-对象模式" class="headerlink" title="C++对象模式"></a>C++对象模式</h2><p>C++中有两种class data members : static 和nonstatic<br>有三种class member functions  : static、nonstatic和virtual</p>
+<p>示例程序如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Point(<span class="keyword">float</span> xval) : x_(xval) &#123;&#125;</div><div class="line">    <span class="keyword">virtual</span> ~Point() &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">float</span> <span class="title">x</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> x_; &#125;</div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">PointCount</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> point_count_; &#125;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">    <span class="keyword">virtual</span> <span class="built_in">std</span>::<span class="function">ostream &amp;<span class="title">print</span><span class="params">(<span class="built_in">std</span>::ostream &amp;out)</span> <span class="keyword">const</span></span></div><div class="line">    &#123;</div><div class="line">        out&lt;&lt; <span class="string">"x: "</span>&lt;&lt; x_;</div><div class="line">        <span class="keyword">return</span> out;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">float</span> x_;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> point_count_;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>书中介绍三种方法来modeling出各种data members和function members</p>
+<ol>
+<li>简单对象模型（A Simple Object Model）</li>
+<li>表格驱动对象模型（A Table-driven Object Model）</li>
+<li>C++对象模型（The C++ Object Model）</li>
+</ol>
+<p>前两种模型都未真正应用到C++编译器上，第三种模型才是当前正使用的。要点如下</p>
+<ul>
+<li>Nonstatic data members被置于每一个class object之内</li>
+<li>static data members则被存放在所有的class object之外</li>
+<li>Static和nonstatic function members也被放在所有的class object之外</li>
+<li>Virtual function以以下两个步骤支持之<ol>
+<li>每一个class产生一堆指向virtual functions的指针，放在表格中。该表格被称为virtual table(vtbl)</li>
+<li>每一个class objec被添加一个指针，指向相关的virtual table.通常这个指针被称为vptr。vptr的设定和重置都由每一个class的ctr,dtr,copy运算符自动完成。每一个class所关联的type_info object通常放在表格的第一个slot处</li>
+</ol>
+</li>
+</ul>
+<p>书中用图像表示如下：<br><img src="/images/C++对象模型/1.3.png" alt="image"></p>
+<p>我的注解：图中vptr虽然放在整个class object的最后，但据我测试得知，不管是ms的cl还是g++，都是将vptr放到最前面。<br>怎么验证书上说的呢，下面一步步来测试</p>
+<ul>
+<li><p>对象大小</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">TEST(PointTest, <span class="built_in">size</span>)</div><div class="line">&#123;</div><div class="line">    EXPECT_EQ(<span class="number">4</span>, <span class="keyword">sizeof</span>(<span class="keyword">float</span>));</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//in windows, vptr size is 4 Bytes.</span></div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(Point));</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//in linux, vptr size is 8, and has 4 Bytes alignment</span></div><div class="line">    EXPECT_EQ(<span class="number">16</span>, <span class="keyword">sizeof</span>(Point));</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>data member的相对位置</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">TEST(PointTest, datamembers)</div><div class="line">&#123;</div><div class="line">    <span class="function">Point <span class="title">obj</span><span class="params">(<span class="number">7.0</span>)</span></span>;</div><div class="line">    Point *pobj = &amp;obj;</div><div class="line">    <span class="keyword">float</span> *raw = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">float</span>*&gt;(pobj);    </div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//Beacuse vptr size is 4 Bytes, so the index '1' is x_;</span></div><div class="line">    EXPECT_FLOAT_EQ(<span class="number">7.0</span>, raw[<span class="number">1</span>]);</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//Beacuse vptr size is 8 bytes, so the index '2' is x_;</span></div><div class="line">    EXPECT_FLOAT_EQ(<span class="number">7.0</span>, raw[<span class="number">2</span>]);</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过vptr找到type_info object<br>还未找到好的验证办法</p>
+</li>
+</ul>
+<p>对象模型如何影响程序<br>书中以一个例子说明，不同的对象模型导致程序会被相应修改<br>假设class X定义了copy ctr, virtual dtr和virtual function foo<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//转换前</span></div><div class="line"><span class="function">X <span class="title">foobar</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    X xx;</div><div class="line">    X *px= <span class="keyword">new</span> X;</div><div class="line">    xx.foo();</div><div class="line">    px-&gt;foo();</div><div class="line">    <span class="keyword">delete</span> px;</div><div class="line">    <span class="keyword">return</span> xx;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//可能被转换为</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">foobar</span><span class="params">(X &amp;result_)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//构造result_取代local xx</span></div><div class="line">    result_.X::X();</div><div class="line">    <span class="comment">//扩展X *px = new X;</span></div><div class="line">    <span class="comment">//先分配相应内存</span></div><div class="line">    px = _new(<span class="keyword">sizeof</span>(X));</div><div class="line">    <span class="comment">//再调用构造函数（有点像C++11的allocator做的事哈）</span></div><div class="line">    <span class="keyword">if</span>(px != <span class="number">0</span>)</div><div class="line">        px-&gt;X::X();</div><div class="line">    <span class="comment">//扩展xx.foo(),注意这里不使用virtual机制</span></div><div class="line">    foo(&amp;result_);</div><div class="line"></div><div class="line">    <span class="comment">//使用virtual机制扩展px-&gt;foo()</span></div><div class="line">    <span class="comment">//虚函数表的索引2即为foo函数</span></div><div class="line">    (*px-&gt;vtbl[<span class="number">2</span>])(px);</div><div class="line"></div><div class="line">    <span class="comment">//扩展delete px</span></div><div class="line">    <span class="keyword">if</span>(px != <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//虚函数表的索引1为析构函数</span></div><div class="line">        (*px-&gt;vtbl[<span class="number">1</span>])(px);</div><div class="line">        _delete(px);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="关键词带来的差异"><a href="#关键词带来的差异" class="headerlink" title="关键词带来的差异"></a>关键词带来的差异</h2><p>书中说下面的代码是一个函数调用操作，这个没能理解<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//编译报错：invalid conversion from ‘<span class="built_in">int</span>’ <span class="keyword">to</span> ‘<span class="built_in">int</span>*’</div><div class="line">//看出错信息，应该是编译器尝试将pf定义成<span class="built_in">int</span> *，并且尝试将<span class="number">1024</span>赋值给<span class="built_in">int</span> *</div><div class="line"><span class="built_in">int</span> (*pf)(<span class="number">1024</span>)<span class="comment">;</span></div></pre></td></tr></table></figure></p>
+<p>下面的操作是声明，这个好理解的，就是最简单的函数指针么<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> <span class="number">10</span>; &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">   <span class="comment">//declaration of ptr</span></div><div class="line">   <span class="keyword">int</span> (*ptr)();</div><div class="line">   ptr = func;</div><div class="line">   <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; ptr()&lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>struct和class的取舍<br>我理解书中的意思：struct和class并没有本质的区别，当一个人感觉“比较好”的时候，可以考虑使用struct。<br>但是书中也明确说明了，对于template是不能使用struct<br>的，毕竟C中没有template嘛。</li>
+</ul>
+<p>但是有时候C程序员的巧记有时候却成为C++程序员的陷阱。比如：把单一元素的数组放置一个struct的尾端，于是每一个struct objects可以拥有可变大小的数组<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">/*stuff*/</span></div><div class="line">    <span class="built_in">char</span> pc[<span class="number">1</span>];</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//假设这里取得了字符串char *str;</span></div><div class="line"><span class="comment">//需要把str放到mumble的尾部</span></div><div class="line"></div><div class="line"><span class="comment">//struct mumble的长度，加上存储字符串需要的长度</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span> *pmumb1 = (<span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span> *)</div><div class="line">    malloc(<span class="keyword">sizeof</span>(<span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span>) + strlen(<span class="built_in">str</span>) + <span class="number">1</span>);</div><div class="line">strcpy(pmumb1-&gt;pc, <span class="built_in">str</span>);</div></pre></td></tr></table></figure></p>
+<p>测试如下<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span></div><div class="line">&#123;</div><div class="line">    int data;</div><div class="line">    <span class="built_in">char</span> pc[<span class="number">1</span>];</div><div class="line">&#125;;</div><div class="line"></div><div class="line">void test()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">const</span> <span class="built_in">char</span> *<span class="built_in">str</span> = <span class="string">"hello world"</span>;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span> *pmumb1 = (<span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span> *)</div><div class="line">        malloc(<span class="keyword">sizeof</span>(<span class="class"><span class="keyword">struct</span> <span class="title">mumble</span></span>) + strlen(<span class="built_in">str</span>) + <span class="number">1</span>);</div><div class="line">    strcpy(pmumb1-&gt;pc, <span class="built_in">str</span>);</div><div class="line">    printf(<span class="string">"%s\n"</span>, pmumb1-&gt;pc);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>C的这种做法有一个前提条件，就是：pc一定要指向struct的末尾。但是C++只能保证</p>
+<ol>
+<li>凡处于同一access section的数据，保证以其声明次序出现在内存布局中</li>
+<li>然而多个access sections的各笔数据，排列次序就不一定了</li>
+<li>基类，子类和数据成员没有谁先谁后的强制规定。</li>
+<li>vptr和vtbl的存在会影响内存布局</li>
+</ol>
+<p>如果需要一个复杂的class object的某部分数据，可以考虑使用组合（composition）</p>
+<h2 id="对象的差异"><a href="#对象的差异" class="headerlink" title="对象的差异"></a>对象的差异</h2><p>C++中直接支持三种parogramming paradigms（程序设计典范）</p>
+<ul>
+<li><p>程序模型（ptocedural model）<br>像C一样，比如字符串处理</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">char</span> boy[] = <span class="string">"Danny"</span>;</div><div class="line"><span class="keyword">char</span> *p_son = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(boy) + <span class="number">1</span>];</div><div class="line"><span class="built_in">strcpy</span>(p_son, boy);</div></pre></td></tr></table></figure>
+</li>
+<li><p>抽象数据类型模型（abstract data type model, ADT）<br>所谓的抽象就是和一组表达式（public接口）一起提供，而其运算定义仍然未知</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">string</span> girl = <span class="string">"Anna"</span>;</div><div class="line"><span class="comment">//operator=()</span></div><div class="line">String daughter = girl;</div></pre></td></tr></table></figure>
+</li>
+<li><p>面向对象模型（object-oriented model）<br>次模型有一些彼此相关的类型，通过一个抽象的base class被封装起来</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Book，Video等继承自Library_materials，实际调用时的类型不确定</span></div><div class="line">void check_in(Library_materials *pmat)</div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="title">if</span>(pmat-&gt;</span>late())</div><div class="line">        <span class="function"><span class="title">pmat</span>-&gt;</span>fine();</div><div class="line">    <span class="function"><span class="title">pmat</span>-&gt;</span>check_in();</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>为了支持OO的多态，只有通过pointer或者reference的间接处理，通过下面的例子来说明<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="number">10</span>; &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="number">20</span>; &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">TEST(OOTest, test)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//derived object</span></div><div class="line">    Derived dobj;</div><div class="line">    EXPECT_EQ(<span class="number">20</span>, dobj.id());</div><div class="line">    <span class="comment">//base object</span></div><div class="line">    Base bobj = dobj;</div><div class="line">    <span class="comment">//no polymorphic</span></div><div class="line">    EXPECT_EQ(<span class="number">10</span>, bobj.id());</div><div class="line">    Base *pobj = &amp;dobj;</div><div class="line">    <span class="comment">//has polymorphic</span></div><div class="line">    EXPECT_EQ(<span class="number">20</span>, pobj-&gt;id());</div><div class="line">    Base &amp;robj = dobj;</div><div class="line">    <span class="comment">//has polymorphic</span></div><div class="line">    EXPECT_EQ(<span class="number">20</span>, robj.id());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>C++通过下列的方法支持多态</p>
+<ol>
+<li>经由一组隐含的转化操作，例如”shape * ps = new Circle()”</li>
+<li>经由virtual funtion 机制，”ps-&gt;rotate();”</li>
+<li>经由dynamic_cast和typeid运算符（这种方法应该不推荐）</li>
+</ol>
+<p>需要多少内存才能够表现一个class object（可以参考之前的测试例子）?</p>
+<ol>
+<li>nonstatic data members的总和大小</li>
+<li>由于alignment的需求而padding上去的孔家</li>
+<li>为了支持virtual而由内部产生的任何额外负担</li>
+</ol>
+<h3 id="指针的类型"><a href="#指针的类型" class="headerlink" title="指针的类型"></a>指针的类型</h3><p>指向不同对象的指针有何不同呢?</p>
+<ul>
+<li><p>以内存需求的观点来看，没有什么不同，都需要足够的内存来放置一个机器地址</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">TEST(PointerTest, size)</div><div class="line">&#123;</div><div class="line">    Base *pbase = <span class="keyword">new</span> Base;</div><div class="line">    <span class="keyword">int</span> *pint = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">5</span>);</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; *pvec = <span class="keyword">new</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">5</span>);</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//pointer size is 4 bytes</span></div><div class="line">    EXPECT_EQ(<span class="number">4</span>, <span class="keyword">sizeof</span>(pbase));</div><div class="line">    EXPECT_EQ(<span class="number">4</span>, <span class="keyword">sizeof</span>(pint));</div><div class="line">    EXPECT_EQ(<span class="number">4</span>, <span class="keyword">sizeof</span>(pvec));</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//pointer size is 8 bytes</span></div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(pbase));</div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(pint));</div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(pvec));</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>但是不同类型的指针寻址出来的object类型不同。指针类型会教导编译器如何解释某个特定地址中的内容及其大小<br>相应类简单定义如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">String</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> len;</div><div class="line">    <span class="keyword">char</span> *str;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZooAnimal</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">virtual</span> ~ZooAnimal() &#123;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> loc;</div><div class="line">    String name;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/images/C++对象模型/1.4.png" alt="image"><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">TEST(PointerTest, size2)</div><div class="line">&#123;</div><div class="line">    ZooAnimal *pobj = <span class="keyword">new</span> ZooAnimal;</div><div class="line">    ZooAnimal *next = pobj + <span class="number">1</span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//str(4) + len(4) =&gt; name(8)</span></div><div class="line">    <span class="comment">//loc(4) + vptr(4) + name(8) =&gt; 16</span></div><div class="line">    EXPECT_EQ(<span class="number">16</span>, <span class="keyword">sizeof</span>(ZooAnimal));</div><div class="line">    EXPECT_EQ(<span class="number">16</span>, <span class="keyword">long</span>(next) - <span class="keyword">long</span>(pobj));</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//str(8) + len(4) + alignment(4) =&gt; name(16)</span></div><div class="line">    <span class="comment">//loc(4) + vptr(8) + name(16) + alignment(4) =&gt; 32</span></div><div class="line">    EXPECT_EQ(<span class="number">32</span>, <span class="keyword">sizeof</span>(ZooAnimal));</div><div class="line">    EXPECT_EQ(<span class="number">32</span>, <span class="keyword">long</span>(next) - <span class="keyword">long</span>(pobj));</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>书中有一句话很有意思：一个ZooAnimal指针将横跨地址空间1000~1015(在ZooAnimal大小为16的情况下)，怎么理解？<br>上面的测试中有一个pobj+1操作，这表面上是+1，但由测试可知，编译器会将next指针移动16（或32）个位置，这个大小显然就是对象本身的大小。<br>那么void *指针呢？我们不知道它将涵盖怎样的地址空间，这就是为什么void * 指针只能够含有一个地址，而不能够通过它操作所指之object的缘故。</p>
+<h3 id="加上多态之后"><a href="#加上多态之后" class="headerlink" title="加上多态之后"></a>加上多态之后</h3><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bear</span> : <span class="title">public</span> <span class="title">ZooAnimal</span></span></div><div class="line">&#123;</div><div class="line"><span class="symbol">public:</span></div><div class="line">    Bear() &#123;&#125;</div><div class="line">    ~Bear() &#123;&#125;</div><div class="line">    void rotate() &#123;&#125;</div><div class="line">    virtual void dance() &#123;&#125;</div><div class="line"><span class="symbol">protected:</span></div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">Dances</span> &#123;<span class="title">haicaowu</span>&#125;;</span></div><div class="line">    Dances dances_known;</div><div class="line">    int cell_block;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>定义Bear继承ZooAnimal之后，可能的内存布局如下<br><img src="/images/C++对象模型/1.5.png" alt="image"><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">TEST(PointerTest, derivedsize)</div><div class="line">&#123;</div><div class="line">    Bear b;</div><div class="line">    Bear *pb = &amp;b;</div><div class="line">    Bear &amp;rb = *pb;</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//base(16) + 4 + 4 =&gt; 24</span></div><div class="line">    EXPECT_EQ(<span class="number">24</span>, <span class="keyword">sizeof</span>(Bear));</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//base(32) + 4 + 4 =&gt; 40</span></div><div class="line">    EXPECT_EQ(<span class="number">40</span>, <span class="keyword">sizeof</span>(Bear));</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>比较：一个Bear指针和一个ZooAnimal指针有什么不同<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Bear </span><span class="keyword">b;</span></div><div class="line"><span class="symbol">ZooAnimal</span> *pz = &amp;<span class="keyword">b;</span></div><div class="line"><span class="keyword">Bear </span>*pb = &amp;<span class="keyword">b;</span></div></pre></td></tr></table></figure></p>
+<p>他们每个都指向Bear object的第一个byte，其间的差别是：pb所涵盖的地址包含整个Bear object，而pz所涵盖的地址只包含Bear object的ZooAnimal subobject.<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">TEST(PointerTest, derivedsize2)</div><div class="line">&#123;</div><div class="line">    Bear b;</div><div class="line">    ZooAnimal *pz = &amp;b;</div><div class="line">    Bear *pb = &amp;b;</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//base size</span></div><div class="line">    EXPECT_EQ(<span class="number">16</span>, <span class="keyword">long</span>(pz + <span class="number">1</span>) - <span class="keyword">long</span>(pz));</div><div class="line">    <span class="comment">//total size</span></div><div class="line">    EXPECT_EQ(<span class="number">24</span>, <span class="keyword">long</span>(pb + <span class="number">1</span>) - <span class="keyword">long</span>(pb));</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//base size</span></div><div class="line">    EXPECT_EQ(<span class="number">32</span>, <span class="keyword">long</span>(pz + <span class="number">1</span>) - <span class="keyword">long</span>(pz));</div><div class="line">    <span class="comment">//total size</span></div><div class="line">    EXPECT_EQ(<span class="number">40</span>, <span class="keyword">long</span>(pb + <span class="number">1</span>) - <span class="keyword">long</span>(pb));</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>根据上面这个例子，突然想到代码里可能会遇到的一个bug<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="number">10</span>; &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">id</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> <span class="number">20</span>; &#125;</div><div class="line">    <span class="keyword">int</span> data;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//assume Base and Derived object has different size</span></div><div class="line">TEST(PointerTest, fatalerror)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> size = <span class="number">5</span>;</div><div class="line">    Derived *parr = <span class="keyword">new</span> Derived[size];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i)</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>, (parr + i)-&gt;id());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    <span class="keyword">delete</span> []parr;</div><div class="line">    <span class="comment">//fatal error</span></div><div class="line">    <span class="comment">//reason: pbaseArr + 1 do not point to a real Derived object</span></div><div class="line">    Base *pbaseArr = <span class="keyword">new</span> Derived[size];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i)</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%d "</span>, (pbaseArr + i)-&gt;id());</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    <span class="keyword">delete</span> []pbaseArr;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>切割问题<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Bear </span><span class="keyword">b;</span></div><div class="line">//引起切割</div><div class="line"><span class="symbol">ZooAnimal</span> za = <span class="keyword">b;</span></div><div class="line">//调用ZooAnimal::rotate()</div><div class="line"><span class="symbol">za.rotate</span>()<span class="comment">;</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>为什么调用的是ZooAnimal实体，而不是Bear实体<br>za不是一个Bear，而是一个ZooAnimal。有一个似是而非的观念：OO程序并不支持堆object的直接处理</li>
+<li>如果初始化函数将一个object内容完整拷贝到另一个object中去，为什么za的vptr不指向Bear的virtual table<br>答：编译器在初始化和指定材质之间做出了仲裁，编译器必须确保如果某个object含有一个或以上的vptrs，那些vptrs的内容不会被base class object初始化或改变。<br>这段话没有看懂</li>
+</ul>
+<p>二重继承可能的内存布局<br><img src="/images/C++对象模型/1.6.png" alt="image"></p>
+<h1 id="构造函数语意学"><a href="#构造函数语意学" class="headerlink" title="构造函数语意学"></a>构造函数语意学</h1><p>开篇举了一个很有趣的例子<br>一个类变量要支持“if(obj)”这种判断操作，一般会重载operator int函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Object(<span class="keyword">int</span> d=<span class="number">0</span>) : data(d) &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">operator</span> <span class="title">int</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> data; &#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> data;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">TEST(ObjectTest, intoperator)</div><div class="line">&#123;</div><div class="line">    <span class="function">Object <span class="title">obj1</span><span class="params">(<span class="number">5</span>)</span></span>;</div><div class="line">    <span class="keyword">if</span>(obj1)</div><div class="line">        SUCCEED();</div><div class="line">    <span class="keyword">else</span></div><div class="line">        FAIL()&lt;&lt;<span class="string">"object is null"</span>;</div><div class="line">    <span class="function">Object <span class="title">obj2</span><span class="params">(<span class="number">0</span>)</span></span>;</div><div class="line">    <span class="keyword">if</span>(obj2)</div><div class="line">        FAIL()&lt;&lt;<span class="string">"object is not null"</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        SUCCEED();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是这样重载之后，会导致“obj1 &lt;&lt; 1”这样的操作合法（&lt;&lt;被当做左移运算符）。这样很可能导致歧义。<br>文中说Jerry以operator void*()取代operator int()来解决。<br>这个在stl的代码里没有找到相关证据</p>
+<h2 id="Default-Constructor的建构操作"><a href="#Default-Constructor的建构操作" class="headerlink" title="Default Constructor的建构操作"></a>Default Constructor的建构操作</h2><p>本节主要讨论默认构造函数在什么时候会被编译器产生出来。<br>注意：这说明编译器不会为每个类都生成默认构造函数<br>在以下四种情况下，编译器会生成默认构造函数</p>
+<ul>
+<li>带有Default Constructor的Member Class object<br>编译器需要在合成的构造函数中将该成员初始化<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span><span class="keyword">public</span>: Foo() &#123;&#125;&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> &#123;</span><span class="keyword">public</span>: Foo foo; <span class="keyword">char</span> *str; &#125;;</div><div class="line"><span class="comment">//则编译器合成的Bar默认构造函数可能像这样</span></div><div class="line"><span class="keyword">inline</span> Bar::Bar()</div><div class="line">&#123;</div><div class="line">    <span class="comment">//C++伪码</span></div><div class="line">    <span class="comment">//注意，并未将str也初始化，那是程序员的事</span></div><div class="line">    foo.Foo::Foo();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>那如果程序员已经定义了默认构造函数了呢<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Bar::Bar() &#123; <span class="built_in">str</span> = <span class="number">0</span>; &#125;</div><div class="line"><span class="comment">//则编译器会进行扩张，可能的扩张后如下</span></div><div class="line">Bar::Bar()</div><div class="line">&#123;</div><div class="line">    foo.Foo::Foo();</div><div class="line">    <span class="built_in">str</span> = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>带有Default Constructo的Base Class<br>类似的道理，默认构造函数需要被合成出来，调用base classes的默认构造函数</p>
+</li>
+<li><p>带有一个Virtual Function的Class<br>因为vptr和vtbl的存在，编译器需要合成出默认构造函数来初始化每个object的vptr地址</p>
+</li>
+</ul>
+<ul>
+<li>带有一个Virtual Base Class的Class<br>虚基类有些特殊，有多个类虚拟继承虚基类时，虚基类只会存在一个实体。<br>每一种virtual basse class实现法的共通点在于必须使virtual base class在其每一个derived class object中的位置，能够于执行期准备妥当。<br>也就是说编译器在编译器无法决定其位置。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">X</span> &#123;</span><span class="keyword">public</span> : <span class="keyword">int</span> i; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> :</span> <span class="keyword">public</span> <span class="keyword">virtual</span> X &#123; <span class="keyword">public</span>: <span class="keyword">int</span> j; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> <span class="keyword">virtual</span> X &#123; <span class="keyword">public</span>: <span class="keyword">double</span> d; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> A, <span class="keyword">public</span> B &#123;<span class="keyword">public</span>: <span class="keyword">int</span> k; &#125;;</div><div class="line"></div><div class="line"><span class="comment">//考虑下面的测试</span></div><div class="line"><span class="comment">//无法再编译时期决定（resolve）出pa-&gt;X::i的位置</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">const</span> A *pa)</span> </span>&#123; pa-&gt;i = <span class="number">1024</span>; &#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    foo(<span class="keyword">new</span> A);</div><div class="line">    foo(<span class="keyword">new</span> C);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>cfront的做法是再derived class object的每一个virtual base class中安插一个指针完成。所有经由reference或pointer来存取一个virtual base class的操作都可以通过相关指针完成。<br>比如foo函数可能被改写成如下<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">void</span> foo(const A *pa) &#123; pa-&gt;</span>__<span class="function"><span class="title">vbcX</span>-&gt;</span>i = <span class="number">1024</span>; &#125;</div></pre></td></tr></table></figure></p>
+<p>其中__vbcX表示编译器所产生的指针，指向virtual base class X.<br>它在class Object的建构期间完成。<br>怎么理解这个__vbcX指针呢，我做了几个小测试<br>没有虚拟继承时的情况<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">X</span> &#123;</span><span class="keyword">public</span>: <span class="keyword">int</span> i=<span class="number">0</span>; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> :</span> <span class="keyword">public</span> X &#123;<span class="keyword">public</span>: <span class="keyword">int</span> a=<span class="number">3</span>; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> A &#123;<span class="keyword">public</span>: <span class="keyword">int</span> c=<span class="number">3</span>; &#125;;</div><div class="line"></div><div class="line"><span class="comment">//no virual base class</span></div><div class="line">TEST(VCBTest, size)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//i(4)</span></div><div class="line">    EXPECT_EQ(<span class="number">4</span>,  <span class="keyword">sizeof</span>(X));</div><div class="line">    <span class="comment">//i(4) + a(4)</span></div><div class="line">    EXPECT_EQ(<span class="number">8</span>,  <span class="keyword">sizeof</span>(A));</div><div class="line">    <span class="comment">//i(4) + a(4) + c(4)</span></div><div class="line">    EXPECT_EQ(<span class="number">12</span>, <span class="keyword">sizeof</span>(C));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>有虚拟继承时的情况比较复杂，要搞清楚其内存布局存在困难<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">X</span> &#123;</span><span class="keyword">public</span>: <span class="keyword">int</span> i=<span class="number">0</span>; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> :</span> <span class="keyword">public</span> <span class="keyword">virtual</span> X &#123;<span class="keyword">public</span>: <span class="keyword">int</span> a=<span class="number">3</span>; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> <span class="keyword">virtual</span> X &#123;<span class="keyword">public</span>: <span class="keyword">int</span> b=<span class="number">5</span>; &#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> :</span> <span class="keyword">public</span> A, <span class="keyword">public</span> B &#123;<span class="keyword">public</span>: <span class="keyword">int</span> c=<span class="number">6</span>; &#125;;</div><div class="line"></div><div class="line">TEST(VCBTest, size)</div><div class="line">&#123;</div><div class="line">    EXPECT_EQ(<span class="number">4</span>,  <span class="keyword">sizeof</span>(X));</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//vcb size is 4 bytes</span></div><div class="line">    <span class="comment">//vcb(4) + i(4) + a(4)</span></div><div class="line">    EXPECT_EQ(<span class="number">12</span>,  <span class="keyword">sizeof</span>(A));</div><div class="line">    <span class="comment">//vcb(4) + i(4) + b(4)</span></div><div class="line">    EXPECT_EQ(<span class="number">12</span>,  <span class="keyword">sizeof</span>(B));</div><div class="line">    <span class="comment">//size 24 is not obvious</span></div><div class="line">    EXPECT_EQ(<span class="number">24</span>, <span class="keyword">sizeof</span>(C));</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//vcb size is 8 bytes</span></div><div class="line">    <span class="comment">//vcb(8) + i(4) + a(4)</span></div><div class="line">    EXPECT_EQ(<span class="number">16</span>,  <span class="keyword">sizeof</span>(A));</div><div class="line">    <span class="comment">//vcb(8) + i(4) + b(4)</span></div><div class="line">    EXPECT_EQ(<span class="number">16</span>,  <span class="keyword">sizeof</span>(B));</div><div class="line">    <span class="comment">//size 40 is not obvious</span></div><div class="line">    EXPECT_EQ(<span class="number">40</span>, <span class="keyword">sizeof</span>(C));</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>不过虚拟继承本身不是很重要，整个chromium中用的也不多</p>
+<ul>
+<li>C++新手的常见误解</li>
+</ul>
+<ol>
+<li>任何class如果没有定义default constructor,就会合成出一个来</li>
+<li>编译器合成出来的default constructor会明确设定class内每一个data member的默认值</li>
+</ol>
+<h2 id="Copy-Constructor的建构操作"><a href="#Copy-Constructor的建构操作" class="headerlink" title="Copy Constructor的建构操作"></a>Copy Constructor的建构操作</h2><p>本节讨论拷贝构造函数在什么时候被编译器生成出来</p>
+<p>注意：“如果一个class未定义出copy constructor，编译器就会自动为他产生一个”这句话是不对的。<br>正确的应该如ARM所说：Default constructors和copy constructors在必要的时候被产生出来</p>
+<p>若一个类的声明如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Word</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Word(<span class="keyword">const</span> <span class="keyword">char</span> *);</div><div class="line">    ~Word() &#123;<span class="keyword">delete</span> []str; &#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> cnt;</div><div class="line">    <span class="keyword">char</span> *str;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这种情况不会合成default copy constructor(但可能引起崩溃)</p>
+<p>若类声明如下<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class Word</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Word(conts <span class="keyword">String</span> &amp;);</div><div class="line">    ~Word();</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="built_in">int</span> cnt;</div><div class="line">    <span class="keyword">String</span> <span class="built_in">str</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">//String 声明了explicit copy constructor</span></div><div class="line">class <span class="keyword">String</span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="keyword">String</span>(<span class="keyword">const</span> <span class="built_in">char</span> *);</div><div class="line">    <span class="keyword">String</span>(<span class="keyword">const</span> <span class="keyword">String</span>&amp;);</div><div class="line">    ~<span class="keyword">String</span>();</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>则编译器必须合成一个copy constructor，以便调用member的copy constructor<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//合成的copy constructor(伪码)</span></div><div class="line">inline Word::Word(<span class="keyword">const</span> Word &amp;wd)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">str</span>.<span class="built_in">String</span>::<span class="built_in">String</span>(wd.<span class="built_in">str</span>);</div><div class="line">    cnt = wd.cnt;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>那综合而言，什么情况下，不要Bitwise copy semantics(位拷贝)呢？</p>
+<ol>
+<li>当class内含一个member object，且该object声明有一个copy constructor(不管是明确声明还是编译器合成的)</li>
+<li>当class的基类存在一个copy constructor(不管是明确声明还是合成)</li>
+<li>当class声明了一个或多个virtual functions</li>
+<li>当class派生自一个继承串链，其中有一个或多个virtual base classes时</li>
+</ol>
+<p>1,2好理解，3,4接下来讨论</p>
+<p>先讨论3，总结而言就一句话</p>
+<ul>
+<li>重新设定Virtual Table的指针<br>存在虚函数的类中有vptr指针，编译器需要合成一个copy constructor以将vptr适当地初始化<br>考虑下面的例子<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ZooAnimal</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    ZooAnimal() &#123;&#125;</div><div class="line">    <span class="keyword">virtual</span> ~ZooAnimal() &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">animate</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bear</span> :</span> <span class="keyword">public</span> ZooAnimal</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Bear() &#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">animate</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">dance</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>ZooAnimal class object 以另一个ZooAnimal class object作为初值，或者Bear class object 以另一个Bear class object作为初值，都可以靠“bitwise copy senmantics”完成<br>比如<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">TEST(CopyCtrTest, vptr1)</div><div class="line">&#123;</div><div class="line">    Bear yogi;</div><div class="line">    Bear winnie = yogi;</div><div class="line">    <span class="keyword">int</span> *py = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;yogi),</div><div class="line">        *pw = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;winnie);</div><div class="line">    <span class="comment">//yogi's vptr and winnie's vptr should be equal</span></div><div class="line">    EXPECT_EQ(py[<span class="number">0</span>], pw[<span class="number">0</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可能的内存布局<br><img src="/images/C++对象模型/2.2.1.png" alt="image"></p>
+<p>但是当base class object以其derived class object的内容做初始化时，vptr的复制操作就需要注意了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">TEST(CopyCtrTest, vptr2)</div><div class="line">&#123;</div><div class="line">    Bear yogi;</div><div class="line">    ZooAnimal franny = yogi;</div><div class="line">    <span class="keyword">int</span> *py = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;yogi),</div><div class="line">        *pf = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;franny);</div><div class="line">    <span class="comment">//yogi's vptr and franny's vptr should not be equal</span></div><div class="line">    <span class="comment">//because franny is not a Bear object but a ZooAnimal object</span></div><div class="line">    EXPECT_NE(py[<span class="number">0</span>], pf[<span class="number">0</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可能的内存布局<br><img src="/images/C++对象模型/2.2.2.png" alt="image"><br>也就是说合成出来的ZooAnimal copy constructor会明确设定object的vptr指向ZooAnimal class的virtual table，而不是直接从右手边的class object中将其vptr拷贝过来</p>
+<p>对于情况4</p>
+<ul>
+<li>处理Virtual Base Class Subobject<br>示例程序<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">class</span> <span class="selector-tag">Raccoon</span> : <span class="selector-tag">public</span> <span class="selector-tag">virtual</span> <span class="selector-tag">ZooAnimal</span></div><div class="line">&#123;</div><div class="line"><span class="attribute">public</span>:</div><div class="line">    <span class="built_in">Raccoon</span>() &#123;&#125;</div><div class="line">    <span class="selector-tag">Raccoon</span>(<span class="selector-tag">int</span> <span class="selector-tag">val</span>) &#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="selector-tag">class</span> <span class="selector-tag">RedPanda</span> : <span class="selector-tag">public</span> <span class="selector-tag">Raccoon</span></div><div class="line">&#123;</div><div class="line"><span class="attribute">public</span>:</div><div class="line">    <span class="built_in">RedPanda</span>() &#123;&#125;</div><div class="line">    <span class="selector-tag">RedPanda</span>(<span class="selector-tag">int</span> <span class="selector-tag">val</span>) &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>测试<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">TEST(CopyCtrTest, vbc1)</div><div class="line">&#123;</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//vptr is 4 bytes and vbc is 4 bytes</span></div><div class="line">    EXPECT_EQ(<span class="number">4</span>, <span class="keyword">sizeof</span>(ZooAnimal));</div><div class="line">    EXPECT_EQ(<span class="number">4</span>, <span class="keyword">sizeof</span>(Bear));</div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(Raccoon));</div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(RedPanda));</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line">    <span class="comment">//why is all 8??</span></div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(ZooAnimal));</div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(Bear));</div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(Raccoon));</div><div class="line">    EXPECT_EQ(<span class="number">8</span>, <span class="keyword">sizeof</span>(RedPanda));</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line">TEST(CopyCtrTest, vbc2)</div><div class="line">&#123;</div><div class="line">    Raccoon rocky;</div><div class="line">    Raccoon little_critter = rocky;</div><div class="line">    <span class="keyword">int</span> *pr = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;rocky),</div><div class="line">        *pl = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;little_critter);</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//maybe index 0 is vptr and index 1 is vcb. I am not sure</span></div><div class="line">    EXPECT_EQ(pr[<span class="number">0</span>], pl[<span class="number">0</span>]);</div><div class="line">    EXPECT_EQ(pr[<span class="number">1</span>], pl[<span class="number">1</span>]);</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line">TEST(CopyCtrTest, vbc3)</div><div class="line">&#123;</div><div class="line">    RedPanda rocky;</div><div class="line">    Raccoon little_critter = rocky;</div><div class="line">    <span class="keyword">int</span> *pr = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;rocky),</div><div class="line">        *pl = <span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;little_critter);</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> defined(_WIN32)</span></div><div class="line">    <span class="comment">//maybe index 0 is vptr and index 1 is vbc. I am not sure</span></div><div class="line">    EXPECT_NE(pr[<span class="number">0</span>], pl[<span class="number">0</span>]);</div><div class="line">    EXPECT_NE(pr[<span class="number">1</span>], pl[<span class="number">1</span>]);</div><div class="line"><span class="meta">#<span class="meta-keyword">elif</span> defined(__linux__)</span></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>也就是说在RedPanda对象作为初值设置Raccoon时，编译器必须合成copy constructor来设定virtual base class pointer/offset的初值</p>
+<h2 id="程序转换语意学（Program-Transformation-Semantics）"><a href="#程序转换语意学（Program-Transformation-Semantics）" class="headerlink" title="程序转换语意学（Program Transformation Semantics）"></a>程序转换语意学（Program Transformation Semantics）</h2><ul>
+<li>明确的初始化操作<br>已知的定义操作<figure class="highlight llvm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">X <span class="keyword">x</span><span class="number">0</span><span class="comment">;</span></div><div class="line">void foo_bar()</div><div class="line">&#123;</div><div class="line">    X <span class="keyword">x</span><span class="number">1</span>(<span class="keyword">x</span><span class="number">0</span>)<span class="comment">;</span></div><div class="line">    X <span class="keyword">x</span><span class="number">2</span> = <span class="keyword">x</span><span class="number">0</span><span class="comment">;</span></div><div class="line">    X <span class="keyword">x</span><span class="number">3</span> = X(<span class="keyword">x</span><span class="number">0</span>)<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>转化阶段</p>
+<ol>
+<li>重写每一个定义，删除其中的初始化操作</li>
+<li>class的copy constructor调用操作被安插进去</li>
+</ol>
+<p>可能被转化为如下<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//C++伪码</div><div class="line">void foo_bar()</div><div class="line">&#123;</div><div class="line">    X <span class="keyword">x</span><span class="number">1</span><span class="comment">;</span></div><div class="line">    X <span class="keyword">x</span><span class="number">2</span><span class="comment">;</span></div><div class="line">    X <span class="keyword">x</span><span class="number">3</span><span class="comment">;</span></div><div class="line">    //编译器安装X copy constructor</div><div class="line">    <span class="keyword">x</span><span class="number">1</span>.X::X(<span class="keyword">x</span><span class="number">0</span>)<span class="comment">;</span></div><div class="line">    <span class="keyword">x</span><span class="number">2</span>.X::X(<span class="keyword">x</span><span class="number">0</span>)<span class="comment">;</span></div><div class="line">    <span class="keyword">x</span><span class="number">3</span>.X::X(<span class="keyword">x</span><span class="number">0</span>)<span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>参数的初始化<br>如下的调用操作<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">void foo(<span class="name">X</span> x0)<span class="comment">;</span></div><div class="line"></div><div class="line">X xx<span class="comment">;</span></div><div class="line">foo(<span class="name">xx</span>)<span class="comment">;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可能被转换为<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(X &amp;x0)</span></span>;</div><div class="line"></div><div class="line"><span class="comment">//编译器产生的临时性对象</span></div><div class="line">X __temp0;</div><div class="line"><span class="comment">//编译器对于copy constructor的调用</span></div><div class="line">__temp0.X::X(xx);</div><div class="line"><span class="comment">//重写函数调用操作（注意foo的参数类型已是引用）</span></div><div class="line">foo(__temp0);</div></pre></td></tr></table></figure></p>
+<ul>
+<li>返回值初始化<br>注意：这个现在可能很不一样了，C++11的编译器都已经使用std::move来优化返回值了吧</li>
+</ul>
+<p>如下的调用操作<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function">X <span class="title">bar</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    X xx;</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="keyword">return</span> xx;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>cfront中，可能经历如下双阶段转换</p>
+<ol>
+<li>加上一个额外的参数，类型是返回值的引用</li>
+<li>返回之前安插copy constructor调用操作<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">(X &amp;__result)</span></span></div><div class="line">&#123;</div><div class="line">    X xx;</div><div class="line">    xx.X::X();</div><div class="line">    <span class="comment">//编译器产生的copy constructor操作</span></div><div class="line">    __result.X::X(xx);</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样对bar()的调用操作<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">X xx</span> = bar();</div></pre></td></tr></table></figure></p>
+<p>将被转换为以下的指令<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">X xx<span class="comment">; //注意这里xx是不需要施行default constructor的</span></div><div class="line">bar(xx)<span class="comment">;</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>使用者层面做优化<br>如下的代码<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function">X <span class="title">bar</span><span class="params">(<span class="keyword">const</span> T &amp;y, <span class="keyword">const</span> T &amp;z)</span></span></div><div class="line">&#123;</div><div class="line">    X xx;</div><div class="line">    <span class="comment">//以y和z来处理xx</span></div><div class="line">    <span class="keyword">return</span> xx;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>建议在X类中新增一个constructor，直接计算xx的值<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">X <span class="title">bar</span><span class="params">(<span class="keyword">const</span> T &amp;y, <span class="keyword">const</span> T &amp;z)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//...</span></div><div class="line">    <span class="keyword">return</span> X(y, z);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>编译器层面做优化<br>之前的返回优化的bar函数，编译器可以把xx以__resukt取代<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">(X &amp;__result)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="comment">//default constructor</span></div><div class="line">    __result.X::X();</div><div class="line">    <span class="comment">//直接处理__result</span></div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这种优化操作就称为Named Return Value(NRV)优化。</p>
+<ul>
+<li>Copy Constructor：要还是不要<br>已知3D坐标点类如下：<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">class</span> <span class="selector-tag">Point3D</span></div><div class="line">&#123;</div><div class="line"><span class="attribute">public</span>:</div><div class="line">    <span class="built_in">Point3D</span>(float x, float y, float z);</div><div class="line"><span class="attribute">private</span>:</div><div class="line">    float x_, y_, z_;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>书中观点很明确，不应当提供一个explict copy constructor，默认的bitwise又快又安全。<br>但是如果类本身需要大量的memberwise初始化操作，那么提供copy constructot函数实体就非常合理了（为了NRV优化）<br>真的是这样吗，来测试一下<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Poi<span class="symbol">nt3</span>D</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    Poi<span class="symbol">nt3</span>D<span class="comment">(float x, float y, float z)</span></div><div class="line">        : x_<span class="comment">(x)</span>, y_<span class="comment">(y)</span>, z_<span class="comment">(z)</span></div><div class="line">    &#123;&#125;</div><div class="line">    <span class="comment">//有拷贝构造函数则有NRV，否则没有</span></div><div class="line">    Poi<span class="symbol">nt3</span>D<span class="comment">(const Point3D &amp;rhs)</span></div><div class="line">        : x_<span class="comment">(rhs.x_)</span>, y_<span class="comment">(rhs.y_)</span>, z_<span class="comment">(rhs.z_)</span></div><div class="line">    &#123;&#125;</div><div class="line">private:</div><div class="line">    float x_, y_, z_;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>测试代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function">Point3D <span class="title">func</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="function">Point3D <span class="title">xx</span><span class="params">(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span></span>;</div><div class="line">    <span class="keyword">return</span> xx;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> NUM = <span class="number">100000000</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">auto</span> start = <span class="built_in">std</span>::chrono::system_clock::now();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; NUM; ++i)</div><div class="line">        Point3D a = func();</div><div class="line">    <span class="keyword">auto</span> end = <span class="built_in">std</span>::chrono::system_clock::now();</div><div class="line">    <span class="keyword">auto</span> duration = <span class="built_in">std</span>::chrono::duration_cast&lt;<span class="built_in">std</span>::chrono::microseconds&gt;(end - start);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"elapse time :%ld microseconds\n"</span>, duration.count());</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>分别在Win10和linux下，有无copy ctr的情况下测试</p>
+<table>
+<thead>
+<tr>
+<th>时间(ms)</th>
+<th>有copy ctr(有NRV)</th>
+<th>无copy ctr(无NRV)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>    Win10</td>
+<td>1391667</td>
+<td>874403</td>
+<td></td>
+</tr>
+<tr>
+<td>    Linux</td>
+<td>656451</td>
+<td>1287036</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>看来cl和g++的处理很不相同啊，不能妄下结论</p>
+<p>然后，书中又提到了一个很容易踩的坑<br>对于有虚函数的类，在构造函数中使用memcpy和memset很危险<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">class</span> <span class="selector-tag">Shape</span></div><div class="line">&#123;</div><div class="line"><span class="attribute">public</span>:</div><div class="line">    //这里会将vptr置空，导致fatal error</div><div class="line">    <span class="built_in">Shape</span>() &#123;<span class="built_in">memset</span>(this, 0, sizeof(Shape)); &#125;</div><div class="line">    <span class="selector-tag">virtual</span> ~<span class="selector-tag">Shape</span>() &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>因为编译器扩张的构造函数如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Shape::Shape()</div><div class="line">&#123;</div><div class="line">    <span class="comment">//vptr的设定在使用者代码执行之前</span></div><div class="line">    __vptr__Shape = __vtbl__Shape;</div><div class="line">    <span class="comment">//这里会将vptr清为0</span></div><div class="line">    <span class="built_in">memset</span>(<span class="keyword">this</span>, <span class="number">0</span>, <span class="keyword">sizeof</span>(Shape));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>额，反正我个人而言是不喜欢用memcpy，memset这种C的库函数的</p>
+<h2 id="成员们的初始化队伍（Member-Initialization-Semantics）"><a href="#成员们的初始化队伍（Member-Initialization-Semantics）" class="headerlink" title="成员们的初始化队伍（Member Initialization Semantics）"></a>成员们的初始化队伍（Member Initialization Semantics）</h2><p>当在构造函数中要设定class members的初值是，要么就是经由member initialization list，要不就是在constructor函数本身之内。<br>但是下面几种情况要求必须在initialization list中初始化</p>
+<ol>
+<li>当初始化一个reference member时</li>
+<li>当初始化一个const member时</li>
+<li>当调用base class的constructor，而它拥有一组参数时</li>
+<li>当调用一个member class的constructor，而它拥有一组参数时</li>
+</ol>
+<p>对于以下构造函数<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Word</div><div class="line">&#123;</div><div class="line">    String name_<span class="comment">;</span></div><div class="line">    iint cnt_<span class="comment">;</span></div><div class="line"><span class="symbol">public:</span></div><div class="line">    Word()</div><div class="line">    &#123;</div><div class="line">        name_ = <span class="number">0</span><span class="comment">;</span></div><div class="line">        cnt_ = <span class="number">0</span><span class="comment">;</span></div><div class="line">    &#125;</div><div class="line">&#125;<span class="comment">;</span></div></pre></td></tr></table></figure></p>
+<p>虽然程序本身没问题，但是合成的构造函数效率很低，可能如下<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Word::Word</div><div class="line">&#123;</div><div class="line">    <span class="comment">//String的默认构造函数</span></div><div class="line">    name_.<span class="built_in">String</span>::<span class="built_in">String</span>();</div><div class="line">    <span class="comment">//临时性对象</span></div><div class="line">    <span class="built_in">String</span> temp = <span class="built_in">String</span>(<span class="number">0</span>);</div><div class="line">    <span class="comment">//memberwise地拷贝name_</span></div><div class="line">    name_.<span class="built_in">String</span>::operator=(temp);</div><div class="line">    <span class="comment">//销毁临时性对象</span></div><div class="line">    temp.<span class="built_in">String</span>::~<span class="built_in">String</span>();</div><div class="line">    cnt_ = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>很明显，更有效率的方法<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Word::Word : name_(<span class="number">0</span>)</div><div class="line">&#123;</div><div class="line">    cnt_ = <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//可能扩张成如下</span></div><div class="line">Word::Word</div><div class="line">&#123;</div><div class="line">    name_.<span class="built_in">String</span>::<span class="built_in">String</span>(<span class="number">0</span>);</div><div class="line">    cnt_ = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>虽然cnt本省不需要优化了，但如果参数是模板参数，即不知道参数的准确类型呢<br>所以结论如下：坚持所有的member初始化操作必须在member initialization list中完成。</p>
+<p>inistialization list的初始化操作，由编译器安插的任何explicit user code之前</p>
+<ul>
+<li><p><strong>注意点1</strong>:list中的项目初始化次序由class中的members声明次序决定<br>错误代码示例</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">X</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i;</div><div class="line">    <span class="keyword">int</span> j;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">//i先被初始化为未知量，j被初始化为val</span></div><div class="line">    X(<span class="keyword">int</span> val) : j(val), i(j) &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>注意点2</strong>:调用一个member function以设定一个member的初值</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">X</span>::<span class="type">X</span>(<span class="built_in">int</span> <span class="keyword">val</span>) : i(xfoo(<span class="keyword">val</span>)), j(<span class="keyword">val</span>) &#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其中xfoo是X的一个member function.<br>这么做是可以的，但是因为不清楚xfoo对X object的依赖性有多高，所以要谨慎</p>
+<ul>
+<li><strong>注意点3</strong>:一个derived class member function的返回值作为base class constructor的参数</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FooBar</span> :</span> <span class="keyword">public</span> X</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> fval_;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">fval</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> fval_; &#125;</div><div class="line">    FooBar(<span class="keyword">int</span> val) : fval_(val), X(fval()) &#123;&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这种情况是有问题的，因为基类的构造函数要安插在成员初始化之前。而成员未初始化是fval()函数的返回值未可知<br>可能的FooBar扩张结果<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">FooBar::FooBar</div><div class="line">&#123;</div><div class="line">    <span class="comment">//不是个好主意，此时fval()返回值未可知</span></div><div class="line">    X::X(<span class="keyword">this</span>, <span class="keyword">this</span>-&gt;fval());</div><div class="line">    fval_ = <span class="keyword">val</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="Data语意学"><a href="#Data语意学" class="headerlink" title="Data语意学"></a>Data语意学</h1><h2 id="Data-Member的绑定（The-Binding-of-a-Data-Member）"><a href="#Data-Member的绑定（The-Binding-of-a-Data-Member）" class="headerlink" title="Data Member的绑定（The Binding of a Data Member）"></a>Data Member的绑定（The Binding of a Data Member）</h2><h2 id="Data-Member的布局（Data-Member-Layout）"><a href="#Data-Member的布局（Data-Member-Layout）" class="headerlink" title="Data Member的布局（Data Member Layout）"></a>Data Member的布局（Data Member Layout）</h2><h2 id="Data-Member的存取"><a href="#Data-Member的存取" class="headerlink" title="Data Member的存取"></a>Data Member的存取</h2><h2 id="继承与Data-Member"><a href="#继承与Data-Member" class="headerlink" title="继承与Data Member"></a>继承与Data Member</h2><h2 id="对象成员的效率（Object-Member-Efficency）"><a href="#对象成员的效率（Object-Member-Efficency）" class="headerlink" title="对象成员的效率（Object Member Efficency）"></a>对象成员的效率（Object Member Efficency）</h2><h2 id="指向Data-Members的指针（Pointer-to-Data-Members）"><a href="#指向Data-Members的指针（Pointer-to-Data-Members）" class="headerlink" title="指向Data Members的指针（Pointer to Data Members）"></a>指向Data Members的指针（Pointer to Data Members）</h2>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/04/20/《深度探索C++对象模型》笔记/" data-title="《深度探索C++对象模型》读书笔记 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/16/对C++多态的新理解/"  title="C++多态">
+ <strong>下一篇：</strong><br/> 
+ <span>C++多态
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#第一章：关于对象"><span class="toc-number">1.</span> <span class="toc-text">第一章：关于对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-对象模式"><span class="toc-number">1.1.</span> <span class="toc-text">C++对象模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键词带来的差异"><span class="toc-number">1.2.</span> <span class="toc-text">关键词带来的差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的差异"><span class="toc-number">1.3.</span> <span class="toc-text">对象的差异</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指针的类型"><span class="toc-number">1.3.1.</span> <span class="toc-text">指针的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加上多态之后"><span class="toc-number">1.3.2.</span> <span class="toc-text">加上多态之后</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#构造函数语意学"><span class="toc-number">2.</span> <span class="toc-text">构造函数语意学</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Default-Constructor的建构操作"><span class="toc-number">2.1.</span> <span class="toc-text">Default Constructor的建构操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Copy-Constructor的建构操作"><span class="toc-number">2.2.</span> <span class="toc-text">Copy Constructor的建构操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序转换语意学（Program-Transformation-Semantics）"><span class="toc-number">2.3.</span> <span class="toc-text">程序转换语意学（Program Transformation Semantics）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#成员们的初始化队伍（Member-Initialization-Semantics）"><span class="toc-number">2.4.</span> <span class="toc-text">成员们的初始化队伍（Member Initialization Semantics）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Data语意学"><span class="toc-number">3.</span> <span class="toc-text">Data语意学</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Member的绑定（The-Binding-of-a-Data-Member）"><span class="toc-number">3.1.</span> <span class="toc-text">Data Member的绑定（The Binding of a Data Member）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Member的布局（Data-Member-Layout）"><span class="toc-number">3.2.</span> <span class="toc-text">Data Member的布局（Data Member Layout）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Member的存取"><span class="toc-number">3.3.</span> <span class="toc-text">Data Member的存取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承与Data-Member"><span class="toc-number">3.4.</span> <span class="toc-text">继承与Data Member</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象成员的效率（Object-Member-Efficency）"><span class="toc-number">3.5.</span> <span class="toc-text">对象成员的效率（Object Member Efficency）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指向Data-Members的指针（Pointer-to-Data-Members）"><span class="toc-number">3.6.</span> <span class="toc-text">指向Data Members的指针（Pointer to Data Members）</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>28</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>18</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
