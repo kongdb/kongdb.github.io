@@ -1,0 +1,719 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>动态规划算法算法 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="《算法导论》第15章">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划算法算法">
+<meta property="og:url" content="http://yoursite.com/2018/06/30/动态规划算法/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="《算法导论》第15章">
+<meta property="og:updated_time" content="2018-07-10T14:01:43.880Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划算法算法">
+<meta name="twitter:description" content="《算法导论》第15章">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/06/30/动态规划算法/" title="动态规划算法算法" itemprop="url">动态规划算法算法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2018-06-30T00:23:51.000Z" itemprop="datePublished"> 发表于 2018-06-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#动态规划"><span class="toc-number">1.</span> <span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#钢条切割"><span class="toc-number">1.1.</span> <span class="toc-text">钢条切割</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵链乘法"><span class="toc-number">1.2.</span> <span class="toc-text">矩阵链乘法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最长公共子序列"><span class="toc-number">1.3.</span> <span class="toc-text">最长公共子序列</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><p>动态规划（dynamic programming）,通过组合子问题的解来求解原问题，这里的programming指的是表格法。<br>通常用来求解最优化问题（optimization problem）</p>
+<p>按如下4个步骤来设计动态规划算法</p>
+<ol>
+<li>刻画一个最优解的结构特征</li>
+<li>递归地定义最优解</li>
+<li>计算最优解的值，通常采用自底向上的方法</li>
+<li>利用计算的信息构造一个最优解</li>
+</ol>
+<h2 id="钢条切割"><a href="#钢条切割" class="headerlink" title="钢条切割"></a>钢条切割</h2><p>Serling公司购买长钢条，将其切割为短钢条出售。假定长度为i的钢条价格为p<sub>i</sub></p>
+<table>
+<thead>
+<tr>
+<th>长度i</th>
+<th>价格p<sub>i</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td>9</td>
+</tr>
+<tr>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr>
+<td>6</td>
+<td>17</td>
+</tr>
+<tr>
+<td>7</td>
+<td>17</td>
+</tr>
+<tr>
+<td>8</td>
+<td>20</td>
+</tr>
+<tr>
+<td>9</td>
+<td>24</td>
+</tr>
+<tr>
+<td>10</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>问题定义：给定一段长度为n英寸的钢条和价格表p<sub>i</sub>，求切割方案，使得销售收益r<sub>n</sub>最大</p>
+<p><strong>最朴素但暴力的想法</strong>：因为长度为n的钢条有n-1个位置可以选择切割或者不切割，比如长度为4的钢条可以在位置为1,2,3的地方分别选择切割或者不切割，所以整体的切割方案会有2<sup>n-1</sup>种，分别求出这些方案的收益，取最大值即可。</p>
+<p>来看示例(以长度为4的钢条为例)<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(a) ----        不切割，收益<span class="number">9</span></div><div class="line">(b) - ---       位置<span class="number">1</span>处切割，这里有长度为<span class="number">1</span>和<span class="number">3</span>的钢条，收益<span class="number">9</span></div><div class="line">(c) -- --       位置<span class="number">2</span>处切割，这里有长度为<span class="number">2</span>的钢条<span class="number">2</span>条，收益<span class="number">10</span></div><div class="line">(d) --- -       位置<span class="number">3</span>处切割，收益和(b)一致为<span class="number">9</span></div><div class="line">(e) - - --      位置<span class="number">1</span>和<span class="number">2</span>处切割，有两条长度<span class="number">1</span>和<span class="number">1</span>条长度<span class="number">2</span>的，收益<span class="number">7</span></div><div class="line">(f) - -- -      位置<span class="number">1</span>和<span class="number">3</span>处切割，收益和(e)一致为<span class="number">7</span></div><div class="line">(g) -- - -      位置<span class="number">2</span>和<span class="number">3</span>处切割，收益和(e)一致为<span class="number">7</span></div><div class="line">(h) - - - -     位置<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>处切割，有<span class="number">4</span>条长度<span class="number">1</span>的，收益为<span class="number">4</span></div></pre></td></tr></table></figure></p>
+<p>可以看出这里有很多看似不同，实则一致的方案，比如(b)(d), (e)(f)(g)<br>也就是说，上面的方案做了很多无用的操作，产生浪费</p>
+<p>考虑下面的思路:</p>
+<p>r<sub>1</sub>=1, 切割方案1=1（无切割）<br>r<sub>2</sub>=5, 切割方案2=2（无切割）<br>r<sub>3</sub>=8, 切割方案3=3（无切割）<br>r<sub>4</sub>=10, 切割方案4=2+2<br>r<sub>5</sub>=13, 切割方案5=2+3</p>
+<p>我的理解，考虑r<sub>5</sub>的情况。</p>
+<ol>
+<li>如果不切割，收益为10</li>
+<li>如果在位置1处切割了，则剩下长度为1和4的钢条。还需要考虑长度为4的钢条的切割方案吗？显然不需要了，因为已知r<sub>4</sub>=10(即长度为4 的钢条最大收益为10)。此时总收益为1+10=11</li>
+<li>如果在位置2处切割了，同理，收益为5+8=13</li>
+<li>如果在位置3处切割了，收益为5+8=13</li>
+<li>如果在位置4处切割了，收益为11<br>所以最大收益即为13</li>
+</ol>
+<p>一般的: r<sub>n</sub> = max(p<sub>n</sub>, r<sub>1</sub>+r<sub>n-1</sub>,r<sub>2</sub>+r<sub>n-2</sub>, r<sub>n-1</sub>+r<sub>1</sub>)<br><strong>困惑</strong>：感觉求1..n有点浪费，应该1..n/2就行了，毕竟是对称的么。</p>
+<p>此外，钢条切割问题还存在相似但更简单的递归求解方法：</p>
+<ol>
+<li>将钢条从左边切割下长度为i的一段</li>
+<li>左半部分为已知p<sub>i</sub></li>
+<li>对右边剩下的长度为n-i的一段继续进行切割（递归求解）</li>
+</ol>
+<p>公式： r<sub>n</sub>=max(p<sub>i</sub>+r<sub>n-i</sub>),其中i为1..n</p>
+<ul>
+<li>自顶向下递归实现</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">CUT-ROD</span><span class="params">(p, n)</span></span></div><div class="line">  <span class="keyword">if</span> n == <span class="number">0</span></div><div class="line">      return <span class="number">0</span></div><div class="line">  <span class="selector-tag">q</span> = -inf</div><div class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to n</div><div class="line">      <span class="selector-tag">q</span> = max(<span class="selector-tag">q</span>, <span class="selector-tag">p</span>[i] + CUT-ROD(<span class="selector-tag">p</span>, n - i))</div><div class="line">  return q</div></pre></td></tr></table></figure>
+<p>C++实现<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; p&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">17</span>, <span class="number">17</span>, <span class="number">20</span>, <span class="number">24</span>, <span class="number">30</span>&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">CutRod</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> q = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</div><div class="line">        q = <span class="built_in">std</span>::max(q, p[i] + CutRod(p, n - i));</div><div class="line">    <span class="keyword">return</span> q;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法虽然很简洁，但是效率实在很差，T(n) = 2<sup>n</sup><br>原因在于它反复求解了相同的子问题</p>
+<ul>
+<li>使用动态规划方法求解最优钢条切割问题</li>
+</ul>
+<p><strong>带备忘的自顶向下法</strong>(top-down with memoization)<br>在求解过程中会保存子问题的解（数组或散列表），避免反复求解<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">MEMOIZED-CUT-ROD</span><span class="params">(p, n)</span></span></div><div class="line">  let r[<span class="number">0</span>..n] be <span class="selector-tag">a</span> new array</div><div class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">0</span> to n</div><div class="line">      r[i] = -inf</div><div class="line">  return MEMOIZED-CUT-ROD-AUX(<span class="selector-tag">p</span>, n, r)</div><div class="line"></div><div class="line"><span class="function"><span class="title">MEMOIZED-CUT-ROD-AUX</span><span class="params">(p, n, r)</span></span></div><div class="line">  <span class="keyword">if</span> r[n] &gt;= <span class="number">0</span></div><div class="line">      return r[n]</div><div class="line">  <span class="keyword">if</span> n == <span class="number">0</span></div><div class="line">      <span class="selector-tag">q</span> = <span class="number">0</span></div><div class="line">  <span class="keyword">else</span> <span class="selector-tag">q</span> = -inf</div><div class="line">      <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to n</div><div class="line">          <span class="selector-tag">q</span> = max(<span class="selector-tag">q</span>, <span class="selector-tag">p</span>[i] + MEMOIZED-CUT-ROD-AUX(<span class="selector-tag">p</span>, n - <span class="selector-tag">i</span>, r))</div><div class="line">  r[n] = <span class="selector-tag">q</span></div><div class="line">  return q</div></pre></td></tr></table></figure></p>
+<p>C++实现<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MemoizedCutRodAux</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> n, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;r)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(r[n] != <span class="number">-1</span>)</div><div class="line">        <span class="keyword">return</span> r[n];</div><div class="line">    <span class="keyword">int</span> q = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</div><div class="line">    &#123;</div><div class="line">        q = <span class="built_in">std</span>::max(q, p[i] + MemoizedCutRodAux(p, n - i, r));</div><div class="line">    &#125;</div><div class="line">    r[n] = q;</div><div class="line">    <span class="keyword">return</span> q;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MemoizedCutRod</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; r(n + <span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</div><div class="line">        r[i] = <span class="number">-1</span>;</div><div class="line">    <span class="keyword">return</span> MemoizedCutRodAux(p, n, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>自底向上法</strong>(bottom-up method)<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">BOTTOM-UP-CUT-ROD</span><span class="params">(p, n)</span></span></div><div class="line">  let r[<span class="number">0</span>..n] be <span class="selector-tag">a</span> new array</div><div class="line">  r[<span class="number">0</span>] = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> j = <span class="number">1</span> to n</div><div class="line">      <span class="selector-tag">q</span> = -inf</div><div class="line">      <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to j</div><div class="line">          <span class="selector-tag">q</span> = max(<span class="selector-tag">q</span>, <span class="selector-tag">p</span>[i] + r[j - i])</div><div class="line">      r[j] = <span class="selector-tag">q</span></div><div class="line">  return r[n]</div></pre></td></tr></table></figure></p>
+<p>C++实现<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">BottomUpCutRod</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; r(n + <span class="number">1</span>);</div><div class="line">    r[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> q = <span class="number">-1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= j; ++i)</div><div class="line">            q = <span class="built_in">std</span>::max(q, p[i] + r[j - i]);</div><div class="line">        r[j] = q;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> r[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或者，按照之前第一个递归公式<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">BottomUpCutRod2</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; r(n + <span class="number">1</span>);</div><div class="line">    r[<span class="number">0</span>] = <span class="number">0</span>; </div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//以下3行相当于求p[j],r1 + rj-1,.. rj-1 + r1的最大值</span></div><div class="line">        <span class="keyword">int</span> q = p[j];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; j; ++i) </div><div class="line">            q = <span class="built_in">std</span>::max(q, r[i] + r[j - i]);</div><div class="line">        <span class="comment">//此时q即为最大值</span></div><div class="line">        r[j] = q;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> r[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>虽然代码只变化了一点点，但感觉是完全不同的两种思想呢</p>
+<p><strong>重构解</strong><br>前面虽然给出了最优解的收益值，但并未给出解本身（一个长度列表，给出切割后的每段钢条长度）</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">EXTENDED-BOTTOM-UP-CUT-ROD</span><span class="params">(p, n)</span></span></div><div class="line">  let r[<span class="number">0</span>..n]and s[<span class="number">0</span>..n]be new arrays</div><div class="line">  r[<span class="number">0</span>] = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> j = <span class="number">1</span> to  n</div><div class="line">    <span class="selector-tag">q</span> = -inf</div><div class="line">    <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to j</div><div class="line">        <span class="keyword">if</span> <span class="selector-tag">a</span> &lt; <span class="selector-tag">p</span>[i] + r[j - i]</div><div class="line">            <span class="selector-tag">q</span> = <span class="selector-tag">p</span>[i] + r[j - i]</div><div class="line">            s[j] = <span class="selector-tag">i</span></div><div class="line">    r[j] = <span class="selector-tag">q</span></div><div class="line">  return r and s</div><div class="line"></div><div class="line"><span class="function"><span class="title">PRINT-CUT-ROD-SOLUTION</span><span class="params">(p, n)</span></span></div><div class="line">  (r, s) = EXTENDED-BOTTOM-UP-CUT-ROD(<span class="selector-tag">p</span>, n)</div><div class="line">  while n &gt; <span class="number">0</span></div><div class="line">    print s[n]</div><div class="line">    n = n - s[n]</div></pre></td></tr></table></figure>
+<p>C++实现<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::pair&lt;<span class="keyword">int</span>, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;</div><div class="line">    ExtendedBottomUpCutRod(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> n)</div><div class="line">&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; r(n + <span class="number">1</span>);</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; s(n + <span class="number">1</span>);</div><div class="line">    r[<span class="number">0</span>] = <span class="number">0</span>; </div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">int</span> q = <span class="number">-1</span>; </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= j; ++i)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(q &lt; p[i] + r[j - i])</div><div class="line">            &#123;</div><div class="line">                q = p[i] + r[j - i];</div><div class="line">                s[j] = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        r[j] = q;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>&#123;r[n], s&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintCutRodSolution</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">auto</span> entry = ExtendedBottomUpCutRod(p, n);</div><div class="line">    <span class="keyword">auto</span> &amp;s = entry.second;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; <span class="string">"cut solution is : "</span>;</div><div class="line">    <span class="keyword">while</span>(n &gt; <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; s[n] &lt;&lt; <span class="string">" "</span>;</div><div class="line">        n -= s[n];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="矩阵链乘法"><a href="#矩阵链乘法" class="headerlink" title="矩阵链乘法"></a>矩阵链乘法</h2><p>问题描述：给定n个矩阵的链（A<sub>1</sub>,A<sub>2</sub>,…,A<sub>n</sub>）,矩阵A<sub>i</sub>的规模为p<sub>i-1</sub> * p<sub>i</sub>，求完全括号化方案，使得计算乘积所需标量乘法次数最少。<br>距离A<sub>1</sub>,A<sub>2</sub>,A<sub>3</sub>的规模分别为10×100、100×5和5×50，则</p>
+<ol>
+<li>方案((A<sub>1</sub>A<sub>2</sub>)A<sub>3</sub>)所需的次数为：10×100×5+10×5×50 = 7500</li>
+<li>方案(A<sub>1</sub>( A<sub>2</sub>A<sub>3</sub>))所需的次数为：100×5×50+10×100×50 = 75000</li>
+</ol>
+<p>可以看出，不同的括号方案，产生的真的是天差地别</p>
+<p><strong>计算括号化方案的数量</strong><br>设P(n)为n个矩阵链的方案数量，显然P(1)=1。<br>当n&gt;=2时，完全括号化方案的矩阵乘积可描述为两个完全括号化的部分积相乘的形式，而两个部分积的划分点在第k和k+1个矩阵之间，k为1..n-1。<br>怎么理解这段话呢，假设n为4，则有以下几种划分点</p>
+<ol>
+<li>(A<sub>1</sub>) (A<sub>2</sub>A<sub>3</sub>A<sub>4</sub>), k为1, 注意这里具体A<sub>2..4</sub>怎么划分是不关心的，因为这已经是P(3)该做的事啦，下同</li>
+<li>(A<sub>1</sub>A<sub>2</sub>) (A<sub>3</sub>A<sub>4</sub>), k为2</li>
+<li>(A<sub>1</sub>A<sub>2</sub>A<sub>3</sub>) (A<sub>4</sub>), k为3<br>可以得到下面的递归式<figure class="highlight excel"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">          <span class="number">1</span>               如果<span class="built_in">n</span> =  <span class="number">1</span></div><div class="line">P(<span class="built_in">n</span>) =   <span class="built_in">n</span>-<span class="number">1</span></div><div class="line">          ∑ P(k)P(<span class="built_in">n</span>-k)    如果<span class="built_in">n</span> &gt;= <span class="number">2</span>      </div><div class="line">         k=<span class="number">1</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>应用动态规划法</strong></p>
+<ul>
+<li>步骤1：最优括号化方案的结构特征<br>假设A<sub>i</sub>A<sub>i+1</sub>…A<sub>j</sub>的最优括号化方案的分割点在A<sub>k</sub>和A<sub>k+1</sub>之间，那么继续对前缀子链A<sub>i</sub>A<sub>i+1</sub>…A<sub>k</sub>进行括号化时，我们应该直接采用独立求解它时所得的最优方案。<br>我是这么理解这段话的。</li>
+</ul>
+<ol>
+<li>假设子链A<sub>i</sub>A<sub>i+1</sub>…A<sub>k</sub>的最优化方案为P<sub>0</sub></li>
+<li>假设分割点在k的最优括号化方案<strong>没有</strong>采用前半段的最优括号化方案P<sub>0</sub>,而是采用了P<sub>1</sub></li>
+<li>但此时将P<sub>0</sub>代入却能得到更低的方案，显然矛盾了。</li>
+</ol>
+<ul>
+<li>步骤2：一个递归求解方案<br>令m[i, j]表示计算矩阵A<sub>i..j</sub>所需标量乘法次数的最小值，那么原问题的最优解–计算A<sub>1..n</sub>所需的最低代价就是m[1, n]。</li>
+</ul>
+<ol>
+<li>对于i=j时的平凡问题，由于只包含一个矩阵，乘法次数为0</li>
+<li>对于i &lt; j，假设A<sub>i</sub>A<sub>i+1</sub>…A<sub>j</sub>的最优括号化方案的分割点在矩阵A<sub>k</sub>和A<sub>k+1</sub>之间，那么m[i, j]就等于计算A<sub>i..k</sub>和A<sub>k+1..j</sub>的代价加上两者相乘的代价的最小值。<br>由于A<sub>i</sub>的大小为p<sub>i-1</sub>×p<sub>i</sub>，易知A<sub>i..k</sub>和A<sub>k+1..j</sub>相乘的代价为p<sub>i-1</sub>p<sub>k</sub>p<sub>j</sub>次标量运算。</li>
+</ol>
+<p>得到递推公式<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">                                            <span class="number">0</span>     如果<span class="selector-tag">i</span> = j</div><div class="line">m[<span class="selector-tag">i</span>, j] =  min&#123;m[<span class="selector-tag">i</span>, k] + m[k+<span class="number">1</span>, j] + pi-<span class="number">1</span>*pk*pj&#125;  如果<span class="selector-tag">i</span> &lt; j</div><div class="line">         <span class="selector-tag">i</span> &lt;= k &lt;j</div></pre></td></tr></table></figure></p>
+<p>并使用s[i, j]保存A<sub>i</sub>A<sub>i+1</sub>A<sub>j</sub>分割点位置k</p>
+<ul>
+<li>步骤3：计算最优代价<br>采用自底向上的表格法代替递归算法来计算最优代价<br>假定矩阵A<sub>i</sub>的输入规模是p<sub>i-1</sub>×p<sub>i</sub>，程序的输入为p=(p<sub>0</sub>, p<sub>1</sub>,…,p<sub>n</sub>)。并用辅助表m[1..n, 1..n]来保存代价m[i, j]，用s[1..n-1, 2..n]来记录最优值m[i, j]对应的分割点k。<br>还有一个很有意思的点：为了计算m[i, j]需要访问其他哪些表项呢？由递推公式可以知道m[i, j]的计算是依赖于m[i, k]和m[k+1, j]的，而这两项的长度都小于j-i+1。因此可以说<strong>m[i,j]的计算只依赖于哪些少于j-i+1个矩阵链相乘的最优计算代价</strong></li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">MATRIX-CHAIN-ORDER</span><span class="params">(p)</span></span></div><div class="line">  n = <span class="selector-tag">p</span><span class="selector-class">.length</span> - <span class="number">1</span></div><div class="line">  let m[<span class="number">1</span>.<span class="selector-class">.n</span>, <span class="number">1</span>..n] and s[<span class="number">1</span>.<span class="selector-class">.n-1</span>, <span class="number">2</span>..n]be new arrays</div><div class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to n</div><div class="line">      m[<span class="selector-tag">i</span>, j] = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> l = <span class="number">2</span> to n</div><div class="line">      <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to n - l + <span class="number">1</span></div><div class="line">          j = <span class="selector-tag">i</span> + l - <span class="number">1</span></div><div class="line">          m[<span class="selector-tag">i</span>, j] = INF</div><div class="line">          <span class="keyword">for</span> k = <span class="selector-tag">i</span> to j - <span class="number">1</span></div><div class="line">              <span class="selector-tag">q</span> = m[<span class="selector-tag">i</span>, k] + m[k + <span class="number">1</span>, j] + pi-<span class="number">1</span>*pk*pj</div><div class="line">              <span class="keyword">if</span> <span class="selector-tag">q</span> &lt; m[<span class="selector-tag">i</span>, j]</div><div class="line">                  m[<span class="selector-tag">i</span>, j] = <span class="selector-tag">q</span></div><div class="line">                  s[<span class="selector-tag">i</span>, j] = k</div><div class="line">  return m and s</div></pre></td></tr></table></figure>
+<ul>
+<li>步骤4：构造最优解<br>s[i, j]中存放的是什么呢，存放的是m[i,j]对应的分割点<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">PRINT-OPTIMAL-PARENS</span><span class="params">(s, i, j)</span></span></div><div class="line">  <span class="keyword">if</span> <span class="selector-tag">i</span> == j</div><div class="line">      print <span class="string">"A"</span><span class="selector-tag">i</span></div><div class="line">  <span class="keyword">else</span> print <span class="string">"("</span></div><div class="line">      PRINT-OPTIMAL-PARENS(s, <span class="selector-tag">i</span>, s[<span class="selector-tag">i</span>, j])</div><div class="line">      PRINT-OPTIMAL-PARENS(s, s[<span class="selector-tag">i</span>, j] + <span class="number">1</span>, j)</div><div class="line">      print <span class="string">")"</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>C++实现<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">typedef std::vector&lt;std::vector&lt;<span class="keyword">int</span>&gt;&gt; Table;</div><div class="line"></div><div class="line">void PrintOptimalParens(<span class="keyword">const</span> Table &amp;s, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(i == j)</div><div class="line">        std::cout&lt;&lt; <span class="string">"A"</span> &lt;&lt; i;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        std::cout&lt;&lt; <span class="string">"("</span>;</div><div class="line">        PrintOptimalParens(s, i, s[i][j]);</div><div class="line">        PrintOptimalParens(s, s[i][j] + <span class="number">1</span>, j);</div><div class="line">        std::cout&lt;&lt; <span class="string">")"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">void MatrixChainOrder(<span class="keyword">const</span> std::vector&lt;<span class="keyword">int</span>&gt; &amp;p)</div><div class="line">&#123;</div><div class="line">    size_t n = p.size() - <span class="number">1</span>;</div><div class="line">    Table m(n + <span class="number">1</span>, std::vector&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>));</div><div class="line">    Table s(n + <span class="number">1</span>, std::vector&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) <span class="comment">// set 0 to chain has length 1</span></div><div class="line">        m[i][i] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> l = <span class="number">2</span>; l &lt;= n; l++) <span class="comment">// 'l' is the length of chain</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n - l + <span class="number">1</span>; ++i)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> j = i + l - <span class="number">1</span>;     <span class="comment">// i..j sub chain's length is always 'l'</span></div><div class="line">            m[i][j] = INT32_MAX;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = i; k &lt; j; ++k)</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">int</span> q = m[i][k] + m[k+<span class="number">1</span>][j] + p[i<span class="number">-1</span>]*p[k]*p[j];</div><div class="line">                <span class="keyword">if</span>(q &lt; m[i][j])</div><div class="line">                &#123;</div><div class="line">                    m[i][j] = q;</div><div class="line">                    s[i][j] = k;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    std::cout&lt;&lt; <span class="string">"m[1, n] : "</span> &lt;&lt; m[<span class="number">1</span>][n] &lt;&lt; std::endl;</div><div class="line">    PrintOptimalParens(s, <span class="number">1</span>, <span class="number">6</span>);</div><div class="line">    std::cout&lt;&lt; std::endl;</div><div class="line">&#125;</div><div class="line">void test()</div><div class="line">&#123;</div><div class="line">    std::vector&lt;<span class="keyword">int</span>&gt; p&#123;<span class="number">30</span>, <span class="number">35</span>, <span class="number">15</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">25</span>&#125;;</div><div class="line">    MatrixChainOrder(p);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>备忘<br>对自然但低效的递归算法加上备忘机制可以达到与自底向上的动态规划相似的效率。<br>其核心是：当递归调用过程中第一次遇到子问题时，计算其解，并<strong>存入对应表项</strong>，随后每次遇到同一个子问题，只是简单的<strong>查表</strong>，返回其解</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">MEMOIZED-MATRIX-CHAIN</span><span class="params">(p)</span></span></div><div class="line">  n = <span class="selector-tag">p</span><span class="selector-class">.length</span> - <span class="number">1</span></div><div class="line">  let m[<span class="number">1</span>.<span class="selector-class">.n</span>, <span class="number">1</span>..n]be <span class="selector-tag">a</span> new <span class="selector-tag">table</span></div><div class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to n</div><div class="line">      <span class="keyword">for</span> j = <span class="selector-tag">i</span> to n</div><div class="line">          m[<span class="selector-tag">i</span>, j] = INF</div><div class="line">  return LOOKUP-CHAIN(m, <span class="selector-tag">p</span>, <span class="number">1</span>, n)</div><div class="line"></div><div class="line"><span class="function"><span class="title">LOOKUP-CHAIN</span><span class="params">(m, p, i, j)</span></span></div><div class="line">  <span class="keyword">if</span> m[<span class="selector-tag">i</span>, j] &lt; INF</div><div class="line">      return m[<span class="selector-tag">i</span>, j]</div><div class="line">  <span class="keyword">if</span> <span class="selector-tag">i</span> == j</div><div class="line">      m[<span class="selector-tag">i</span>, j] = <span class="number">0</span></div><div class="line">  <span class="keyword">else</span> <span class="keyword">for</span> k = <span class="selector-tag">i</span> to j - <span class="number">1</span></div><div class="line">      <span class="selector-tag">q</span> = LOOKUP-CHAIN(m, <span class="selector-tag">p</span>, <span class="selector-tag">i</span>, k) +</div><div class="line">          LOOKUP-CHAIN(m, <span class="selector-tag">p</span>, k + <span class="number">1</span>, j) + pi-<span class="number">1</span>*pk*pj</div><div class="line">      <span class="keyword">if</span> <span class="selector-tag">q</span> &lt; m[<span class="selector-tag">i</span>, j]</div><div class="line">          m[<span class="selector-tag">i</span>, j] = <span class="selector-tag">q</span></div><div class="line">  return m[<span class="selector-tag">i</span>, j]</div></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">LookupChain</span><span class="params">(Table &amp;m, <span class="keyword">const</span> std::vector&lt;<span class="keyword">int</span>&gt; &amp;p, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(m[i][j] &lt; INT32_MAX)</div><div class="line">        <span class="keyword">return</span> m[i][j];</div><div class="line">    <span class="keyword">if</span>(i == j)</div><div class="line">        m[i][j] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> k = i; k &lt; j; ++k)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">int</span> q = LookupChain(m, p, i, k) +</div><div class="line">                    LookupChain(m, p, k + <span class="number">1</span>, j) +</div><div class="line">                    p[i - <span class="number">1</span>] * p[k] * p[j];</div><div class="line">            <span class="keyword">if</span>(q &lt; m[i][j])</div><div class="line">                m[i][j] = q;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> m[i][j];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">MemoizedMatrixChain</span><span class="params">(<span class="keyword">const</span> std::vector&lt;<span class="keyword">int</span>&gt; &amp;p)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> n = p.size() - <span class="number">1</span>;</div><div class="line">    Table m(n + <span class="number">1</span>, std::vector&lt;<span class="keyword">int</span>&gt;(n + 1));</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i; j &lt;= n; ++j)</div><div class="line">            m[i][j] = INT32_MAX;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">return</span> <span class="title">LookupChain</span><span class="params">(m, p, <span class="number">1</span>, n)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是，自底向上动态规划算法，回比自顶向下备忘算法快。</p>
+<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h2><p>一个给定序列的子序列就是讲给定序列中的0个或多个元素去掉之后的结果。<br>给定两个序列X和Y，如果Z既是X的子序列，也是Y的子序列，我们称它为X和Y的公共子序列。<br>例如X:(A,B,C,B,D,A,B)和Y:(B,D,C,A,B,A)，那么序列(B,C,A)是X和Y的公共子序列，长度为3，而(B,C,B,A)和(B,D,A,B)是最长公共子序列。<br><strong>最长公共子序列问题</strong>(longest-common-subsequence problem)，给定两个序列X和Y，且X和Y长度最长的公共子序列 </p>
+<ul>
+<li>步骤1：刻画最长公共子序列的特征<br>先考虑暴力搜索方法</li>
+</ul>
+<ol>
+<li>穷举X(x<sub>1</sub>,x<sub>2</sub>,…,x<sub>m</sub>)的所有子序列，可以想象每一个项都为一个一个bit位，可以取0或1，这样可以得到总共2<sup>m</sup>个子序列</li>
+<li>已知X的一个子序列，确认其是否为Y的子序列。遍历Y即可，时间为O(n)<br>显然，该方法不实用。<br>定义<strong>LCS的最优子结构</strong>，令X=(x<sub>1</sub>,x<sub>2</sub>,…,x<sub>m</sub>)和Y=(y<sub>1</sub>,y<sub>2</sub>,…,y<sub>n</sub>)为两个序列，Z=(z<sub>1</sub>,z<sub>2</sub>,…,z<sub>k</sub>)为X和Y的任意LCS</li>
+<li>如果x<sub>m</sub>=y<sub>n</sub>，则z<sub>k</sub>=x<sub>m</sub>=y<sub>n</sub>，且Z<sub>k-1</sub>是X<sub>m-1</sub>和Y<sub>n-1</sub>的一个LCS</li>
+<li>如果x<sub>m</sub>!=y<sub>n</sub>，那么z<sub>k</sub>!=x<sub>m</sub>意味着Z是X<sub>m-1</sub>和Y的一个LCS</li>
+<li>如果x<sub>m</sub>!=y<sub>n</sub>，那么z<sub>k</sub>!=y<sub>n</sub>意味着Z是X和Y<sub>n-1</sub>的一个LCS</li>
+</ol>
+<ul>
+<li>步骤2：一个递归解</li>
+</ul>
+<p>定义c[i, j]表示X<sub>i</sub>和Y<sub>j</sub>的LCS的长度，如果i=0活着j=0，即一个序列长度为0，则LCS的长度为0，公式入下：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">                      <span class="number">0</span>                 若i=<span class="number">0</span>或j=<span class="number">0</span></div><div class="line">c[i, j] =      c[i<span class="number">-1</span>, j<span class="number">-1</span>] + <span class="number">1</span>          若i,j&gt;<span class="number">0</span>且xi =  yj</div><div class="line">          max(c[i, j<span class="number">-1</span>], c[[i<span class="number">-1</span>, j]])   若i,j&gt;<span class="number">0</span>且xi != yj</div></pre></td></tr></table></figure></p>
+<ul>
+<li>步骤3：计算LCS的长度</li>
+</ul>
+<p>算法思想：</p>
+<ol>
+<li>将c[i, j]的值保存在表c[0..m, 0..n]中，并按行主次序计算表项</li>
+<li>维护表b[1..m, 1..n]帮助构造最优解。其中b[i, j]指向表项对应计算c[i, j]时所选择的子问题最优解</li>
+<li>c[m, n]保存了LCS的长度</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">LCS-LENGTH</span><span class="params">(X, Y)</span></span></div><div class="line">  m = X<span class="selector-class">.length</span></div><div class="line">  n = Y<span class="selector-class">.length</span></div><div class="line">  let <span class="selector-tag">b</span>[<span class="number">1</span>.<span class="selector-class">.m</span>, <span class="number">1</span>..n] and c[<span class="number">0</span>.<span class="selector-class">.m</span>, <span class="number">0</span>..n]be new tables</div><div class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to m</div><div class="line">      c[<span class="selector-tag">i</span>, <span class="number">0</span>] = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> j = <span class="number">0</span> to n</div><div class="line">      c[<span class="number">0</span>, j] = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> = <span class="number">1</span> to m</div><div class="line">      <span class="keyword">for</span> j = <span class="number">1</span> to n</div><div class="line">          <span class="keyword">if</span> x[i] == y[j]</div><div class="line">              c[<span class="selector-tag">i</span>, j] = c[<span class="selector-tag">i</span> - <span class="number">1</span>, j - <span class="number">1</span>] + <span class="number">1</span></div><div class="line">              <span class="selector-tag">b</span>[<span class="selector-tag">i</span>, j] = <span class="string">'↖'</span></div><div class="line">          elseif c[<span class="selector-tag">i</span> - <span class="number">1</span>, j] &gt;= c[<span class="selector-tag">i</span>, j - <span class="number">1</span>]</div><div class="line">              c[<span class="selector-tag">i</span>, j] = c[<span class="selector-tag">i</span> - <span class="number">1</span>, j]</div><div class="line">              <span class="selector-tag">b</span>[<span class="selector-tag">i</span>, j] = <span class="string">'↑'</span></div><div class="line">          <span class="keyword">else</span> c[<span class="selector-tag">i</span>, j] = c[<span class="selector-tag">i</span>, j - <span class="number">1</span>]</div><div class="line">              <span class="selector-tag">b</span>[<span class="selector-tag">i</span>, j] = <span class="string">'←'</span></div><div class="line">  return c and b</div></pre></td></tr></table></figure>
+<ul>
+<li>步骤4：构造LCS</li>
+</ul>
+<p>想想上面’↖’,’↑’,’←’三个箭头代表的意义。<br>如果是’↖’就说明x[i]等于y[j]，且他们是LCS中的一个元素</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">PRINT-LCS</span><span class="params">(b, X, i, j)</span></span></div><div class="line">  <span class="keyword">if</span> <span class="selector-tag">i</span> == <span class="number">0</span> or j == <span class="number">0</span></div><div class="line">      return</div><div class="line">  <span class="keyword">if</span> <span class="selector-tag">b</span>[<span class="selector-tag">i</span>, j] == <span class="string">'↖'</span></div><div class="line">      PRINT-LCS(<span class="selector-tag">b</span>, X, <span class="selector-tag">i</span> - <span class="number">1</span>, j - <span class="number">1</span>)</div><div class="line">      print x[i]</div><div class="line">  elseif <span class="selector-tag">b</span>[<span class="selector-tag">i</span>, j] == <span class="string">'↑'</span></div><div class="line">      PRINT-LCS(<span class="selector-tag">b</span>, X, <span class="selector-tag">i</span> - <span class="number">1</span>, j)</div><div class="line">  <span class="keyword">else</span> PRINT-LCS(<span class="selector-tag">b</span>, X, <span class="selector-tag">i</span>, j - <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>待续</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/《算法导论》/">《算法导论》</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C++</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/06/30/动态规划算法/" data-title="动态规划算法算法 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/05/01/《算法导论》笔记/"  title="《算法导论》读书笔记">
+ <strong>下一篇：</strong><br/> 
+ <span>《算法导论》读书笔记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#动态规划"><span class="toc-number">1.</span> <span class="toc-text">动态规划</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#钢条切割"><span class="toc-number">1.1.</span> <span class="toc-text">钢条切割</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵链乘法"><span class="toc-number">1.2.</span> <span class="toc-text">矩阵链乘法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最长公共子序列"><span class="toc-number">1.3.</span> <span class="toc-text">最长公共子序列</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/《算法导论》/" title="《算法导论》">《算法导论》<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>29</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
