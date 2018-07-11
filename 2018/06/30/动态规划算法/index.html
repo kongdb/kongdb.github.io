@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/06/30/动态规划算法/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="《算法导论》第15章">
-<meta property="og:updated_time" content="2018-07-10T14:06:33.079Z">
+<meta property="og:updated_time" content="2018-07-11T14:24:28.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态规划算法">
 <meta name="twitter:description" content="《算法导论》第15章">
@@ -274,9 +274,17 @@
 <ul>
 <li>步骤4：构造LCS</li>
 </ul>
-<p>想想上面’↖’,’↑’,’←’三个箭头代表的意义。<br>如果是’↖’就说明x[i]等于y[j]，且他们是LCS中的一个元素</p>
+<p>想想上面’↖’,’↑’,’←’三个箭头代表的意义。</p>
+<ol>
+<li>如果是’↖’就说明x[i]等于y[j]，且他们是LCS中的一个元素</li>
+<li>如果是’↑’,说明c[i - 1, j]和c[i, j]是一样大的</li>
+<li>如果是’←’,说明c[i, j - 1]和c[i, j]是一样大的<br>递归迭代即可</li>
+</ol>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">PRINT-LCS</span><span class="params">(b, X, i, j)</span></span></div><div class="line">  <span class="keyword">if</span> <span class="selector-tag">i</span> == <span class="number">0</span> or j == <span class="number">0</span></div><div class="line">      return</div><div class="line">  <span class="keyword">if</span> <span class="selector-tag">b</span>[<span class="selector-tag">i</span>, j] == <span class="string">'↖'</span></div><div class="line">      PRINT-LCS(<span class="selector-tag">b</span>, X, <span class="selector-tag">i</span> - <span class="number">1</span>, j - <span class="number">1</span>)</div><div class="line">      print x[i]</div><div class="line">  elseif <span class="selector-tag">b</span>[<span class="selector-tag">i</span>, j] == <span class="string">'↑'</span></div><div class="line">      PRINT-LCS(<span class="selector-tag">b</span>, X, <span class="selector-tag">i</span> - <span class="number">1</span>, j)</div><div class="line">  <span class="keyword">else</span> PRINT-LCS(<span class="selector-tag">b</span>, X, <span class="selector-tag">i</span>, j - <span class="number">1</span>)</div></pre></td></tr></table></figure>
-<p>待续</p>
+<p>C++实现<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">using</span> Table = <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;T&gt;&gt;;</div><div class="line"></div><div class="line"><span class="keyword">enum</span> Arrow</div><div class="line">&#123;</div><div class="line">    UP,    <span class="comment">//up arrow</span></div><div class="line">    LEFT,  <span class="comment">//left arrow</span></div><div class="line">    UL,    <span class="comment">//upper left arrow</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintLcs</span><span class="params">(<span class="keyword">const</span> Table&lt;Arrow&gt; &amp;b, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;X, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(i == <span class="number">0</span> || j == <span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">if</span>(b[i][j] == UL)</div><div class="line">    &#123;</div><div class="line">        PrintLcs(b, X, i - <span class="number">1</span>, j - <span class="number">1</span>);</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; X[i - <span class="number">1</span>] &lt;&lt; <span class="string">" "</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(b[i][j] == UP) </div><div class="line">        PrintLcs(b, X, i - <span class="number">1</span>, j);</div><div class="line">    <span class="keyword">else</span></div><div class="line">        PrintLcs(b, X, i, j - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">LcsLength</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;X, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;Y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m = X.size(), n = Y.size();</div><div class="line">    Table&lt;Arrow&gt; b(m + <span class="number">1</span>, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Arrow&gt;(n + <span class="number">1</span>));</div><div class="line">    Table&lt;<span class="keyword">int</span>&gt; c(m + <span class="number">1</span>, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n + <span class="number">1</span>));</div><div class="line">    <span class="comment">//initialize</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</div><div class="line">        c[i][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= n; ++j)</div><div class="line">        c[<span class="number">0</span>][j] = <span class="number">0</span>;</div><div class="line">    <span class="comment">//main loop</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">//string suffix is [0..m-1] and [0..n-1]</span></div><div class="line">            <span class="keyword">if</span>(X[i - <span class="number">1</span>] == Y[j - <span class="number">1</span>])</div><div class="line">            &#123;</div><div class="line">                c[i][j] = c[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">                b[i][j] = UL;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c[i - <span class="number">1</span>][j] &gt;= c[i][j - <span class="number">1</span>])</div><div class="line">            &#123;</div><div class="line">                c[i][j] = c[i - <span class="number">1</span>][j];</div><div class="line">                b[i][j] = UP;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                c[i][j] = c[i][j - <span class="number">1</span>];</div><div class="line">                b[i][j] = LEFT;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//print result</span></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; <span class="string">"LCS is : "</span>;</div><div class="line">    PrintLcs(b, X, m, n);</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>15.4-2<br>利用完整的表c及原始序列X,Y来重构LCS，要求运行时间O(m + n)，不使用表b<br>按照题目意思，实现如下<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintLcs2</span><span class="params">(<span class="keyword">const</span> Table&lt;<span class="keyword">int</span>&gt; &amp;c, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;X,</span></span></div><div class="line">               <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;Y, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//一个栈</span></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; stk;</div><div class="line">    <span class="keyword">while</span>(i != <span class="number">0</span> &amp;&amp; j != <span class="number">0</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(X[i - <span class="number">1</span>] == Y[j - <span class="number">1</span>]) <span class="comment">//c[i][j]使用了c[i - 1][j - 1]</span></div><div class="line">        &#123;</div><div class="line">            i--;</div><div class="line">            j--;</div><div class="line">            stk.push_back(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c[i][j] == c[i - <span class="number">1</span>][j]) <span class="comment">//c[i][j]使用了c[i - 1][j]</span></div><div class="line">            i--;</div><div class="line">        <span class="keyword">else</span>      <span class="comment">//c[i][j]使用了c[i][j - 1]</span></div><div class="line">            j--;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = stk.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; X[stk[i]] &lt;&lt; <span class="string">" "</span>;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>&lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -406,11 +414,11 @@
 			
 		
 			
-				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
 			
 		
 			
@@ -418,15 +426,7 @@
 			
 		
 			
-				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
 			
 		
 			
@@ -434,11 +434,19 @@
 			
 		
 			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
 			
 		
 		</ul>
