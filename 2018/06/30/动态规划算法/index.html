@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/06/30/动态规划算法/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="《算法导论》第15章">
-<meta property="og:updated_time" content="2018-07-12T14:12:53.895Z">
+<meta property="og:updated_time" content="2018-07-13T00:03:47.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态规划算法">
 <meta name="twitter:description" content="《算法导论》第15章">
@@ -297,8 +297,15 @@
 </li>
 </ol>
 <ul>
-<li>15.4-4<br>只是用表c中2×min(m, n)个表项及O(1)的额外空间来计算LCS的长度。<br>然后说明如何只用min(m, n)个表项及O(1)的额外空间完成相同的工作<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></li>
+<li>15.4-4<br>只是用表c中2×min(m, n)个表项及O(1)的额外空间来计算LCS的长度。<br>然后说明如何只用min(m, n)个表项及O(1)的额外空间完成相同的工作</li>
 </ul>
+<p>先来2×min(m, n)，这个比较好想。<br>假设Y的长度小于X的长度，因为如果Y的长度大于X的长度，则只要调用LcsLength(Y, X)就行了嘛。<br>这样就保证了n = min(m, n)。</p>
+<ol>
+<li>使用c0保存上一行的信息</li>
+<li>c1为当前计算行的信息</li>
+<li>c1计算完成之后，将所有项赋值到c0。这样c0重新成为”上一行”</li>
+<li>循环迭代即可<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">LcsLength</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;X, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;Y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m = X.size(), n = Y.size();</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; c0(n + <span class="number">1</span>), c1(n + <span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; ++i)</div><div class="line">        c0[i] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(X[i - <span class="number">1</span>] == Y[j - <span class="number">1</span>])</div><div class="line">            &#123;</div><div class="line">                c1[j] = c0[j - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c1[j - <span class="number">1</span>] &gt;= c0[j])</div><div class="line">            &#123;</div><div class="line">                c1[j] = c1[j - <span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                c1[j] = c0[j];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">            c0[j] = c1[j];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> c1[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -428,7 +435,7 @@
 			
 		
 			
-				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
 			
 		
 			
@@ -448,10 +455,6 @@
 			
 		
 			
-				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
 			
 		
@@ -461,6 +464,10 @@
 		
 			
 				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
 			
 		
 		</ul>
