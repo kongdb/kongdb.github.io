@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/06/30/动态规划算法/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="《算法导论》第15章">
-<meta property="og:updated_time" content="2018-07-13T00:03:47.509Z">
+<meta property="og:updated_time" content="2018-07-15T02:01:32.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态规划算法">
 <meta name="twitter:description" content="《算法导论》第15章">
@@ -304,8 +304,14 @@
 <li>使用c0保存上一行的信息</li>
 <li>c1为当前计算行的信息</li>
 <li>c1计算完成之后，将所有项赋值到c0。这样c0重新成为”上一行”</li>
-<li>循环迭代即可<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">LcsLength</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;X, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;Y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m = X.size(), n = Y.size();</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; c0(n + <span class="number">1</span>), c1(n + <span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; ++i)</div><div class="line">        c0[i] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(X[i - <span class="number">1</span>] == Y[j - <span class="number">1</span>])</div><div class="line">            &#123;</div><div class="line">                c1[j] = c0[j - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c1[j - <span class="number">1</span>] &gt;= c0[j])</div><div class="line">            &#123;</div><div class="line">                c1[j] = c1[j - <span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                c1[j] = c0[j];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">            c0[j] = c1[j];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> c1[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+<li>循环迭代即可<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">LcsLength</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;X, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;Y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m = X.size(), n = Y.size();</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; c0(n + <span class="number">1</span>), c1(n + <span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; ++i)</div><div class="line">        c0[i] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">if</span>(X[i - <span class="number">1</span>] == Y[j - <span class="number">1</span>])</div><div class="line">            &#123;</div><div class="line">                c1[j] = c0[j - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c1[j - <span class="number">1</span>] &gt;= c0[j])</div><div class="line">            &#123;</div><div class="line">                c1[j] = c1[j - <span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                c1[j] = c0[j];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">            c0[j] = c1[j];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> c1[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 </ol>
+<p>那如何只使用O(min(m, n))的空间呢?我的实现如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">LcsLength2</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;X, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;Y)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> m = X.size(), n = Y.size();</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; c(n + <span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; ++i)</div><div class="line">        c[i] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="comment">//ul_item始终指向假想存在的前一行的左前方项</span></div><div class="line">        <span class="keyword">int</span> ul_item = c[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; ++j)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">//计算当前c[j]项时，先保存下来。这样可以假想up_item始终指向前一行的上方项</span></div><div class="line">            <span class="keyword">int</span> up_item = c[j];</div><div class="line">            <span class="keyword">if</span>(X[i - <span class="number">1</span>] == Y[j - <span class="number">1</span>])</div><div class="line">                c[j] = ul_item + <span class="number">1</span>;   <span class="comment">//前一行的左前方项+1</span></div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c[j - <span class="number">1</span>] &gt; c[j])  <span class="comment">//左侧项比上方项大</span></div><div class="line">                c[j] = c[j - <span class="number">1</span>];      <span class="comment">//c[j]需要指向左侧项</span></div><div class="line">            <span class="keyword">else</span></div><div class="line">                ;                     <span class="comment">//否则c[j]则无需修改</span></div><div class="line">            <span class="comment">//计算下一个值前，左前方项需要重新置为当前上方项</span></div><div class="line">            ul_item = up_item;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> c[n];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>15.4-5<br>设计一个O(n<sup>2</sup>)时间的算法，求一个n个数的序列的最长单调递增子数列</li>
+</ul>
+<p>没想好</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -439,7 +445,7 @@
 			
 		
 			
-				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
 			
 		
 			
@@ -447,11 +453,11 @@
 			
 		
 			
-				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
 			
 		
 			
@@ -459,7 +465,7 @@
 			
 		
 			
-				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 			
@@ -467,7 +473,7 @@
 			
 		
 			
-				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
 			
 		
 		</ul>
