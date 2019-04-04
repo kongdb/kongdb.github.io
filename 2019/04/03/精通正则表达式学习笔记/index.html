@@ -1,0 +1,933 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>精通正则表达式学习笔记 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="精通正则表达式学习笔记">
+<meta name="keywords" content="正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="精通正则表达式学习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/04/03/精通正则表达式学习笔记/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="精通正则表达式学习笔记">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/时钟.png">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/温度表示.png">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/环视.png">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/数字插入逗号.png">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/文本主导举例.png">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/拆分日期的方法.png">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/单层嵌套括号匹配.png">
+<meta property="og:image" content="http://yoursite.com/images/精通正则表达式学习笔记/两层嵌套括号匹配.png">
+<meta property="og:updated_time" content="2019-04-04T15:19:53.096Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="精通正则表达式学习笔记">
+<meta name="twitter:description" content="精通正则表达式学习笔记">
+<meta name="twitter:image" content="http://yoursite.com/images/精通正则表达式学习笔记/时钟.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/04/03/精通正则表达式学习笔记/" title="精通正则表达式学习笔记" itemprop="url">精通正则表达式学习笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2019-04-03T06:23:51.000Z" itemprop="datePublished"> 发表于 2019-04-03</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第1章：正则表达式入门"><span class="toc-number">2.</span> <span class="toc-text">第1章：正则表达式入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#更多的例子"><span class="toc-number">2.1.</span> <span class="toc-text">更多的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第2章：入门示例拓展"><span class="toc-number">3.</span> <span class="toc-text">第2章：入门示例拓展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配温度"><span class="toc-number">3.1.</span> <span class="toc-text">匹配温度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为数值添加逗号"><span class="toc-number">3.2.</span> <span class="toc-text">为数值添加逗号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Text-To-HTML转换"><span class="toc-number">3.3.</span> <span class="toc-text">Text-To-HTML转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单词重复问题"><span class="toc-number">3.4.</span> <span class="toc-text">单词重复问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第3章：正则表达式的特性和流派概览"><span class="toc-number">4.</span> <span class="toc-text">第3章：正则表达式的特性和流派概览</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#处理正则表达式的几种方式"><span class="toc-number">4.1.</span> <span class="toc-text">处理正则表达式的几种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则模式与匹配模式"><span class="toc-number">4.2.</span> <span class="toc-text">正则模式与匹配模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第4章：表达式的匹配原理"><span class="toc-number">5.</span> <span class="toc-text">第4章：表达式的匹配原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是NFA和DFA呢"><span class="toc-number">5.1.</span> <span class="toc-text">什么是NFA和DFA呢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试引擎类型"><span class="toc-number">5.2.</span> <span class="toc-text">测试引擎类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配的基础"><span class="toc-number">5.3.</span> <span class="toc-text">匹配的基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#表达式主导与文本主导"><span class="toc-number">5.3.1.</span> <span class="toc-text">表达式主导与文本主导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较NFA与DFA"><span class="toc-number">5.3.2.</span> <span class="toc-text">比较NFA与DFA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯（Backtracking）"><span class="toc-number">5.3.3.</span> <span class="toc-text">回溯（Backtracking）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#再看匹配优先"><span class="toc-number">5.3.3.1.</span> <span class="toc-text">再看匹配优先</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浮点数规范化问题"><span class="toc-number">5.3.3.2.</span> <span class="toc-text">浮点数规范化问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#占有优先量词和固化分组"><span class="toc-number">5.3.3.2.1.</span> <span class="toc-text">占有优先量词和固化分组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#环视中的回溯"><span class="toc-number">5.3.3.2.2.</span> <span class="toc-text">环视中的回溯</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多选结果的匹配原则"><span class="toc-number">5.3.3.2.3.</span> <span class="toc-text">多选结果的匹配原则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最左最长规则"><span class="toc-number">5.3.3.2.4.</span> <span class="toc-text">最左最长规则</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第5章：正则表达式实用技巧"><span class="toc-number">6.</span> <span class="toc-text">第5章：正则表达式实用技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式的平衡法则"><span class="toc-number">6.1.</span> <span class="toc-text">正则表达式的平衡法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#若干例子"><span class="toc-number">6.2.</span> <span class="toc-text">若干例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配连续行"><span class="toc-number">6.2.1.</span> <span class="toc-text">匹配连续行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配IP地址"><span class="toc-number">6.2.2.</span> <span class="toc-text">匹配IP地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理文件名"><span class="toc-number">6.2.3.</span> <span class="toc-text">处理文件名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#去掉文件名开始的路径"><span class="toc-number">6.2.3.1.</span> <span class="toc-text">去掉文件名开始的路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#从路径中获取文件名"><span class="toc-number">6.2.3.2.</span> <span class="toc-text">从路径中获取文件名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#所在的路径和文件名"><span class="toc-number">6.2.3.3.</span> <span class="toc-text">所在的路径和文件名</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配对称的括号"><span class="toc-number">6.2.4.</span> <span class="toc-text">匹配对称的括号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配数字"><span class="toc-number">6.2.4.1.</span> <span class="toc-text">匹配数字</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配分隔符之内的文本"><span class="toc-number">6.2.5.</span> <span class="toc-text">匹配分隔符之内的文本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#容许引文字符串中出现转义引号"><span class="toc-number">6.2.5.1.</span> <span class="toc-text">容许引文字符串中出现转义引号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#去除文本首尾的空白字符"><span class="toc-number">6.2.6.</span> <span class="toc-text">去除文本首尾的空白字符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML相关范例"><span class="toc-number">6.3.</span> <span class="toc-text">HTML相关范例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配HTML-Tag"><span class="toc-number">6.3.1.</span> <span class="toc-text">匹配HTML Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配HTML-Link"><span class="toc-number">6.3.2.</span> <span class="toc-text">匹配HTML Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#校验HTTP-URL"><span class="toc-number">6.3.3.</span> <span class="toc-text">校验HTTP URL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展的例子"><span class="toc-number">6.4.</span> <span class="toc-text">扩展的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#保持数据的协调性"><span class="toc-number">6.4.1.</span> <span class="toc-text">保持数据的协调性</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>正则表达式是一个程序员必备的技能，小到查看日志时的grep/egrep，大到代码里检查字符串的合法性等，都需要依赖于正则表达式。<br>《精通正则表达式》这本书是这方面的杰作，可能如果只是想简单用一用正则表达式，并不需要学的这么深入，但本着查根问底的精神，加上最近的兴趣又上来了，便拿起来啃了起来。</p>
+<p>原书作者基本上基于perl来讲解，我还是对Python比较熟悉，下文的所有例子主要都是基于Python3的<a href="https://docs.python.org/3/library/re.html" target="_blank" rel="external">re</a>库来的，部分使用centos的egrep</p>
+<h1 id="第1章：正则表达式入门"><a href="#第1章：正则表达式入门" class="headerlink" title="第1章：正则表达式入门"></a>第1章：正则表达式入门</h1><p>排除型字符组的注意点，</p>
+<ul>
+<li>必须匹配一个未列出的字符</li>
+<li>他必须放在字符组首部，否则表示其字符本身的含义</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可以匹配'qb'</span></div><div class="line">re.search(<span class="string">r'q[^u]'</span>, <span class="string">'qb'</span>)</div><div class="line"><span class="comment">#不可以匹配</span></div><div class="line">re.search(<span class="string">r'q[^u]'</span>, <span class="string">'aq'</span>)</div><div class="line"><span class="comment">#匹配字符'a'</span></div><div class="line">re.search(<span class="string">r'[^b]'</span>, <span class="string">'a'</span>)</div><div class="line"><span class="comment">#不能匹配</span></div><div class="line">re.search(<span class="string">r'[b^]'</span>, <span class="string">'a'</span>)</div><div class="line"><span class="comment">#匹配字符'^'</span></div><div class="line">re.search(<span class="string">r'[b^]'</span>, <span class="string">'^'</span>)</div></pre></td></tr></table></figure>
+<p>字符组的注意点</p>
+<ul>
+<li>内部的“元字符”，比如’.?*’等，仅能表示普通字符</li>
+<li>‘-‘只有放在开头，才能表示’-‘本身，否则表示范围</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.match(<span class="string">r'1[.]2'</span>, <span class="string">'1.2'</span>)</div><div class="line"><span class="comment">#不能匹配</span></div><div class="line">re.match(<span class="string">r'1[.]2'</span>, <span class="string">'1/2'</span>)</div><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.match(<span class="string">r'1.2'</span>, <span class="string">'1/2'</span>)</div><div class="line"></div><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.match(<span class="string">r'1[-./]2'</span>, <span class="string">'1-2'</span>)</div><div class="line"><span class="comment">#不能匹配</span></div><div class="line">re.match(<span class="string">r'1[.-/]2'</span>, <span class="string">'1-2'</span>)</div><div class="line"><span class="comment">#误匹配，此处表示范围。'#'、','、'/'的ascii码分别为35,44,47</span></div><div class="line">re.match(<span class="string">r'1[#-/]2'</span>, <span class="string">'1,2'</span>)</div></pre></td></tr></table></figure>
+<p>脱字符与多选分支，可以理解成多选分支的”<strong><em>优先级</em></strong>“最低</p>
+<p>例如四则运算里’3*4+2’，因为’+’的优先级低，结果为14；而’3*(4+2)’的结果为18</p>
+<ul>
+<li>‘^(From|Subject):’   表示以’From’开头，然后是’:’，或者以’Subject’开头，然后是’:’</li>
+<li>‘^From|Subject:’      表示以’From’开头，或者包含’Subject:’</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.search(<span class="string">r'^(From|Subject):'</span>, <span class="string">'Subject: helo'</span>)</div><div class="line"><span class="comment">#不能匹配</span></div><div class="line">re.search(<span class="string">r'^(From|Subject):'</span>, <span class="string">'abc Subject: helo'</span>)</div><div class="line"><span class="comment">#可以匹配'Subject:'</span></div><div class="line">re.search(<span class="string">r'^From|Subject:'</span>, <span class="string">'abc Subject: helo'</span>)</div></pre></td></tr></table></figure>
+<p>忽略大小写</p>
+<ul>
+<li>egrep中使用’-i’表示</li>
+<li>Python中使用’re.I’参数表示</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#能够匹配'the'开头的行</span></div><div class="line">% egrep -i <span class="string">'^THE'</span> ./<span class="number">1.</span>txt</div><div class="line"></div><div class="line"><span class="comment">#能够匹配</span></div><div class="line">re.match(<span class="string">r'cat'</span>, <span class="string">'CAT'</span>, re.I)</div></pre></td></tr></table></figure>
+<p>单词分界符，用来匹配整个单词。比如不希望’cat’和’category’中的’cat’匹配时需要用到</p>
+<ul>
+<li>egrep中使用’\&lt;’和’\&gt;’来表示</li>
+<li>Python中使用’\b’来表示</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#只能匹配包含单词'cat'的行</span></div><div class="line">% egrep <span class="string">'\&lt;cat\&gt;'</span> ./<span class="number">1.</span>txt</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.search(<span class="string">r'cat'</span>, <span class="string">'this is a category'</span>)</div><div class="line"><span class="comment">#不能匹配</span></div><div class="line">re.search(<span class="string">r'\bcat\b'</span>, <span class="string">'this is a category'</span>)</div><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.search(<span class="string">r'\bcat\b'</span>, <span class="string">'this is a cat'</span>)</div></pre></td></tr></table></figure>
+<p>书中说”单词的开始和结束”准确说是”字母数字符号的开始和结束“（其实也就是’\w’，写代码的时候，变量名只能用这几个字符哦），但实际测试过程中，发现Python3对于汉字的支持相当好，把汉字也当做’字母’了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.search(<span class="string">'\w+'</span>, <span class="string">'我'</span>)</div><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.search(<span class="string">r'\b我们\b'</span>, <span class="string">'this is 我们 的家'</span>)</div><div class="line"><span class="comment">#不能匹配</span></div><div class="line">re.search(<span class="string">r'\b我们\b'</span>, <span class="string">'this is我们的家'</span>)</div></pre></td></tr></table></figure>
+<p>匹配HR标签，注意点：</p>
+<ol>
+<li>SIZE属性可有可无</li>
+<li>‘=’前后可能有任意多个空格</li>
+<li>‘&gt;’前面可能有任意多个空格</li>
+<li>标签和属性可能大小写</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">re.match(<span class="string">r'&lt;HR(\s+SIZE\s*=\s*\d+)?\s*&gt;'</span>, <span class="string">'&lt;HR size =  14  &gt;'</span>, re.I)</div></pre></td></tr></table></figure>
+<h2 id="更多的例子"><a href="#更多的例子" class="headerlink" title="更多的例子"></a>更多的例子</h2><ul>
+<li>匹配变量名：以字母下划线开头，然后是字母数字或者下划线</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">re.search(<span class="string">r'[a-zA-Z_][a-zA-Z_0-9]*'</span>, <span class="string">'obj2'</span>)</div></pre></td></tr></table></figure>
+<ul>
+<li>引号内的字符串</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#最简单的情况，不考虑转义引号，嵌套等，也不考虑匹配优先导致的问题</span></div><div class="line">re.search(<span class="string">r'"[^"]*"'</span>, <span class="string">'"abc"'</span>)</div></pre></td></tr></table></figure>
+<ul>
+<li>美元金额（可能包含小数）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#任意多位的整数，加上可选的"点号及两位整数"</span></div><div class="line">re.match(<span class="string">r'\$\d+(\.\d\d)?'</span>, <span class="string">'$36.30'</span>)</div><div class="line"><span class="comment">#不能匹配'$1,000','$.36'</span></div><div class="line"><span class="comment">#尝试把'+'改成'*'会导致误匹配</span></div><div class="line"><span class="comment">#可以匹配</span></div><div class="line">re.match(<span class="string">r'\$\d*(\.\d\d)?'</span>, <span class="string">'$.30'</span>)</div><div class="line"><span class="comment">#误匹配，因为这里的'*'和'?'都是可选的，所以“什么数字都没有”也能匹配</span></div><div class="line">re.match(<span class="string">r'\$\d*(\.\d\d)?'</span>, <span class="string">'$'</span>)</div></pre></td></tr></table></figure>
+<ul>
+<li>HTTP/HTML URL</li>
+</ul>
+<p>通常是要匹配这样的结构：<a href="http://hostname/path.html" target="_blank" rel="external">http://hostname/path.html</a></p>
+<p>当然也可以’.htm’结尾</p>
+<p>PS：作者那个年代可能这种静态网页很多吧，现在以这种结尾的网页显得很low啦</p>
+<ol>
+<li>匹配hostname ： ‘[-a-z0-9_.]+’</li>
+<li>匹配path：’[-a-z0-9_:@&amp;?=+,.!/~*%$]*‘</li>
+</ol>
+<ul>
+<li>表示时刻的文字</li>
+</ul>
+<p>12小时制，后面带am或pm表示上下午，比如’12:30 pm’</p>
+<p>需要注意的是一般午夜12点要用’12:00 am’而不是’00:00’ am，也就是时数不为0</p>
+<p>24小时制，比如’13:35’</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#12小时制时间</span></div><div class="line">re.match(<span class="string">r'(1[012]|0?[1-9]):[0-5][0-9]\s(am|pm)'</span>, <span class="string">'12:00 pm'</span>)</div><div class="line"><span class="comment">#24小时制时间-1</span></div><div class="line">re.match(<span class="string">r'(2[0-3]|[01]?\d):[0-5][0-9]'</span>, <span class="string">'13:25'</span>)</div><div class="line"><span class="comment">#24小时制时间-2</span></div><div class="line">re.match(<span class="string">r'([012][0-3]|[01]?[4-9]):[0-5][0-9]'</span>, <span class="string">'13:25'</span>)</div></pre></td></tr></table></figure>
+<p><img src="/images/精通正则表达式学习笔记/时钟.png" alt="images"></p>
+<h1 id="第2章：入门示例拓展"><a href="#第2章：入门示例拓展" class="headerlink" title="第2章：入门示例拓展"></a>第2章：入门示例拓展</h1><h2 id="匹配温度"><a href="#匹配温度" class="headerlink" title="匹配温度"></a>匹配温度</h2><p>包括摄氏度和华氏度，比如’-16.0  C’、’+23.7 F’</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#返回：('+32.23', 'F')</span></div><div class="line">re.match(<span class="string">r'^([-+]?\d+(?:\.\d*)?)\s*([CF])$'</span>, <span class="string">'+32.23 F'</span>, re.I).groups()</div></pre></td></tr></table></figure>
+<p><img src="/images/精通正则表达式学习笔记/温度表示.png" alt=""></p>
+<p>两种表示的区别</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配任意多个连续的'a'，或者任意多个连续的'b'。此处返回'a'</span></div><div class="line">re.match(<span class="string">r'a*|b*'</span>, <span class="string">'abab'</span>, re.I)</div><div class="line"><span class="comment">#匹配任意多个'a'或者'b'，此处返回'abab'</span></div><div class="line">re.match(<span class="string">r'(a|b)*'</span>, <span class="string">'abab'</span>, re.I)</div></pre></td></tr></table></figure>
+<p>修整股票价格，参考第4章</p>
+<h2 id="为数值添加逗号"><a href="#为数值添加逗号" class="headerlink" title="为数值添加逗号"></a>为数值添加逗号</h2><p>这个问题的需求很简单，把数字格式化为人类能够看懂的格式，比如：”12345678” =&gt; “12,345,678”，这个很常见了。</p>
+<p>想想，如果不用正则表达式，怎么解决呢？</p>
+<p>啊哈，Python里面提供了基本的格式化方法，参考<a href="https://docs.python.org/3/library/string.html" target="_blank" rel="external">string</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'&#123;:,&#125;'</span>.format(<span class="number">12345678</span>))</div></pre></td></tr></table></figure>
+<p>如果不能使用这种Python特有 的东西呢？大概是要这样丑陋的逻辑了吧</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">AddThousandsSeparator</span><span class="params">(s)</span>:</span></div><div class="line">    chs = list(s)</div><div class="line">    chs_len = len(chs)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(chs_len - <span class="number">3</span>, <span class="number">0</span>, <span class="number">-3</span>):</div><div class="line">        chs.insert(i, <span class="string">','</span>)</div><div class="line">    <span class="keyword">return</span> chs.join(<span class="string">''</span>)</div></pre></td></tr></table></figure>
+<p>那现在我们有了正则怎么办呢？这就要用到环视啦，其实环视就是用来匹配<strong><em>符合正则表达式的位置</em></strong>。</p>
+<p>这个算正则表达式里面比较难的概念啦，掌握了这个，基本上正则就入门了。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>正则表达式</th>
+<th>匹配成功的条件</th>
+<th>大白话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>肯定逆序环视</td>
+<td>(?&lt;=…)</td>
+<td>子表达式能够匹配左侧文本</td>
+<td>如果一个位置的<strong><em>左侧</em></strong>文本和正则表达式<strong><em>相匹配</em></strong>，就匹配该位置成功</td>
+</tr>
+<tr>
+<td>否定逆序环视</td>
+<td>(?&lt;!…)</td>
+<td>子表达式不能匹配左侧文本</td>
+<td>如果一个位置的<strong><em>左侧</em></strong>文本和正则表达式<strong><em>不相匹配</em></strong>，就匹配该位置成功</td>
+</tr>
+<tr>
+<td>肯定顺序环视</td>
+<td>(?=…)</td>
+<td>子表达式能够匹配右侧文本</td>
+<td>如果一个位置的<strong><em>右侧</em></strong>文本和正则表达式<strong><em>相匹配</em></strong>，就匹配该位置成功</td>
+</tr>
+<tr>
+<td>否定顺序环视</td>
+<td>(?!…)</td>
+<td>子表达式不能匹配右侧文本</td>
+<td>如果一个位置的<strong><em>右侧</em></strong>文本和正则表达式<strong><em>不相匹配</em></strong>，就匹配该位置成功</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/精通正则表达式学习笔记/环视.png" alt="环视"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#肯定逆序环视，输出'1,+2,+3'</span></div><div class="line">re.sub(<span class="string">r'(?&lt;=,)'</span>, <span class="string">'+'</span>, <span class="string">'1,2,3'</span>)</div><div class="line"><span class="comment">#否定逆序环视，输出'+1+,2+,3+'</span></div><div class="line">re.sub(<span class="string">r'(?&lt;！,)'</span>, <span class="string">'+'</span>, <span class="string">'1,2,3'</span>)</div><div class="line"><span class="comment">#肯定顺序环视，输出'1+,2+,3'</span></div><div class="line">re.sub(<span class="string">r'(?=,)'</span>, <span class="string">'+'</span>, <span class="string">'1,2,3'</span>)</div><div class="line"><span class="comment">#否定顺序环视，输出'+1,+2,+3+'</span></div><div class="line">re.sub(<span class="string">r'(?！,)'</span>, <span class="string">'+'</span>, <span class="string">'1,2,3'</span>)</div></pre></td></tr></table></figure>
+<p>将”Jeffs”替换成”Jeff’s”的几种方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">re.sub(<span class="string">r'\bJeffs\b'</span>, <span class="string">r"Jeff's"</span>, <span class="string">'My name is Jeffs'</span>)</div><div class="line">re.sub(<span class="string">r'\b(Jeff)(s)\b'</span>, <span class="string">r"\1'\2"</span>, <span class="string">'My name is Jeffs'</span>)</div><div class="line">re.sub(<span class="string">r'\bJeff(?=s\b)'</span>, <span class="string">r"Jeff'"</span>, <span class="string">'My name is Jeffs'</span>)</div><div class="line"><span class="comment">#对于这种多个环视组合的情况，需要匹配的位置重合才算匹配成功</span></div><div class="line">re.sub(<span class="string">r'(?&lt;=\bJeff)(?=s\b)'</span>, <span class="string">"'"</span>, <span class="string">'My name is Jeffs'</span>)</div><div class="line">re.sub(<span class="string">r'(?=s\b)(?&lt;=\bJeff)'</span>, <span class="string">"'"</span>, <span class="string">'My name is Jeffs'</span>)</div></pre></td></tr></table></figure>
+<p>回到正题，我们的要给数字插入逗号，其实是找”左边有数字，右边数字的个数正好是3的倍数“的位置</p>
+<p><img src="/images/精通正则表达式学习笔记/数字插入逗号.png" alt="数字插入逗号"></p>
+<ol>
+<li>如果没有’(?&lt;=\d)’，当数字正好3位时，会在首位就插入一个逗号</li>
+<li>如果没有’$’，会出现’2,9,8,4,4,4,215’这样的情况</li>
+</ol>
+<p>如果数字不是出现字符串末尾，上面的表达式就失效啦，比如”the number is 1024 !“</p>
+<p>可能会想通过”\b”来代替”$”，但同样不能解决”tone of 1024Hz”这样的问题，因为”\b”表示的是单词(字母数字下划线)的分界符，他可以用环视表示为两部分</p>
+<ol>
+<li>(?&lt;!\w)(?=\w) ：左边不是word，右边是word，表示单词起始分界符</li>
+<li>(?&lt;=\w)(?!\w) ：左边是word，右边不是word，表示单词结束分界符</li>
+</ol>
+<p>原问题可以通过’(?!\d)’来解决，表示右边不是数字的位置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#输出：tone of 1,024Hz</span></div><div class="line">re.sub(<span class="string">r'(?&lt;=\d)(?=(?:\d&#123;3&#125;)+(?!\d))'</span>, <span class="string">','</span>, <span class="string">'tone of 1024Hz'</span>)</div></pre></td></tr></table></figure>
+<p>不通过逆序环视，这里对于Python的sub替换函数要说明一下，他默认会替换所以匹配的位置。但是<strong><em>每一次匹配都是从上一次匹配结束位置开始的</em></strong>，这句话是我自己的理解，来看几个例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#这个很好理解，把所有的数字变成'-'，所以结果是'a-b-c-'</span></div><div class="line">re.sub(<span class="string">r'\d'</span>, <span class="string">'-'</span>, <span class="string">'a1b2c3'</span>)</div><div class="line"><span class="string">'''</span></div><div class="line">1、'\d+'匹配到'123'之后，替换为'-'</div><div class="line">2、从'b'开始搜索，'\d+'匹配到'5'，替换为'-'</div><div class="line">3、从'c'开始搜索，'\d+'匹配到'6789'，替换为'-'</div><div class="line">所以结果为'a-b-c-'</div><div class="line">'''</div><div class="line">re.sub(<span class="string">r'\d+'</span>, <span class="string">'-'</span>, <span class="string">'a123b5c6789'</span>)</div></pre></td></tr></table></figure>
+<p>环视与普通括号的区别是，它<strong><em>不会占用字符串</em></strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line">来看一下不使用逆序环视时的匹配情况</div><div class="line">1、'(\d)'匹配到'1'，后面正好6位数字，与环视相匹配，所以'1'被替换为'1,'，原字符串变成'1,234567'</div><div class="line">2、注意环视不会占用字符串，接下来从'2'开始搜索。'(\d)'匹配到'2'，后面5位数字，与环视不能匹配</div><div class="line">3、'(\d)'匹配到'3'，后面4位数字与环视不能匹配</div><div class="line">4、'(\d)'匹配到'4'，后面3位数字与环视匹配，'4'被替换为'4,'，原字符串变成'1,234,567'</div><div class="line">5、'(\d)'匹配到'5'，后面2位数字与环视不能匹配</div><div class="line">6、'(\d)'匹配到'6'，后面1位数字与环视不能匹配</div><div class="line">7、'(\d)'匹配到'7'，后面没有数字与环视不能匹配</div><div class="line">8、匹配结束</div><div class="line">'''</div><div class="line">re.sub(<span class="string">r'(\d)(?=(?:\d&#123;3&#125;)+(?!\d))'</span>, <span class="string">r'\1,'</span>, <span class="string">'1234567'</span>)</div></pre></td></tr></table></figure>
+<p>如果连顺序环视也不使用呢</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#下面的结果是'1,234567'，以为第一次匹配时，第二个括号会占尽所有'234567'，并且不会释放，所以替换不会继续</span></div><div class="line">re.sub(<span class="string">r'(\d)((\d&#123;3&#125;)+(?!\d))'</span>, <span class="string">r'\1,\2'</span>, <span class="string">'1234567'</span>)</div></pre></td></tr></table></figure>
+<h2 id="Text-To-HTML转换"><a href="#Text-To-HTML转换" class="headerlink" title="Text-To-HTML转换"></a>Text-To-HTML转换</h2><ul>
+<li>特殊字符的转换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#'&amp;','&lt;','&gt;'在HTML中有其自己的编码，这些字符有特殊含义，编码不正确可能导致显示错误</span></div><div class="line">re.sub(<span class="string">r'&amp;'</span>, <span class="string">'&amp;amp'</span>, s)   <span class="comment">#要先替换'&amp;'</span></div><div class="line">re.sub(<span class="string">r'&lt;'</span>, <span class="string">'&amp;lt'</span>, s)</div><div class="line">re.sub(<span class="string">r'&gt;'</span>, <span class="string">'&amp;gt'</span>, s)</div></pre></td></tr></table></figure>
+<ul>
+<li>匹配空行</li>
+</ul>
+<p>可以通过’^\s<em>$’来匹配空行，注意’\s’是能够匹配到’\n’的，所以这个表达式的意义就是：**</em>寻找空行和只包括空白字符的行的结合<strong><em>，直白一点说就是</em></strong>连续空白行<em>*</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'first line \n \t \nsecond line'</span></div><div class="line"><span class="string">'''</span></div><div class="line">注意Python中sub的原型是：re.sub(pattern, repl, string, count=0, flags=0)</div><div class="line">count为0表示全部替换，第四个参数才是flags，千万不要写成：re.sub(r'^\s*$', '&lt;p&gt;', s, re.M)</div><div class="line">'''</div><div class="line">re.sub(<span class="string">r'^\s*$'</span>, <span class="string">'&lt;p&gt;'</span>, s, <span class="number">0</span>, re.M)</div></pre></td></tr></table></figure>
+<ul>
+<li>将E-mail转换为超链接形式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line">需求：将jfriedl@oreilly.com转换为&lt;a href="mailto:jfriedl@oreilly.com"&gt;jfriedl@oreilly.com&lt;/a&gt;</div><div class="line">'''</div><div class="line">re.sub(<span class="string">r'''</span></div><div class="line">    \b                                              #单词分界</div><div class="line">    (                                               #保存到\1</div><div class="line">      \w[-.\w]*                                     #用户名</div><div class="line">      @</div><div class="line">      [-a-z0-9]+(\.[-a-z0-9]+)*\.(com|edu|info)     #主机名</div><div class="line">    )</div><div class="line">    \b</div><div class="line">    ''', <span class="string">r'&lt;a href="mailto:\1"&gt;\1&lt;/a&gt;'</span>, s, <span class="number">0</span>, re.X)</div></pre></td></tr></table></figure>
+<h2 id="单词重复问题"><a href="#单词重复问题" class="headerlink" title="单词重复问题"></a>单词重复问题</h2><p>来看一下对这个问题的要求</p>
+<ol>
+<li>能查找多个文件，挑出包含重复单词的行，高亮标记每个重复单词，显示这行文字来自哪个文件</li>
+<li>能跨行查找，即使两个单词一个在某行末尾另一个在下一行的开头，也算重复单词</li>
+<li>能进行不区分大小写的查找，重复单词之间可以出现任意数量的空白字符</li>
+<li>能查找用HTML tag分隔的重复单词，如‘…it is  \<b\>very\</b\> very important…’</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line">python中用'\033[7mtext\033[m'标注高亮</div><div class="line">'''</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_duplicate</span><span class="params">(directory)</span>:</span></div><div class="line">  <span class="keyword">for</span> fname <span class="keyword">in</span> os.listdir(directory):                               <span class="comment">#遍历所有文件</span></div><div class="line">    <span class="keyword">if</span> os.path.isdir(fname):</div><div class="line">      <span class="keyword">continue</span></div><div class="line">    <span class="keyword">with</span> open(directory + <span class="string">'/'</span> + fname, <span class="string">'r'</span>) <span class="keyword">as</span> f:</div><div class="line">      content = f.read()                                            </div><div class="line">      content = re.sub(<span class="string">r'''</span></div><div class="line">        \b                                                       #匹配单词起始位置</div><div class="line">        ([a-z]+)                                                 #将单词保存到\1</div><div class="line">        (                                                        #空白或者可能出现的标签保存到\2</div><div class="line">          (?:                                                    #非捕获括号</div><div class="line">            \s                                                     #空白字符</div><div class="line">            |                                                      #或者是</div><div class="line">            &lt;[^&gt;]+&gt;                                                #&lt;TAG&gt;形式的tag</div><div class="line">          )+                                                     #至少出现一次</div><div class="line">        )</div><div class="line">        (\1\b)                                                   #再次匹配第一个单词，保证重复</div><div class="line">        ''',</div><div class="line">        <span class="string">'\033[7m\\1\033[m\\2\033[7m\\3\033[m'</span>,                   <span class="comment">#将\1和\3高亮显示</span></div><div class="line">      content,</div><div class="line">      <span class="number">0</span>,</div><div class="line">      re.I | re.M | re.X)</div><div class="line">      content = re.sub(<span class="string">'^(?:[^\033]*\n)+'</span>, <span class="string">''</span>, content, <span class="number">0</span>, re.M) <span class="comment">#删除未匹配的行</span></div><div class="line">      content = re.sub(<span class="string">r'^'</span>, fname + <span class="string">': '</span>, content, <span class="number">0</span>, re.M)     <span class="comment">#每行开头加上文件名</span></div><div class="line">      print(content)</div></pre></td></tr></table></figure>
+<h1 id="第3章：正则表达式的特性和流派概览"><a href="#第3章：正则表达式的特性和流派概览" class="headerlink" title="第3章：正则表达式的特性和流派概览"></a>第3章：正则表达式的特性和流派概览</h1><h2 id="处理正则表达式的几种方式"><a href="#处理正则表达式的几种方式" class="headerlink" title="处理正则表达式的几种方式"></a>处理正则表达式的几种方式</h2><ul>
+<li><p>集成式处理：Python中不支持。perl中可以很方便的使用：$line = ~m/^Subject: (.*)/i</p>
+</li>
+<li><p>程序式处理：直接re.sub这样的方法</p>
+</li>
+<li>面向对象式处理：先编译再使用，r = re.compile(xxx)   r.match(yyy)</li>
+</ul>
+<h2 id="正则模式与匹配模式"><a href="#正则模式与匹配模式" class="headerlink" title="正则模式与匹配模式"></a>正则模式与匹配模式</h2><ul>
+<li>不区分大小写的匹配模式：re.I 或  re.IGNORECASE 或  (?i)</li>
+</ul>
+<p>匹配过程中忽略大小写，需要注意的是一些不常见的字符也有大小写</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'abc'</span></div><div class="line"><span class="comment">#不能匹配</span></div><div class="line">re.match(<span class="string">r'ABC'</span>, s)</div><div class="line"><span class="comment">#匹配：'abc'</span></div><div class="line">re.match(<span class="string">r'ABC'</span>, s, re.I)</div><div class="line"><span class="comment">#匹配</span></div><div class="line">re.match(<span class="string">r'ü'</span>, <span class="string">'Ü'</span>, re.I)</div></pre></td></tr></table></figure>
+<ul>
+<li>宽松排列和注释模式：re.X或re.VERBOSE</li>
+</ul>
+<p>让正则表达式更优雅，空格通常会被“忽略”，但不是“剔除”，比如”\1 2”不等于”\12”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a = re.compile(<span class="string">r"""\d +  # the integral part</span></div><div class="line">                   \.    # the decimal point</div><div class="line">                   \d *  # some fractional digits""", re.X)</div><div class="line">b = re.compile(<span class="string">r"\d+\.\d*"</span>)</div></pre></td></tr></table></figure>
+<ul>
+<li>点号通配模式（单行文本模式）：re.S或re.DOTALL或(?s)</li>
+</ul>
+<p>修改点号的匹配规则，从”需要特殊处理“=&gt;”不需要特殊处理“</p>
+<p>点号变为可以匹配换行符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'123\n456'</span></div><div class="line"><span class="comment">#结果为：'123'</span></div><div class="line">re.match(<span class="string">'.*'</span>, s)</div><div class="line"><span class="comment">#结果为：'123\n456'</span></div><div class="line">re.match(<span class="string">'.*'</span>, s, re.S)</div></pre></td></tr></table></figure>
+<ul>
+<li>增强的行锚点模式（多行文本模式）：re.M或re.MULTILINE或(?m)</li>
+</ul>
+<p>修改’^’与’$’的匹配规则，从”不需要特殊处理”=&gt;”需要特殊处理“</p>
+<p>‘^’能够匹配内嵌文本行的开头位置</p>
+<p>‘$’能够匹配字符串内部的换行符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'123\n456'</span></div><div class="line"><span class="comment">#结果为空，因为'\d'与'\n'不匹配</span></div><div class="line">re.findall(<span class="string">r'^\d*$'</span>, s)</div><div class="line"><span class="comment">#结果为：['123, '456']</span></div><div class="line">re.findall(<span class="string">r'^\d*$'</span>, s, re.M)  <span class="comment">#等同于re.MULTILINE</span></div></pre></td></tr></table></figure>
+<ul>
+<li>文字文本模式</li>
+</ul>
+<p>不使用元字符，等于字符串搜索，Python中不支持\Q和\E这样的用法</p>
+<ul>
+<li>ASCII模式：re.A或re.ASCII或(?a)</li>
+</ul>
+<p>Python特有的，使得\w,\W,\b,\B,\d,\D,\s只匹配ascii字符，而不是unicode字符</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'我爱NJ'</span></div><div class="line"><span class="comment">#结果为：'我爱NJ'</span></div><div class="line">re.search(<span class="string">r'\w+'</span>, <span class="string">'我爱NJ'</span>)</div><div class="line"><span class="comment">#结果为：'NJ'</span></div><div class="line">re.search(<span class="string">r'\w+'</span>, <span class="string">'我爱NJ'</span>, re.A) <span class="comment">#注意这里如果用'\w*'，结果是空哦，因为'*'可以表示什么都不匹配的</span></div></pre></td></tr></table></figure>
+<h1 id="第4章：表达式的匹配原理"><a href="#第4章：表达式的匹配原理" class="headerlink" title="第4章：表达式的匹配原理"></a>第4章：表达式的匹配原理</h1><p>作者生动的将正则表达式引擎类比为发动机引擎，其中DFA类比为电动机，NFA类比为汽油机；NFA又分为传统型NFA（不符合加州标准的汽油机），POSIX NFA（符合加州标准的汽油机）。<br>目前Python,Perl,PHP,Java,vi等大多数语言使用传统型NFA；<br>MySQL和egrep(大多数版本)使用DFA。</p>
+<p>DFA不支持捕获括号，反向引用和忽略量词优先功能（后面会说原因），但是DFA通常匹配速度会比较快。</p>
+<h2 id="什么是NFA和DFA呢"><a href="#什么是NFA和DFA呢" class="headerlink" title="什么是NFA和DFA呢"></a>什么是NFA和DFA呢</h2><p>本来想找一个关于NFA和DFA的视频看看，结果google了一下，youtube上全是三哥的，口音有点醉人。不过转念一想他们在计算机基础理论的研究上还是先人一步呀。</p>
+<p>比较权威的资料参考</p>
+<ol>
+<li><p><a href="https://www.cs.umd.edu/class/spring2018/cmsc330/lectures/02-automata.pdf" target="_blank" rel="external">automata</a></p>
+</li>
+<li><p><a href="https://swtch.com/~rsc/regexp/" target="_blank" rel="external">Implementing Regular Expressions</a></p>
+</li>
+</ol>
+<p>   感觉理解的比较模糊，写不出啥来，还是看别人的把。</p>
+<h2 id="测试引擎类型"><a href="#测试引擎类型" class="headerlink" title="测试引擎类型"></a>测试引擎类型</h2><ul>
+<li>是否支持忽略量词优先<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Python匹配的是'nfa'字符串，因此Python是传统型NFA</span></div><div class="line">re.match(<span class="string">r'nfa|nfa not'</span>, <span class="string">'nfa not'</span>)</div><div class="line"></div><div class="line"><span class="comment">#egrep匹配的是'nfa not'</span></div><div class="line">echo <span class="string">'nfa not'</span> | egrep <span class="string">'nfa|nfa not'</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这个例子我的理解是，如果引擎总是尝试匹配多选结构中的最长分支，那么他是DFA或者POSIX NFA；否则他是传统型NFA</p>
+<ul>
+<li>是否导致“无限”回溯<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Python一直在循环，无法返回结果</span></div><div class="line">re.search(<span class="string">r'X(.+)+X'</span>, <span class="string">'=XX======================================='</span>)</div><div class="line"></div><div class="line"><span class="comment">#egrep很快返回无法匹配的结果，因此egrep是DFA</span></div><div class="line">echo <span class="string">'=XX======================================='</span> | egrep <span class="string">'X(.+)+X'</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>虽然这是一个很丑陋的正则表达式，但用肉眼一看就知道他是无法匹配的。因为’(.+)+’至少得匹配一个字符，但原字符串中两个‘X’之间不存在字符。<br>为什么Python中执行会“卡住了”呢？第6章的<a href="#第6章">“指数级”匹配</a>会有详细说明。</p>
+<p>POSIX NFA使用的程序太少，不找例子了</p>
+<h2 id="匹配的基础"><a href="#匹配的基础" class="headerlink" title="匹配的基础"></a>匹配的基础</h2><p>两条普适的原则</p>
+<ul>
+<li>优先选择最左端（最靠开头）的匹配结果</li>
+</ul>
+<p>可以这么理解：匹配的过程是从需要查找的字符串起始位置开始遍历，当查找一个符合正则表达式的子串之后便停止了匹配过程，即使后面还有“更加相称”的子串，也不会继续匹配了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#'cat'只会匹配'indicates'中的'cat'，而不是后面单个的'cat'</span></div><div class="line">re.search(<span class="string">r'cat'</span>, <span class="string">'The dragging belly indicates that your cat is too fat.'</span>)</div><div class="line"><span class="comment">#输出为&lt;_sre.SRE_Match object; span=(23, 26), match='cat'&gt;，其中的23~26为匹配的位置</span></div><div class="line"></div><div class="line"><span class="comment">#会匹配'belly'</span></div><div class="line">re.search(<span class="string">r'fat|cat|belly|your'</span>, <span class="string">'The dragging belly indicates that your cat is too fat.'</span>)</div><div class="line"><span class="comment">#尽管正则表达式的第一个分支'fat'在原字符串中也能匹配。但是当匹配的过程进行到索引13，也就是字符'b'时，</span></div><div class="line"><span class="comment">#后面的'belly'和正则表达式是能够匹配的，所以结果只会是'belly'</span></div></pre></td></tr></table></figure>
+<ul>
+<li>标准的匹配量词（*,+,?和{m,n}）是匹配优先的</li>
+</ul>
+<p>这就是传说中的贪婪(greddy)模式，感觉说贪婪比较low，以后还是说匹配优先吧。用大白话说就是，匹配优先量词总是尝试匹配多于匹配成功下限的字符，也就是匹配得“越多越好”。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">re.match(<span class="string">r'^Subject: (.*)(.*)'</span>, <span class="string">'Subject: Mastering Regular Expressions'</span>).groups()</div><div class="line"><span class="comment">#输出为：('Mastering Regular Expressions', '')，因为第一个'.*'会霸占整个标题的文本，而不留任何字符给第二个</span></div><div class="line"></div><div class="line">re.match(<span class="string">r'^.*([0-9][0-9])'</span>, <span class="string">'about 24 characters long'</span>)</div><div class="line"><span class="comment">#匹配结果为'about 24'，可能人很容易看出来匹配结果，但是计算机的匹配过程就比较‘累’了，可以理解为如下</span></div><div class="line"><span class="comment">#1、'.*'占尽整个字符串</span></div><div class="line"><span class="comment">#2、第一个'[0-9]'需要匹配一个数字，此时无法匹配。'.*'被迫释放最后的字符'g'，但是'[0-9]'仍然无法匹配'g'</span></div><div class="line"><span class="comment">#3、'.*'被迫继续释放'n'，重复此过程直到释放字符'4'</span></div><div class="line"><span class="comment">#4、第二个'[0-9]'仍然需要匹配一个数字，'.*'继续释放字符'2'，此时匹配完成</span></div><div class="line"></div><div class="line">re.match(<span class="string">r'^(.*)([0-9]+)'</span>, <span class="string">'Copyright 2003.'</span>).groups()</div><div class="line"><span class="comment">#输出为：('Copyright 200', '3')</span></div><div class="line"><span class="comment">#这条规则书上用先来先服务来说明，比较形象。可以这么理解，'.*'占尽所有字符之后，无法完成匹配，但此时只需要释放一个字符'3'即可以完成匹配过程了。</span></div></pre></td></tr></table></figure>
+<h3 id="表达式主导与文本主导"><a href="#表达式主导与文本主导" class="headerlink" title="表达式主导与文本主导"></a>表达式主导与文本主导</h3><ul>
+<li>NFA引擎：表达式主导（Regex-Directed）</li>
+</ul>
+<p>表达式中的控制权在不同的元素之间转换。怎么理解呢，看书上的例子字符串’tonight’和正则’to(nite|knight|night)’匹配的过程。</p>
+<ol>
+<li>表达式中的第一个字符’t’和字符串中的第一个字符’t’匹配，接下来表达式的第二个字符’o’也匹配</li>
+<li>正则控制权转移到多选分支，首先选定第一个分支’nite’。第一个分支的’n’和原字符串能够匹配，’i’也能匹配，但是’t’不能匹配了。放弃第一个分支。</li>
+<li>依次类推，选定第二、三个分支。最终和第三个分支能够匹配，匹配过程结束。</li>
+</ol>
+<ul>
+<li>DFA引擎：文本主导（Text-Directed）</li>
+</ul>
+<p>匹配过程中，扫描的字符串中的每个字符都对引擎进行了控制（标记可能匹配的位置）。还是看上面的例子</p>
+<ol>
+<li>引擎移动到字符‘t’时，表达式中有一个可能匹配的位置</li>
+<li>引擎移动到字符’n’时，表达式中有两个可能匹配的位置，分别在多选分支的第一和第三个分支上</li>
+<li>引擎移动到字符’g’时，表达式中只剩下一个可能匹配的位置，在第三个多选分支上。</li>
+</ol>
+<p><img src="/images/精通正则表达式学习笔记/文本主导举例.png" alt=""></p>
+<h3 id="比较NFA与DFA"><a href="#比较NFA与DFA" class="headerlink" title="比较NFA与DFA"></a>比较NFA与DFA</h3><p>DFA一般情况下比NFA快，这个容易理解，看上面的匹配过程容易看出来。</p>
+<p>为什么DFA不支持捕获呢，这个还是没有想明白。</p>
+<h3 id="回溯（Backtracking）"><a href="#回溯（Backtracking）" class="headerlink" title="回溯（Backtracking）"></a>回溯（Backtracking）</h3><p>回溯也是一种标准算法了，想像在走迷宫，前面有个岔路口A,B,C。我们可以选择A，然后记住B和C。<br>如果A没走通，那么回来继续走B，等等</p>
+<p>一般情况下，回溯可以用递归实现。最经典的要数8皇后算法了哈。</p>
+<p>两个要点</p>
+<ul>
+<li>对于匹配优先量词，引擎优先选择进行尝试；对于忽略优先量词，引擎会选择跳过尝试</li>
+<li>引擎选择依据LIFO后进先出原则（可以理解为后存储的选择，先进行尝试）</li>
+</ul>
+<h4 id="再看匹配优先"><a href="#再看匹配优先" class="headerlink" title="再看匹配优先"></a>再看匹配优先</h4><p>以”[0-9]+”来匹配”a 1234 num”为例，引擎会在能够回溯的位置保存4个状态，分别在’1’,’2’,’3’,’4’字符的后面（+号限制必须有一个数字）。</p>
+<p>接下来引擎匹配到空格失败，需要回溯到最近保存的状态，也就是’4’后面的位置，匹配”1234”字符串成功。</p>
+<p>所以，从根本上看，<strong>所谓的“贪婪模式”，其实就是回溯的后进先出原则</strong>。</p>
+<p>那么非贪婪模式呢，其实就是上面的第一个原则，忽略优先量词会优先跳过尝试。</p>
+<p>导致的问题</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#结果为："McDonald\'s" is said "makudonarudo"</span></div><div class="line">re.search(<span class="string">r'".*"'</span>, <span class="string">'The name "McDonald\'s" is said "makudonarudo" in Japanese.'</span>)</div><div class="line"></div><div class="line"><span class="comment">#'[^"]*'替换'.*'之后，结果为："McDonald\'s"</span></div><div class="line">re.search(<span class="string">r'"[^"]*"'</span>, <span class="string">'The name "McDonald\'s" is said "makudonarudo" in Japanese.'</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">#多字符引文，需要匹配&lt;B&gt;&lt;/B&gt;之间的内容</span></div><div class="line"><span class="comment">#用'.*'不能达到要求。以下结果为：&lt;B&gt;Billions&lt;/B&gt; and &lt;B&gt;Zillions&lt;/B&gt;</span></div><div class="line">re.match(<span class="string">r'&lt;B&gt;.*&lt;/B&gt;'</span>, <span class="string">'&lt;B&gt;Billions&lt;/B&gt; and &lt;B&gt;Zillions&lt;/B&gt; of suns'</span>)</div><div class="line"><span class="comment">#由于tag是多字符了，不能使用排除型字符组了</span></div><div class="line"></div><div class="line"><span class="comment">#使用忽略优先量词</span></div><div class="line"><span class="comment">#以下结果为：B&gt;Billions&lt;/B&gt;</span></div><div class="line">re.match(<span class="string">r'&lt;B&gt;.*?&lt;/B&gt;'</span>, <span class="string">'&lt;B&gt;Billions&lt;/B&gt; and &lt;B&gt;Zillions&lt;/B&gt; of suns'</span>)</div><div class="line"><span class="comment">#可能导致问题，以下结果为：&lt;B&gt;Billions and &lt;B&gt;Zillions&lt;/B&gt;</span></div><div class="line">re.match(<span class="string">r'&lt;B&gt;.*?&lt;/B&gt;'</span>, <span class="string">'&lt;B&gt;Billions and &lt;B&gt;Zillions&lt;/B&gt; &lt;/B&gt; of suns'</span>)</div><div class="line"></div><div class="line"><span class="comment">#使用排除环视，以下结果为：&lt;B&gt;Zillions&lt;/B&gt;</span></div><div class="line">re.search(<span class="string">r'&lt;B&gt;((?!&lt;/?B&gt;).)*&lt;/B&gt;'</span>, <span class="string">'&lt;B&gt;Billions and &lt;B&gt;Zillions&lt;/B&gt; &lt;/B&gt; of suns'</span>)</div></pre></td></tr></table></figure>
+<h4 id="浮点数规范化问题"><a href="#浮点数规范化问题" class="headerlink" title="浮点数规范化问题"></a>浮点数规范化问题</h4><p>规则</p>
+<ul>
+<li>保留两位小数，比如3.010000000056规范化为3.01</li>
+<li>如果小数点后第三位不为零，则保留三位小数。比如1.625789000000000规范化为1.625</li>
+</ul>
+<p>最简单的想法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#输出为1.625</span></div><div class="line">re.sub(<span class="string">r'(\.\d\d[1-9]?)\d*'</span>, <span class="string">r'\1'</span>, <span class="string">'1.6250001'</span>)</div><div class="line"><span class="comment">#输出为1.62</span></div><div class="line">re.sub(<span class="string">r'(\.\d\d[1-9]?)\d*'</span>, <span class="string">r'\1'</span>, <span class="string">'1.62000001'</span>)</div></pre></td></tr></table></figure>
+<p>这个表达式有一点问题，当原字符串就是符合规范的时候，它会把自己替换为自己，因为后面的’\d*’什么也匹配不到，这样有一点浪费。</p>
+<p>如果把’\d*’替换为’\d+’呢</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#OK，输出为1.625</span></div><div class="line">re.sub(<span class="string">r'(\.\d\d[1-9]?)\d+'</span>, <span class="string">r'\1'</span>, <span class="string">'1.6250001'</span>)</div><div class="line"><span class="comment">#OK，无法匹配，不会替换，输出为1.62</span></div><div class="line">re.sub(<span class="string">r'(\.\d\d[1-9]?)\d+'</span>, <span class="string">r'\1'</span>, <span class="string">'1.62'</span>)</div><div class="line"></div><div class="line"><span class="comment">#NG，字符串被切割。输出1.62。过程有点微妙</span></div><div class="line"><span class="comment">#1、'[1-9]?'匹配字符'5'，并留下一个不去匹配的备用状态</span></div><div class="line"><span class="comment">#2、'\d+'无法匹配了，需要回溯。'[1-9]?'交出字符'5'</span></div><div class="line"><span class="comment">#3、这样'(\.\d\d[1-9]?)'匹配的是'.62'，'\d+'匹配的是'5'</span></div><div class="line">re.sub(<span class="string">r'(\.\d\d[1-9]?)\d+'</span>, <span class="string">r'\1'</span>, <span class="string">'1.625'</span>)</div></pre></td></tr></table></figure>
+<h5 id="占有优先量词和固化分组"><a href="#占有优先量词和固化分组" class="headerlink" title="占有优先量词和固化分组"></a>占有优先量词和固化分组</h5><p>导致这个问题的根本原因就是，如果’[1-9]?’匹配到了非0数字，我们就不希望再回溯了，也就是不需要保存状态了。</p>
+<p>很遗憾Python中这两中特性都不支持，但是可以通过环视来模拟</p>
+<ul>
+<li>固化分组</li>
+</ul>
+<p>语法：(?&gt;…)</p>
+<p>意义：匹配进行到括号之后，此结构内的所有备用状态都会被放弃</p>
+<ul>
+<li>占用优先量词</li>
+</ul>
+<p>语法：?+、*+、++、{m,n}+</p>
+<p>意义：不创建备用状态，不用交还已经匹配的字符</p>
+<h5 id="环视中的回溯"><a href="#环视中的回溯" class="headerlink" title="环视中的回溯"></a>环视中的回溯</h5><p>环视结构（括号）内会保存一些状态，但是环视匹配结束之后，这些状态便不会保留了。这一点和固化分组及占用优先量词很像。</p>
+<p><strong>用肯定环视模拟固化分组</strong>：’(?&gt;regex)’用’(?=(regex))\1’来模拟，注意这里的’\1’要根据实际情况来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#使用环视，结果为1.625。并且因为没有匹配成功，所以不会发生替换</span></div><div class="line">re.sub(<span class="string">r'(\.\d\d(?=([1-9]?))\2)\d+'</span>, <span class="string">r'\1'</span>, <span class="string">'1.625'</span>)</div></pre></td></tr></table></figure>
+<h5 id="多选结果的匹配原则"><a href="#多选结果的匹配原则" class="headerlink" title="多选结果的匹配原则"></a>多选结果的匹配原则</h5><ul>
+<li>对于传统型NFA引擎，他是按顺序排列的</li>
+<li>对于DFA和POSIX NFA引擎，他是匹配优先的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#输出为tour，因为他在多选分支排第一个</span></div><div class="line">re.search(<span class="string">r'tour|to|tournament'</span>, <span class="string">'three tournaments'</span>)</div><div class="line"></div><div class="line"><span class="comment">#egrep高亮的部分为'tournament'</span></div><div class="line">echo <span class="string">'three tournaments'</span> | egrep  <span class="string">'tour|to|tournament'</span></div></pre></td></tr></table></figure>
+<p>匹配日期的几种办法（日期为1-31，并且要支持01这种写法）</p>
+<p>直接想可能比较麻烦，书上用画图表的方式表现出来，比较直观</p>
+<p><img src="/images/精通正则表达式学习笔记/拆分日期的方法.png" alt=""></p>
+<p>这里需要注意的是，多选分支的顺序也是有讲究的，需要把<strong>匹配的数字最短的放到最后</strong>，为什么这么说呢？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#结果为'Jan 3'，因为和分支'0?[1-9]'匹配，并且他在最前面</span></div><div class="line">re.match(<span class="string">r'Jan (0?[1-9]|[12]\d|3[01])'</span>, <span class="string">"Jan 31 is Dad's birthday"</span>)</div><div class="line"></div><div class="line"><span class="comment">#调整顺序可以使得结果OK，匹配到'Jan 31'</span></div><div class="line">re.match(<span class="string">r'Jan ([12]\d|3[01]|0?[1-9])'</span>, <span class="string">"Jan 31 is Dad's birthday"</span>)</div></pre></td></tr></table></figure>
+<h5 id="最左最长规则"><a href="#最左最长规则" class="headerlink" title="最左最长规则"></a>最左最长规则</h5><p>POSIX规定，如果在字符串的某个位置存在多个可能的匹配，应当返回的是最长的匹配</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配'oneself'</span></div><div class="line">re.match(<span class="string">r'one(self)?(selfsufficient)?'</span>, <span class="string">"oneselfsufficient"</span>)</div><div class="line"><span class="comment">#egrep总是返回最长匹配，返回高亮'oneselfsufficient'</span></div><div class="line">echo <span class="string">"oneselfsufficient"</span> | egrep <span class="string">'one(self)?(selfsufficient)?'</span></div></pre></td></tr></table></figure>
+<h1 id="第5章：正则表达式实用技巧"><a href="#第5章：正则表达式实用技巧" class="headerlink" title="第5章：正则表达式实用技巧"></a>第5章：正则表达式实用技巧</h1><h2 id="正则表达式的平衡法则"><a href="#正则表达式的平衡法则" class="headerlink" title="正则表达式的平衡法则"></a>正则表达式的平衡法则</h2><ul>
+<li>只匹配期望的文本，排除不期望的文本</li>
+<li>必须易于控制和理解</li>
+<li>必须保证效率</li>
+</ul>
+<h2 id="若干例子"><a href="#若干例子" class="headerlink" title="若干例子"></a>若干例子</h2><h3 id="匹配连续行"><a href="#匹配连续行" class="headerlink" title="匹配连续行"></a>匹配连续行</h3><p>需要匹配类似于下面这样的文本：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SRC=array<span class="selector-class">.c</span> builtin<span class="selector-class">.c</span> eval<span class="selector-class">.c</span> field<span class="selector-class">.c</span> gawkmisc<span class="selector-class">.c</span> io<span class="selector-class">.c</span> main.c\</div><div class="line">        missing<span class="selector-class">.c</span> msg<span class="selector-class">.c</span> node<span class="selector-class">.c</span> re<span class="selector-class">.c</span> version.c</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#字符串简化一下</span></div><div class="line">s = <span class="string">'SRC=array.c builtin.c main.c \\\nre.c'</span></div><div class="line"><span class="comment">#错误示例，只能匹配到：'SRC=array.c builtin.c main.c \\'，原因很简单，因为第一个'.*'会一直匹配到'\\'之后</span></div><div class="line">re.match(<span class="string">r'^\w+=.*(\\\n.*)*'</span>, s)</div><div class="line"></div><div class="line"><span class="comment">#排除'\\'字符，即使用'[^\\]*'代替'.*'，对本例子是OK的，能够匹配到：SRC=array.c builtin.c main.c \\\nre.c</span></div><div class="line">re.match(<span class="string">r'^\w+=[^\\]*(\\\n[^\\]*)*'</span>, s)</div><div class="line"><span class="string">'''</span></div><div class="line">但是当s为类似于下面这样的字符串</div><div class="line">SRC=array.c builtin.c main.c \</div><div class="line">        re.c</div><div class="line">HEADER=array.h node.h \</div><div class="line">        io.h</div><div class="line">s会将整个字符串都匹配，因为'[^\\]'能够匹配'\n'字符，这不是我们期望的结果</div><div class="line">'''</div><div class="line">s = <span class="string">'SRC=array.c builtin.c main.c \\\nre.c\nHEADER=array.h node.h \\\nio.h'</span></div><div class="line"><span class="comment">#匹配结果为整个s字符串，但是我们只希望匹配SRC部分</span></div><div class="line">re.match(<span class="string">r'^\w+=[^\\]*(\\\n[^\\]*)*'</span>, s)</div><div class="line"></div><div class="line"><span class="comment">#将'\n'也排除，即使用'[^\n\\]*'代替'.*'，可以只匹配SRC了，结果为：SRC=array.c builtin.c main.c \\\nre.c</span></div><div class="line">re.match(<span class="string">r'^\w+=[^\n\\]*(\\\n[^\n\\]*)*'</span>, s)</div><div class="line"></div><div class="line"><span class="comment">#上面这种方法限制了'\\'必须出现在一行的结尾位置，如果不是会有问题</span></div><div class="line"><span class="comment">#只能匹配到：SRC=array.c builtin.c</span></div><div class="line">re.match(<span class="string">r'^\w+=[^\n\\]*(\\\n[^\n\\]*)*'</span>, <span class="string">'SRC=array.c builtin.c\\ main.c \\\nre.c'</span>)</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line">换个思路，目前的需求其实两个：</div><div class="line">1、匹配普通（除反斜线和换行符之外）的字符</div><div class="line">2、匹配反斜线与其他任何字符的结合体，包括反斜线与换行符的结合体，这就要用到点号通配模式了</div><div class="line">'''</div><div class="line">s = <span class="string">'SRC=array.c builtin.c\\ main.c \\\nre.c\nHEADER=array.h node.h \\\nio.h'</span></div><div class="line"><span class="comment">#通过re.DOTALL来使用点号通配模式，匹配结果为：SRC=array.c builtin.c\\ main.c \\\nre.c</span></div><div class="line">re.match(<span class="string">r'^\w+=([^\n\\]|\\.)*'</span>, s, re.DOTALL)</div></pre></td></tr></table></figure>
+<h3 id="匹配IP地址"><a href="#匹配IP地址" class="headerlink" title="匹配IP地址"></a>匹配IP地址</h3><p>ip地址的格式</p>
+<ul>
+<li>点号分开的四个数</li>
+<li>每个数字最多3位，最大255</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#简单有效的表示法</span></div><div class="line">re.match(<span class="string">r'^\d&#123;1,3&#125;\.\d&#123;1,3&#125;\.\d&#123;1,3&#125;\.\d&#123;1,3&#125;$'</span>, <span class="string">'192.168.1.137'</span>)</div><div class="line"></div><div class="line"><span class="comment">#精确表示法</span></div><div class="line"><span class="string">'''</span></div><div class="line">1、1位数字：\d，如0,9等</div><div class="line">2、2位数字：\d\d，如00,91等</div><div class="line">3、0或者1开头的三位数字：[01]\d\d，如001,199等</div><div class="line">4、2开头，第二位小于5：2[0-4]\d，如209,240等</div><div class="line">5、25开头：25[0-5]，如250,255等</div><div class="line">因此整个表达式可以表示为：\d|\d\d|[01]\d\d|2[0-4]\d|25[0-5]</div><div class="line">我们可以将前三个分支合并，化简为：[01]?\d\d?|2[0-4]\d|25[0-5]</div><div class="line">'''</div><div class="line">re.match(<span class="string">r'^([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])\.([01]?\d\d?|2[0-4]\d|25[0-5])$'</span>, <span class="string">'192.168.1.137'</span>)</div></pre></td></tr></table></figure>
+<h3 id="处理文件名"><a href="#处理文件名" class="headerlink" title="处理文件名"></a>处理文件名</h3><p>linux（比如/usr/local/bin/cmake）和windows（比如C:\Program Files\Windows Mail\wab.exe）下的文件名各有特点，处理起来的方法也不相同</p>
+<h4 id="去掉文件名开始的路径"><a href="#去掉文件名开始的路径" class="headerlink" title="去掉文件名开始的路径"></a>去掉文件名开始的路径</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#linux下的文件名格式，结果为：'python'</span></div><div class="line">re.sub(<span class="string">r'^.*/'</span>, <span class="string">''</span>, <span class="string">'/usr/local/bin/python'</span>)</div><div class="line"><span class="comment">#windows下的文件名格式，结果为：'wab.exe'</span></div><div class="line">re.sub(<span class="string">r'^.*\\'</span>, <span class="string">''</span>, <span class="string">'C:\Program Files\Windows Mail\wab.exe'</span>)</div></pre></td></tr></table></figure>
+<h4 id="从路径中获取文件名"><a href="#从路径中获取文件名" class="headerlink" title="从路径中获取文件名"></a>从路径中获取文件名</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line">以下的方法含义比较简单：一段不是'/'的字符串，并且要在结尾</div><div class="line">但是这样会导致比较多的回溯，因为匹配总是从开头开始，表达式最后的'$'只有在匹配“快结束”的时候才会导致失败。</div><div class="line">不过对于很短的文件名，这点回溯不是很重要</div><div class="line">'''</div><div class="line"></div><div class="line"><span class="comment">#结果为：'python'</span></div><div class="line">re.search(<span class="string">r'[^/]*$'</span>, <span class="string">'/usr/local/bin/python'</span>)</div><div class="line"><span class="comment">#结果为：'wab.exe'</span></div><div class="line">re.search(<span class="string">r'[^\\]*$'</span>, <span class="string">'C:\Program Files\Windows Mail\wab.exe'</span>)</div></pre></td></tr></table></figure>
+<h4 id="所在的路径和文件名"><a href="#所在的路径和文件名" class="headerlink" title="所在的路径和文件名"></a>所在的路径和文件名</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line">下面的方法也很直观，第一个'.*'先会占尽所有字符，然后被迫释放直到一个'/'字符，所以第二个'.*'不会包含任何'/'</div><div class="line">'''</div><div class="line"><span class="comment">#结果为：('/usr/local/bin', 'python')</span></div><div class="line">re.match(<span class="string">r'^(.*)/(.*)$'</span>, <span class="string">'/usr/local/bin/python'</span>).groups()</div><div class="line"><span class="comment">#结果为：('C:\\Program Files\\Windows Mail', 'wab.exe')</span></div><div class="line">re.match(<span class="string">r'^(.*)\\(.*)$'</span>, <span class="string">'C:\Program Files\Windows Mail\wab.exe'</span>).groups()</div><div class="line"></div><div class="line"><span class="comment">#为了把“第二个'.*'不包含任何'/'”的意思更加突出，也可以这么写。结果是一样的</span></div><div class="line">re.match(<span class="string">r'^(.*)/([^/]*)$'</span>, <span class="string">'/usr/local/bin/python'</span>).groups()</div><div class="line"></div><div class="line"><span class="comment">#以上的方法不能处理'file.txt'这样不包含路径的字符串，可以在代码中加上相应处理逻辑</span></div></pre></td></tr></table></figure>
+<h3 id="匹配对称的括号"><a href="#匹配对称的括号" class="headerlink" title="匹配对称的括号"></a>匹配对称的括号</h3><p>对称的括号就是指的’()’，’[]’，’{}’，’&lt;&gt;’等，他们单独出现的时候处理很简单，嵌套的时候会变的很复杂</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line">原始字符串为：val = foo(bar(this), 3.7) + 2 * (that - 1);</div><div class="line">期待匹配：(bar(this), 3.7)</div><div class="line">'''</div><div class="line"><span class="comment">#括号及括号内部的全部字符，匹配结果为：'(bar(this), 3.7) + 2 * (that - 1)'</span></div><div class="line">re.search(<span class="string">r'(?&lt;=foo)\(.*\)'</span>, <span class="string">'val = foo(bar(this), 3.7) + 2 * (that - 1);'</span>)</div><div class="line"><span class="comment">#从一个开括号到最近的闭括号，匹配结果为：'(bar(this)'</span></div><div class="line">re.search(<span class="string">r'(?&lt;=foo)\([^)]*\)'</span>, <span class="string">'val = foo(bar(this), 3.7) + 2 * (that - 1);'</span>)</div><div class="line"><span class="comment">#从一个开括号到最近的闭括号，并且不允许包含其他开括号。无法匹配，如果把'(?&lt;=foo)'去掉是可以匹配的</span></div><div class="line">re.search(<span class="string">r'(?&lt;=foo)\([^()]*\)'</span>, <span class="string">'val = foo(bar(this), 3.7) + 2 * (that - 1);'</span>)</div></pre></td></tr></table></figure>
+<p>正则表达式无法匹配任意深度的嵌套结构，比如上面的一层嵌套，可构造如下表达式：</p>
+<p><img src="/images/精通正则表达式学习笔记/单层嵌套括号匹配.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配结果为：'(bar(this), 3.7)'</span></div><div class="line">re.search(<span class="string">r'(?&lt;=foo)\([^()]*(\([^()]*\)[^()]*)*\)'</span>, <span class="string">'val = foo(bar(this), 3.7) + 2 * (that - 1);'</span>)</div><div class="line"><span class="comment">#它也可以匹配单层嵌套的多个括号，匹配结果为：'(bar(this),bar2(), 3.7)'</span></div><div class="line">re.search(<span class="string">r'(?&lt;=foo)\([^()]*(\([^()]*\)[^()]*)*\)'</span>, <span class="string">'val = foo(bar(this),bar2(), 3.7) + 2 * (that - 1);'</span>)</div></pre></td></tr></table></figure>
+<p>可以利用“string x count”（Python中是”string * count”）来构造任意深度嵌套的表达式，参考下面的公式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">regex_str = <span class="string">'\('</span> + <span class="string">'(?:[^()]|\('</span> * <span class="number">2</span> + <span class="string">'[^()]*'</span> + <span class="string">r'\))*'</span> * <span class="number">2</span> + <span class="string">'\)'</span></div></pre></td></tr></table></figure>
+<p>这个公式有点难理解呀，来分析一下两层嵌套的情况</p>
+<p><img src="/images/精通正则表达式学习笔记/两层嵌套括号匹配.png" alt=""></p>
+<p>已经有点变态了，理解就好，强记也没有意义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">regex_str = <span class="string">'\('</span> + <span class="string">'(?:[^()]|\('</span> * <span class="number">2</span> + <span class="string">'[^()]*'</span> + <span class="string">r'\))*'</span> * <span class="number">2</span> + <span class="string">'\)'</span></div><div class="line"><span class="comment">#结果为：'(bar(this, bar3(12)), 3.7)'</span></div><div class="line">re.search(<span class="string">r'(?&lt;=foo)'</span> + regex_str, <span class="string">'val = foo(bar(this, bar3(12)), 3.7) + 2 * (that - 1);'</span>)</div></pre></td></tr></table></figure>
+<h4 id="匹配数字"><a href="#匹配数字" class="headerlink" title="匹配数字"></a>匹配数字</h4><p>包括负数，小数等</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#可以匹配'365','-3.6','.3'这样的数字</span></div><div class="line">re.search(<span class="string">r'-?\d+(\.\d*)?|-?\.\d+'</span>, <span class="string">'-0.23'</span>)</div></pre></td></tr></table></figure>
+<h3 id="匹配分隔符之内的文本"><a href="#匹配分隔符之内的文本" class="headerlink" title="匹配分隔符之内的文本"></a>匹配分隔符之内的文本</h3><p>一般步骤：</p>
+<ol>
+<li>匹配起始分隔符</li>
+<li>匹配正文</li>
+<li>匹配结束分隔符</li>
+</ol>
+<p>当结束分隔符不止一个字符，或者正文中允许出现结束分隔符，难度就来了</p>
+<h4 id="容许引文字符串中出现转义引号"><a href="#容许引文字符串中出现转义引号" class="headerlink" title="容许引文字符串中出现转义引号"></a>容许引文字符串中出现转义引号</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="string">'''</span></div><div class="line">待匹配字符串："2\"x3\"abc"</div><div class="line">理清思路，正文部分包括两个部分：1、非'"'字符；2、'\"'字符</div><div class="line">这个问题用Python表达出来还有点麻烦，因为Python会对转义引文做一些特殊处理</div><div class="line">"2\"x3\"abc"    =&gt;     '2"x3"abc'</div><div class="line">'2\'x3\'abc'    =&gt;     "2'x3'abc"</div><div class="line">'2\"x3\"abc'    =&gt;     '2"x3"abc'</div><div class="line">"2\'x3\'abc"    =&gt;     "2'x3'abc"</div><div class="line">为了测试，原字符串也要使用raw字符串</div><div class="line">r'"2\"x3\"abc"' =&gt;     '"2\\"x3\\"abc"'</div><div class="line">'''</div><div class="line"><span class="comment">#直接使用排除型字符组肯定不行，会匹配到：'2\\'</span></div><div class="line">re.match(<span class="string">r'"([^"]*)"'</span>, <span class="string">r'"2\"x3\"abc"'</span>).groups()</div><div class="line"><span class="comment">#结果为：'2\\"x3\\"abc'</span></div><div class="line">re.match(<span class="string">r'"((?:[^"]|(?&lt;=\\)")*)"'</span>, <span class="string">r'"2\"x3\"abc"'</span>).groups()</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line">这里有一点Python中微妙的东西，必须说明一下</div><div class="line">正则r'\\.'想匹配的结果是“反斜杠以及它后面的一个字符”，而'\\"'代表的字符串实际是“一个反斜杠加一个双引号”</div><div class="line">所以re.match(r'\\.', '\\"')的匹配结果是'\\"'，而不是想象中的'\\'（这其实不是两个反斜杠，而是一个）</div><div class="line">所以为了表达书中的意思，字符串本身也要使用raw字符串。</div><div class="line">r'\\'   =&gt;    '\\\\'    =&gt;   表示真正意义上的两个反斜杠</div><div class="line">'''</div><div class="line"><span class="comment">#意外的匹配，下面的匹配结果：r'"/-|-\\" or "'，但期待的匹配结果是：r'"/-|-\\"'。</span></div><div class="line"><span class="comment">#因为原字符串中的'\\'是用来转义'\'的，不是用来转义'"'的</span></div><div class="line">re.match(<span class="string">r'"((?:[^"]|(?&lt;=\\)")*)"'</span>, <span class="string">r'"/-|-\\" or "[^-^]"'</span>)</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line">再理一下思路，这里的正文部分其实包括两个：1、非结束分隔符'[^"]'；2、转义字符'\\.'。</div><div class="line">'''</div><div class="line"><span class="comment">#能够匹配到：r'"/-|-\\"'。</span></div><div class="line">re.match(<span class="string">r'"((\\.|[^"])*)"'</span>, <span class="string">r'"/-|-\\" or "[^-^]"'</span>)</div><div class="line"></div><div class="line"><span class="comment">#依然会有不期待的匹配，下面会匹配到：'"You need a 2\\"x3\\"'，期待是不能匹配</span></div><div class="line"><span class="comment">#原因是回溯的过程中r'x3\"'中的反斜杠会被认为是'[^"]'，而'"'被认为是结束分隔符</span></div><div class="line">re.match(<span class="string">r'"((\\.|[^"])*)"'</span>, <span class="string">r'"You need a 2\"x3\" Photo'</span>)</div><div class="line"></div><div class="line"><span class="comment">#产生根本原因是多个多选分支能够匹配的内容发生了重叠，可以将'[^"]'修改为'[^\\"]'</span></div><div class="line">re.match(<span class="string">r'"((\\.|[^\\"])*)"'</span>, <span class="string">r'"You need a 2\"x3\" photo'</span>)</div></pre></td></tr></table></figure>
+<h3 id="去除文本首尾的空白字符"><a href="#去除文本首尾的空白字符" class="headerlink" title="去除文本首尾的空白字符"></a>去除文本首尾的空白字符</h3><p>最好的办法，使用下面两个正则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s0 = <span class="string">'    abcddsss  dfff   '</span></div><div class="line"><span class="comment">#去除开头的空白字符</span></div><div class="line">s1 = re.sub(<span class="string">r'^\s+'</span>, <span class="string">''</span>, s0)</div><div class="line"><span class="comment">#去除末尾的空白字符</span></div><div class="line">re.sub(<span class="string">r'\s+$'</span>, <span class="string">''</span>, s1)</div></pre></td></tr></table></figure>
+<h2 id="HTML相关范例"><a href="#HTML相关范例" class="headerlink" title="HTML相关范例"></a>HTML相关范例</h2><h3 id="匹配HTML-Tag"><a href="#匹配HTML-Tag" class="headerlink" title="匹配HTML Tag"></a>匹配HTML Tag</h3><p>一般情况下，下面的表达式就够了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">re.match(<span class="string">r'&lt;[^&gt;]+&gt;'</span>, <span class="string">'&lt;input value="1234"&gt;&lt;/input&gt;'</span>)</div></pre></td></tr></table></figure>
+<p>但是如果引号字符串里出现了’&gt;’字符就有问题了，会匹配’&lt;input value=”&gt;’</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">re.match(<span class="string">r'&lt;[^&gt;]+&gt;'</span>, <span class="string">'&lt;input value="&gt;"&gt;&lt;/input&gt;'</span>)</div></pre></td></tr></table></figure>
+<p>tag中主要包括三类字符：</p>
+<ol>
+<li>双引号包含的字符串：”[^”]*”</li>
+<li>单引号包含的字符串：’[^’]*’</li>
+<li>非单引号，非双引号，非’&gt;’字符</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">re.match(<span class="string">r'''</span></div><div class="line">        &lt;             #开始尖括号"&lt;"</div><div class="line">          (           #    任意数量的...</div><div class="line">            "[^"]*"   #        双引号字符串</div><div class="line">            |         #        或者是...</div><div class="line">            '[^']*'   #        单引号字符串</div><div class="line">            |         #        或者是...</div><div class="line">            [^'"&gt;]    #        其他文本</div><div class="line">          )*</div><div class="line">        &gt;             #结束尖括号"&gt;"</div><div class="line">        ''', <span class="string">r'&lt;input value="&gt;"&gt;&lt;/input&gt;'</span>, re.X)</div></pre></td></tr></table></figure>
+<h3 id="匹配HTML-Link"><a href="#匹配HTML-Link" class="headerlink" title="匹配HTML Link"></a>匹配HTML Link</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#匹配第一种情况，href属性为双引号内容</span></div><div class="line"><span class="comment">#s = '&lt;a href="http://www.oreilly.com"&gt;O\'Reilly Media&lt;/a&gt;'</span></div><div class="line"><span class="comment">#匹配第二种情况，href属性为单引号内容</span></div><div class="line"><span class="comment">#s = "&lt;a href='http://www.oreilly.com'&gt;O'Reilly Media&lt;/a&gt;"</span></div><div class="line"><span class="comment">#匹配第三种情况，href属性为无引号内容</span></div><div class="line">s = <span class="string">"&lt;a href=http://www.oreilly.com&gt;O'Reilly Media&lt;/a&gt;"</span></div><div class="line">guts, link = re.match(<span class="string">r'&lt;a\b([^&gt;]+)&gt;(.*?)&lt;/a&gt;'</span>, s).groups()</div><div class="line">urls = re.search(<span class="string">r'''</span></div><div class="line">    \b href                # "href"属性</div><div class="line">    \s*=\s*                # "="两端可能会出现空白字符</div><div class="line">    (?:                    # 其值为...</div><div class="line">        "([^"]*)"          #     双引号字符串</div><div class="line">        |                  #     或者是...</div><div class="line">        '([^']*)'          #     单引号字符串</div><div class="line">        |                  #     或者是...</div><div class="line">        ([^"'\s&gt;]+)        #     “其他文本”</div><div class="line">    )</div><div class="line">    ''', guts, re.X        <span class="comment"># 多行可添加注释并，忽略大小写</span></div><div class="line">).groups()</div><div class="line"><span class="string">'''</span></div><div class="line">由于不同多选分支的匹配，造成返回元祖的内容格式不固定，比如</div><div class="line">第一个匹配：('http://www.oreilly.com', None, None)</div><div class="line">第三个匹配：(None, None, 'http://www.oreilly.com')</div><div class="line">因此这里需要选择出实际匹配的内容，而Python中文没有Perl里'$+'这种操作，所以需要自己处理。参考</div><div class="line">https://stackoverflow.com/questions/2498935/how-to-extract-the-first-non-null-match-from-a-group-of-regexp-matches-in-python</div><div class="line">'''</div><div class="line">url = next((x <span class="keyword">for</span> x <span class="keyword">in</span> urls <span class="keyword">if</span> x <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>), <span class="keyword">None</span>)</div><div class="line">print(url, <span class="string">','</span>, link)</div><div class="line"></div><div class="line"><span class="comment">#或者，也可以使用命名捕获</span></div></pre></td></tr></table></figure>
+<h3 id="校验HTTP-URL"><a href="#校验HTTP-URL" class="headerlink" title="校验HTTP URL"></a>校验HTTP URL</h3><p>考虑主机、端口、路径的情况</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#输出为：('www.baidu.com', '8888', '/path')</span></div><div class="line">re.match(<span class="string">r'^http://([^/:]+)(?::(\d+))?(/.*)?$'</span>, <span class="string">'http://www.baidu.com/path'</span>).groups()</div></pre></td></tr></table></figure>
+<h2 id="扩展的例子"><a href="#扩展的例子" class="headerlink" title="扩展的例子"></a>扩展的例子</h2><h3 id="保持数据的协调性"><a href="#保持数据的协调性" class="headerlink" title="保持数据的协调性"></a>保持数据的协调性</h3><p>查找一系列5位数的美国邮政编码中，以44开头的那些，比如：</p>
+<p>“03824531449411615213<strong><em>44182</em></strong>95053<strong><em>44272</em></strong>742010217443235”中的’’44182”和”44272”。</p>
+<p>注意”44941”不是，因为这里的”44”只是”53144”后面的两位，与要求不符。</p>
+<p>典型的错误</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'03824531449411615213441829505344272742010217443235'</span></div><div class="line"></div><div class="line"><span class="comment">#匹配所有44开头的5位数字，会包括'44941'等</span></div><div class="line">re.findall(<span class="string">r'44\d\d\d'</span>, s)</div></pre></td></tr></table></figure>
+<p>关键的问题是要跳过完整的邮政编码，而不是进行单个字符的移动，书中给出几种方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#因为已经限定是数字，所以可以用[^4]表示非4的数字，注意不能使用'[^4][^4]\d\d\d'，这样无法跳过'43210'</span></div><div class="line">re.findall(<span class="string">r'(?:[^4]\d&#123;4&#125;|\d[^4]\d&#123;3&#125;)*(44\d&#123;3&#125;)'</span>, s)</div><div class="line"><span class="comment">#使用否定顺序环视</span></div><div class="line">re.findall(<span class="string">r'(?:(?!44)\d&#123;5&#125;)*(44\d&#123;3&#125;)'</span>, s)</div><div class="line"><span class="comment">#使用忽略优先量词</span></div><div class="line">re.findall(<span class="string">r'(?:\d&#123;5&#125;)*?(44\d&#123;3&#125;)'</span>, s)</div></pre></td></tr></table></figure>
+<p>上面的方法都会错误的匹配”44323”，原因：</p>
+<p>可以使用’\G’来避免，实测re库不支持’\G’，高级一些的regex库支持’\G’</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> regex</div><div class="line">regex.findall(<span class="string">r'\G(?:(?!44)\d&#123;5&#125;)*(44\d&#123;3&#125;)'</span>, s)</div></pre></td></tr></table></figure>
+<p>待续~</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/正则表达式/">正则表达式</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2019/04/03/精通正则表达式学习笔记/" data-title="精通正则表达式学习笔记 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/06/30/动态规划算法/"  title="动态规划算法">
+ <strong>下一篇：</strong><br/> 
+ <span>动态规划算法
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第1章：正则表达式入门"><span class="toc-number">2.</span> <span class="toc-text">第1章：正则表达式入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#更多的例子"><span class="toc-number">2.1.</span> <span class="toc-text">更多的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第2章：入门示例拓展"><span class="toc-number">3.</span> <span class="toc-text">第2章：入门示例拓展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配温度"><span class="toc-number">3.1.</span> <span class="toc-text">匹配温度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为数值添加逗号"><span class="toc-number">3.2.</span> <span class="toc-text">为数值添加逗号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Text-To-HTML转换"><span class="toc-number">3.3.</span> <span class="toc-text">Text-To-HTML转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单词重复问题"><span class="toc-number">3.4.</span> <span class="toc-text">单词重复问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第3章：正则表达式的特性和流派概览"><span class="toc-number">4.</span> <span class="toc-text">第3章：正则表达式的特性和流派概览</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#处理正则表达式的几种方式"><span class="toc-number">4.1.</span> <span class="toc-text">处理正则表达式的几种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则模式与匹配模式"><span class="toc-number">4.2.</span> <span class="toc-text">正则模式与匹配模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第4章：表达式的匹配原理"><span class="toc-number">5.</span> <span class="toc-text">第4章：表达式的匹配原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是NFA和DFA呢"><span class="toc-number">5.1.</span> <span class="toc-text">什么是NFA和DFA呢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试引擎类型"><span class="toc-number">5.2.</span> <span class="toc-text">测试引擎类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配的基础"><span class="toc-number">5.3.</span> <span class="toc-text">匹配的基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#表达式主导与文本主导"><span class="toc-number">5.3.1.</span> <span class="toc-text">表达式主导与文本主导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较NFA与DFA"><span class="toc-number">5.3.2.</span> <span class="toc-text">比较NFA与DFA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯（Backtracking）"><span class="toc-number">5.3.3.</span> <span class="toc-text">回溯（Backtracking）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#再看匹配优先"><span class="toc-number">5.3.3.1.</span> <span class="toc-text">再看匹配优先</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#浮点数规范化问题"><span class="toc-number">5.3.3.2.</span> <span class="toc-text">浮点数规范化问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#占有优先量词和固化分组"><span class="toc-number">5.3.3.2.1.</span> <span class="toc-text">占有优先量词和固化分组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#环视中的回溯"><span class="toc-number">5.3.3.2.2.</span> <span class="toc-text">环视中的回溯</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多选结果的匹配原则"><span class="toc-number">5.3.3.2.3.</span> <span class="toc-text">多选结果的匹配原则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#最左最长规则"><span class="toc-number">5.3.3.2.4.</span> <span class="toc-text">最左最长规则</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第5章：正则表达式实用技巧"><span class="toc-number">6.</span> <span class="toc-text">第5章：正则表达式实用技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式的平衡法则"><span class="toc-number">6.1.</span> <span class="toc-text">正则表达式的平衡法则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#若干例子"><span class="toc-number">6.2.</span> <span class="toc-text">若干例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配连续行"><span class="toc-number">6.2.1.</span> <span class="toc-text">匹配连续行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配IP地址"><span class="toc-number">6.2.2.</span> <span class="toc-text">匹配IP地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理文件名"><span class="toc-number">6.2.3.</span> <span class="toc-text">处理文件名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#去掉文件名开始的路径"><span class="toc-number">6.2.3.1.</span> <span class="toc-text">去掉文件名开始的路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#从路径中获取文件名"><span class="toc-number">6.2.3.2.</span> <span class="toc-text">从路径中获取文件名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#所在的路径和文件名"><span class="toc-number">6.2.3.3.</span> <span class="toc-text">所在的路径和文件名</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配对称的括号"><span class="toc-number">6.2.4.</span> <span class="toc-text">匹配对称的括号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配数字"><span class="toc-number">6.2.4.1.</span> <span class="toc-text">匹配数字</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配分隔符之内的文本"><span class="toc-number">6.2.5.</span> <span class="toc-text">匹配分隔符之内的文本</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#容许引文字符串中出现转义引号"><span class="toc-number">6.2.5.1.</span> <span class="toc-text">容许引文字符串中出现转义引号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#去除文本首尾的空白字符"><span class="toc-number">6.2.6.</span> <span class="toc-text">去除文本首尾的空白字符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML相关范例"><span class="toc-number">6.3.</span> <span class="toc-text">HTML相关范例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配HTML-Tag"><span class="toc-number">6.3.1.</span> <span class="toc-text">匹配HTML Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配HTML-Link"><span class="toc-number">6.3.2.</span> <span class="toc-text">匹配HTML Link</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#校验HTTP-URL"><span class="toc-number">6.3.3.</span> <span class="toc-text">校验HTTP URL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展的例子"><span class="toc-number">6.4.</span> <span class="toc-text">扩展的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#保持数据的协调性"><span class="toc-number">6.4.1.</span> <span class="toc-text">保持数据的协调性</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/《算法导论》/" title="《算法导论》">《算法导论》<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>30</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
