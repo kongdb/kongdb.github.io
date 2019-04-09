@@ -1,0 +1,582 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>GoogleMock的小例子 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="简单的入门GoogleMock">
+<meta name="keywords" content="单元测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoogleMock的小例子">
+<meta property="og:url" content="http://yoursite.com/2019/04/08/GoogleMock的例子/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="简单的入门GoogleMock">
+<meta property="og:updated_time" content="2019-04-09T15:15:34.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GoogleMock的小例子">
+<meta name="twitter:description" content="简单的入门GoogleMock">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/04/08/GoogleMock的例子/" title="GoogleMock的小例子" itemprop="url">GoogleMock的小例子</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2019-04-08T13:25:40.000Z" itemprop="datePublished"> 发表于 2019-04-08</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">2.</span> <span class="toc-text">实例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求"><span class="toc-number">2.1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mock实现测试"><span class="toc-number">2.2.</span> <span class="toc-text">mock实现测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fake实现测试"><span class="toc-number">2.3.</span> <span class="toc-text">fake实现测试</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一直以来对于googlemock都感觉很陌生，写单元测试的时候也是一直只用googletest，无意中看到一个小例子，感觉比较形象，按照自己的理解记录下来<br><a href="http://blog.divebomb.org/2011/07/my-first-c-cmake-googletest-and-googlemock/" target="_blank" rel="external">my-first-c-cmake-googletest-and-googlemock</a></p>
+<p>关于googlemock的接口直接参考官网：<a href="https://github.com/google/googletest/blob/master/googlemock/docs/" target="_blank" rel="external">googlemock</a></p>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>HtmlParser类需要实现getAllLinks接口，该接口主要实现以下功能</p>
+<ol>
+<li>通过接口参数uri，获取对应的html内容</li>
+<li>解析文本内容，将里面的所有链接返回</li>
+</ol>
+<p>对于这个问题，如果使用面向过程的方式来写，大概像这样</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; getAllLinks(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;uri)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//调用curl返回内容</span></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> content = curlGetContent(url);</div><div class="line">    <span class="comment">//解析content并返回，这是要测试的主要逻辑</span></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样的代码是没办法进行单元测试的，因为调用getAllLinks的时候，必然要调用curl相关的接口来访问网络。<br>单元测试时禁止网络这种又慢又不稳定的访问的。</p>
+<p>怎么办呢？既然是使用C++，自然要用到面向对象的思想啦，考虑新增类HttpFetch，将网络请求的接口封装到HttpFetch类中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">string</span> HttpFetch::getUrlAsString(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;url)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//调用curl返回内容</span></div><div class="line">    <span class="keyword">return</span> curlGetContent(url);</div><div class="line">&#125;</div><div class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; getAllLinks(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;uri)</div><div class="line">&#123;</div><div class="line">    HttpFetch fetcher;</div><div class="line">    <span class="comment">//调用类接口</span></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> content = fetcher.curlGetContent(url);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果这么写的话，仍然是没有意义的，因为HttpFetch类已经写死使用curl，无法测试。怎么办呢？“多态”闪亮登场。</p>
+<h2 id="mock实现测试"><a href="#mock实现测试" class="headerlink" title="mock实现测试"></a>mock实现测试</h2><p>基本思想是</p>
+<ol>
+<li>抽象出类HttpFetch的接口</li>
+<li>实现类HttpFetchImpl，继承HttpFetch，并调用curl返回内容</li>
+<li>测试类MockHttpFetch，继承HttpFetch，仅进行内存操作</li>
+<li>HtmlParser传入HttpFetch的引用或指针</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//HttpFetch.h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> HTTPFETCH_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HTTPFETCH_H</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HttpFetch</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">virtual</span> ~HttpFetch() &#123;&#125;</div><div class="line">	<span class="keyword">virtual</span> <span class="built_in">std</span>::<span class="function"><span class="built_in">string</span> <span class="title">getUrlAsString</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;url)</span> <span class="keyword">const</span> </span>= <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//HttpFetchImpl.h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> HTTPFETCHIMPL_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HTTPFETCHIMPL_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HttpFetch.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HttpFetchImpl</span> :</span> <span class="keyword">public</span> HttpFetch</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">std</span>::<span class="function"><span class="built_in">string</span> <span class="title">getUrlAsString</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;url)</span> <span class="keyword">const</span> override</span></div><div class="line">    &#123;</div><div class="line">        <span class="comment">//<span class="doctag">TODO:</span>use curl to get content</span></div><div class="line">        <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//HtmlParser.h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> HTMLPARSER_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HTMLPARSER_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HttpFetch.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlParser</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    HtmlParser(<span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;HttpFetch&gt; fetcher) : fetcher_(fetcher) &#123;&#125;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; getAllLinks(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;uri)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">string</span> content = fetcher_-&gt;getUrlAsString(uri);</div><div class="line">        <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt; result;</div><div class="line">        <span class="comment">//simple implement</span></div><div class="line">        <span class="keyword">size_t</span> start_pos = <span class="number">0</span>;</div><div class="line">        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">char</span> *kBegin = <span class="string">"href='"</span>, *kEnd = <span class="string">"'"</span>;</div><div class="line">        <span class="keyword">while</span>(<span class="literal">true</span>)</div><div class="line">        &#123;</div><div class="line">            start_pos = content.find(kBegin, start_pos);</div><div class="line">            <span class="keyword">if</span>(start_pos == <span class="built_in">std</span>::<span class="built_in">string</span>::npos)</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            start_pos += <span class="built_in">strlen</span>(kBegin);</div><div class="line">            <span class="keyword">size_t</span> end_pos = content.find(kEnd, start_pos);</div><div class="line">            <span class="keyword">if</span>(end_pos == <span class="built_in">std</span>::<span class="built_in">string</span>::npos)</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            result.push_back(content.substr(start_pos, end_pos - start_pos));</div><div class="line">            start_pos = end_pos;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;HttpFetch&gt; fetcher_;</div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//MockHttpFetch.h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> MOCKHTTPFETCH_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MOCKHTTPFETCH_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HttpFetch.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;gmock/gmock.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MockHttpFetch</span> :</span> <span class="keyword">public</span> HttpFetch</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	MOCK_CONST_METHOD1(getUrlAsString, <span class="built_in">std</span>::<span class="built_in">string</span>(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;));</div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//HtmlParserTest.cpp</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;gtest/gtest.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;gmock/gmock.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HtmlParser.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"MockHttpFetch.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlParserTest</span> :</span> <span class="keyword">public</span> ::testing::Test</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	HtmlParserTest()</div><div class="line">	: fetcher_(<span class="built_in">std</span>::make_shared&lt;MockHttpFetch&gt;()),</div><div class="line">	  parser_(fetcher_)</div><div class="line">	 &#123;&#125;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">	<span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;MockHttpFetch&gt; fetcher_;</div><div class="line">	HtmlParser parser_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">TEST_F(HtmlParserTest, getAllLinks01)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//empty htmlc content</span></div><div class="line">    EXPECT_CALL(*fetcher_, getUrlAsString(<span class="string">"http://example.net"</span>))</div><div class="line">        .WillOnce(::testing::Return(<span class="string">""</span>));</div><div class="line">    <span class="keyword">auto</span> links = parser_.getAllLinks(<span class="string">"http://example.net"</span>);</div><div class="line">    EXPECT_TRUE(links.empty());</div><div class="line">&#125;</div><div class="line"></div><div class="line">TEST_F(HtmlParserTest, getAllLinks02)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//one link</span></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> html_content = <span class="string">"&lt;html&gt;&lt;body&gt;"</span> \</div><div class="line">    <span class="string">"&lt;a href='index.html'&gt;index.html&lt;/a&gt;"</span> \</div><div class="line">    <span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>;</div><div class="line">    EXPECT_CALL(*fetcher_, getUrlAsString(<span class="string">"http://example.net"</span>))</div><div class="line">        .WillOnce(::testing::Return(html_content));</div><div class="line">    <span class="keyword">auto</span> links = parser_.getAllLinks(<span class="string">"http://example.net"</span>);</div><div class="line">    ASSERT_EQ(<span class="number">1</span>, links.size());</div><div class="line">    EXPECT_EQ(<span class="string">"index.html"</span>, links[<span class="number">0</span>]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></div><div class="line">&#123;</div><div class="line">	::testing::InitGoogleMock(&amp;argc, argv);</div><div class="line">	<span class="keyword">return</span> RUN_ALL_TESTS();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="fake实现测试"><a href="#fake实现测试" class="headerlink" title="fake实现测试"></a>fake实现测试</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//FakeHttpFetch.h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> FAKEHTTPFETCH_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> FAKEHTTPFETCH_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HttpFetch.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FakeHttpFetch</span> :</span> <span class="keyword">public</span> HttpFetch</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="built_in">std</span>::<span class="function"><span class="built_in">string</span> <span class="title">getUrlAsString</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;url)</span> <span class="keyword">const</span> override</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> fake_content_;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetFakeContent</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;content)</span> </span>&#123; fake_content_ = content;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> fake_content_;</div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//HtmlParserTest2.cpp</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;gtest/gtest.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HtmlParser.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"FakeHttpFetch.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HtmlParserTest</span> :</span> <span class="keyword">public</span> ::testing::Test</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    HtmlParserTest()</div><div class="line">    : fetcher_(<span class="built_in">std</span>::make_shared&lt;FakeHttpFetch&gt;()),</div><div class="line">      parser_(fetcher_)</div><div class="line">     &#123;&#125;</div><div class="line"><span class="keyword">protected</span>:</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">shared_ptr</span>&lt;FakeHttpFetch&gt; fetcher_;</div><div class="line">    HtmlParser parser_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">TEST_F(HtmlParserTest, getAllLinks01)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//empty htmlc content</span></div><div class="line">    <span class="keyword">auto</span> links = parser_.getAllLinks(<span class="string">"http://example.net"</span>);</div><div class="line">    EXPECT_TRUE(links.empty());</div><div class="line">&#125;</div><div class="line"></div><div class="line">TEST_F(HtmlParserTest, getAllLinks02)</div><div class="line">&#123;</div><div class="line">    <span class="comment">//one link</span></div><div class="line">    fetcher_-&gt;SetFakeContent(<span class="string">"&lt;html&gt;&lt;body&gt;"</span> \</div><div class="line">    <span class="string">"&lt;a href='index.html'&gt;index.html&lt;/a&gt;"</span> \</div><div class="line">    <span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>);</div><div class="line">    <span class="keyword">auto</span> links = parser_.getAllLinks(<span class="string">"http://example.net"</span>);</div><div class="line">    ASSERT_EQ(<span class="number">1</span>, links.size());</div><div class="line">    EXPECT_EQ(<span class="string">"index.html"</span>, links[<span class="number">0</span>]);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></div><div class="line">&#123;</div><div class="line">    ::testing::InitGoogleTest(&amp;argc, argv);</div><div class="line">    <span class="keyword">return</span> RUN_ALL_TESTS();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以感受到mock和fake的微妙区别，至少fake不能实现“至少调用一次”这样的断言呀！</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/单元测试/">单元测试</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2019/04/08/GoogleMock的例子/" data-title="GoogleMock的小例子 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/04/09/无符号整形引发的血案/" title="无符号整型引发的血案">
+  <strong>上一篇：</strong><br/>
+  <span>
+  无符号整型引发的血案</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/04/03/精通正则表达式学习笔记/"  title="精通正则表达式学习笔记">
+ <strong>下一篇：</strong><br/> 
+ <span>精通正则表达式学习笔记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例"><span class="toc-number">2.</span> <span class="toc-text">实例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求"><span class="toc-number">2.1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mock实现测试"><span class="toc-number">2.2.</span> <span class="toc-text">mock实现测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fake实现测试"><span class="toc-number">2.3.</span> <span class="toc-text">fake实现测试</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/《算法导论》/" title="《算法导论》">《算法导论》<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>32</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>21</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单元测试/" title="单元测试">单元测试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
