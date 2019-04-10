@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2019/04/09/无符号整形引发的血案/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="unsigned 的坑">
-<meta property="og:updated_time" content="2019-04-09T15:15:12.997Z">
+<meta property="og:updated_time" content="2019-04-10T00:18:12.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无符号整型引发的血案">
 <meta name="twitter:description" content="unsigned 的坑">
@@ -115,7 +115,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoSomething</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;<span class="built_in">array</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> end = <span class="built_in">array</span>.size() - <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; ++i)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">array</span>[i] += <span class="built_in">array</span>[i + <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这么写是没有问题的，因为「array.size() - 1」相当于二进制的64个1，转换为int时会截断为32个1（这是我猜的，应该合情合理哈），其值恰为-1</p>
 <p>来写个例子验证一下，比较运算符会不会导致隐士类型转换</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class Integer</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    explicit Integer(int d) : data_(d) &#123;&#125;</div><div class="line">    operator int() &#123;</div><div class="line">        printf("int transfer called\n");</div><div class="line">        return data_;</div><div class="line">    &#125;</div><div class="line">    bool operator&lt;(int other) &#123;</div><div class="line">        printf("'&lt;' operator called\n");</div><div class="line">        return data_ &lt; other;</div><div class="line">    &#125;</div><div class="line">private:</div><div class="line">    int data_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">void test2()</div><div class="line">&#123;</div><div class="line">    Integer i1(2);</div><div class="line">    //如果定义了'&lt;'操作费，则调用 '&lt;' 操作符，不会将i1隐式转为int</div><div class="line">    //否则，会将i1隐式转为int</div><div class="line">    printf("%d\n", i1 &lt; 4);</div><div class="line">    int i2 = i1;</div><div class="line">    //调用int转换法，将i1转为int</div><div class="line">    printf("%d\n", i2);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class Integer</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">    explicit Integer(int d) : data_(d) &#123;&#125;</div><div class="line">    operator int() &#123;</div><div class="line">        printf("int transfer called\n");</div><div class="line">        return data_;</div><div class="line">    &#125;</div><div class="line">    bool operator&lt;(int other) &#123;</div><div class="line">        printf("'&lt;' operator called\n");</div><div class="line">        return data_ &lt; other;</div><div class="line">    &#125;</div><div class="line">private:</div><div class="line">    int data_;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">void test()</div><div class="line">&#123;</div><div class="line">    Integer i1(2);</div><div class="line">    //如果定义了'&lt;'操作符，则调用 '&lt;' 操作符，不会将i1隐式转为int</div><div class="line">    //否则，会将i1隐式转为int</div><div class="line">    printf("%d\n", i1 &lt; 4);</div><div class="line">    int i2 = i1;</div><div class="line">    //调用int转换法，将i1转为int</div><div class="line">    printf("%d\n", i2);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -249,7 +249,7 @@
 			
 		
 			
-				<li><a href="/tags/单元测试/" title="单元测试">单元测试<sup>1</sup></a></li>
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
 			
 		
 			
@@ -257,7 +257,11 @@
 			
 		
 			
-				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+				<li><a href="/tags/单元测试/" title="单元测试">单元测试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
 			
 		
 			
@@ -266,10 +270,6 @@
 		
 			
 				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
 			
 		
 			
