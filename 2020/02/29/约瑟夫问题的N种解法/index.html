@@ -1,0 +1,624 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>约瑟夫问题的N种解法 | 飞翔的pig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Kongdb">
+    
+
+    
+    <meta name="description" content="几种解决约瑟夫问题的思路">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="约瑟夫问题的N种解法">
+<meta property="og:url" content="http://yoursite.com/2020/02/29/约瑟夫问题的N种解法/index.html">
+<meta property="og:site_name" content="飞翔的pig">
+<meta property="og:description" content="几种解决约瑟夫问题的思路">
+<meta property="og:updated_time" content="2020-02-29T13:11:41.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="约瑟夫问题的N种解法">
+<meta name="twitter:description" content="几种解决约瑟夫问题的思路">
+
+    
+    <link rel="alternative" href="/atom.xml" title="飞翔的pig" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="飞翔的pig" title="飞翔的pig"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="飞翔的pig">飞翔的pig</a></h1>
+				<h2 class="blog-motto">仰望苍穹，脚踏实地</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/02/29/约瑟夫问题的N种解法/" title="约瑟夫问题的N种解法" itemprop="url">约瑟夫问题的N种解法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Kongdb" target="_blank" itemprop="author">Kongdb</a>
+		
+  <p class="article-time">
+    <time datetime="2020-02-29T01:23:51.000Z" itemprop="datePublished"> 发表于 2020-02-29</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题定义"><span class="toc-number">1.</span> <span class="toc-text">问题定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#各种解法"><span class="toc-number">2.</span> <span class="toc-text">各种解法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#直白的暴力求解"><span class="toc-number">2.1.</span> <span class="toc-text">直白的暴力求解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路"><span class="toc-number">2.1.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">2.1.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例"><span class="toc-number">2.1.3.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">2.1.4.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优雅地利用数据结构"><span class="toc-number">2.2.</span> <span class="toc-text">优雅地利用数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">2.2.4.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#巧妙的另辟蹊径"><span class="toc-number">2.3.</span> <span class="toc-text">巧妙的另辟蹊径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-2"><span class="toc-number">2.3.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例-2"><span class="toc-number">2.3.3.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-2"><span class="toc-number">2.3.4.</span> <span class="toc-text">分析</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h1><p>有n个人，第0个人从1开始报数，报到m的人出列，然后从下一个人开始报数。求最值剩下人的序号</p>
+<h1 id="各种解法"><a href="#各种解法" class="headerlink" title="各种解法"></a>各种解法</h1><h2 id="直白的暴力求解"><a href="#直白的暴力求解" class="headerlink" title="直白的暴力求解"></a>直白的暴力求解</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>定义一个n长的数组array，初值都为1，表示都还活着</li>
+<li>定义一个索引index<ol>
+<li>它从0到n-1自增，当变为n时，回到0，也就是<code>(++index) %n</code></li>
+<li>它跳过array[index]为0的那些项</li>
+</ol>
+</li>
+<li>定义一个计数器sum，从0开始计数，到n时推出循环，表示当前有多少人出列了。</li>
+<li>定义一个计数器count<ol>
+<li>它从0计数到m</li>
+<li>当变为m时，将array[index]置为0，表示被移除。将sum自增</li>
+</ol>
+</li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">josephus0</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="built_in">array</span>(n, <span class="literal">true</span>);</div><div class="line">    <span class="keyword">int</span> count = <span class="number">0</span>, sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> index = <span class="number">0</span>;;index = ++index % n) &#123;</div><div class="line">        <span class="keyword">if</span>(<span class="built_in">array</span>[index] &amp;&amp; ++count == m) &#123;</div><div class="line">            count = <span class="number">0</span>;</div><div class="line">            <span class="built_in">array</span>[index] = <span class="literal">false</span>;</div><div class="line">            <span class="keyword">if</span>(++sum == n)</div><div class="line">                <span class="keyword">return</span> index;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><p>在n为5，m为3的情况下，举例前三次出列的场景</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">初始<span class="keyword">index</span>为<span class="number">0</span>，<span class="built_in">count</span>为<span class="number">0</span>      <span class="keyword">index</span>为<span class="number">0</span>          <span class="keyword">index</span> 自增为<span class="number">1</span>        <span class="keyword">index</span>自增为<span class="number">2</span></div><div class="line"><span class="keyword">index</span>:  <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span>      =&gt; <span class="built_in">count</span>自增为<span class="number">1</span>    =&gt; <span class="built_in">count</span>自增为<span class="number">2</span>    =&gt;   <span class="built_in">count</span>置为<span class="number">0</span>（先变<span class="number">3</span>再变<span class="number">0</span>） =&gt;</div><div class="line"><span class="keyword">array</span>:  <span class="number">1</span> <span class="number">1</span> <span class="number">1</span> <span class="number">1</span> <span class="number">1</span>         <span class="keyword">array</span>未变化        <span class="keyword">array</span>未变化          <span class="keyword">array</span>:  <span class="number">1</span> <span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">index</span>自增为<span class="number">3</span>       <span class="keyword">index</span>自增为<span class="number">4</span>       <span class="keyword">index</span>置为<span class="number">0</span>（先变<span class="number">5</span>再置为<span class="number">0</span>）</div><div class="line"><span class="built_in">count</span>自增为<span class="number">1</span>    =&gt; <span class="built_in">count</span>自增为<span class="number">2</span>    =&gt; <span class="built_in">count</span>置为<span class="number">0</span>（先变<span class="number">3</span>再变<span class="number">0</span>）     =&gt;</div><div class="line"><span class="keyword">array</span>未变化        <span class="keyword">array</span>未变化        <span class="keyword">array</span>: <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">index</span>自增为<span class="number">1</span>       <span class="keyword">index</span>自增为<span class="number">2</span>               <span class="keyword">index</span>自增为<span class="number">3</span>        <span class="keyword">index</span>自增为<span class="number">3</span></div><div class="line"><span class="built_in">count</span>自增为<span class="number">1</span>    =&gt; <span class="built_in">count</span>未变化(对应项为<span class="number">0</span>)   =&gt; <span class="built_in">count</span>自增为<span class="number">2</span>    =&gt;  <span class="built_in">count</span>置为<span class="number">0</span>（先变<span class="number">3</span>再变<span class="number">0</span>）</div><div class="line"><span class="keyword">array</span>未变化        <span class="keyword">array</span>未变化                <span class="keyword">array</span>未变化         <span class="keyword">array</span>: <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span></div></pre></td></tr></table></figure>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>这种方式，逻辑上还是比较清晰的，题目怎么来我就怎么算。缺点也很明显</p>
+<ol>
+<li><code>%n</code>不高效</li>
+<li>当n很大时，数组持续占据很大内存，而且计算最后一个人时，即使其他人都”死了”，却还要再重新遍历一遍</li>
+</ol>
+<h2 id="优雅地利用数据结构"><a href="#优雅地利用数据结构" class="headerlink" title="优雅地利用数据结构"></a>优雅地利用数据结构</h2><p>某人报到号出队时，需要将它移出原数据。这时数组显然不合适，自然想到了链表。</p>
+<p>既然所有的人是一个圈，即最后一个人的下一个人是第一个人，那自然使用<strong><em>循环链表</em></strong></p>
+<p>使用单向循环链表还是双向循环链表呢，报号是从前往后的，理论上不需要back。因此使用单项循环链表实现。</p>
+<p>ps. 今年南大AI初试里，有道填空题就考到了循环链表解决约瑟夫问题</p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>建立一个单向循环链表，每个节点存有的数据即为索引</li>
+<li>报数即为指向下一节点</li>
+<li>链表里只剩一项时即为结果</li>
+</ul>
+<p>需要注意的点是，由于是单链表，至少需要前后两个指针才能做到删除节点</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> index;</div><div class="line">    Node *next;</div><div class="line">    Node(<span class="keyword">int</span> data=<span class="number">0</span>): index(data) &#123;&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">josephus1</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</div><div class="line">    Node head, *p = &amp;head, *q;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</div><div class="line">        p = p-&gt;next = <span class="keyword">new</span> Node(i);</div><div class="line">    <span class="comment">//p始终为q的前一项</span></div><div class="line">    q = p-&gt;next = head.next;</div><div class="line">    <span class="keyword">while</span>(p-&gt;next != p) &#123;</div><div class="line">        <span class="comment">// 循环结束，q指向待删除节点</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m - <span class="number">1</span>; ++i) &#123;</div><div class="line">            p = q;</div><div class="line">            q = q-&gt;next;</div><div class="line">        &#125;</div><div class="line">        p-&gt;next = q-&gt;next;</div><div class="line">        <span class="keyword">delete</span> q;</div><div class="line">        q = p-&gt;next;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> result = p-&gt;index;</div><div class="line">    <span class="keyword">delete</span> p;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="举例-1"><a href="#举例-1" class="headerlink" title="举例"></a>举例</h3><p>考虑一个平凡的场景，还是n为5，m为3</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  q                              p       q                               p       q</div><div class="line">  ↓                              ↓       ↓                               ↓       ↓</div><div class="line"><span class="string">[ 0 ]</span> → <span class="string">[ 1 ]</span> → <span class="string">[ 2 ]</span>          <span class="string">[ 0 ]</span> → <span class="string">[ 1 ]</span> → <span class="string">[ 2 ]</span>           <span class="string">[ 0 ]</span> → <span class="string">[ 1 ]</span> → <span class="string">[ 2 ]</span></div><div class="line">  ↑               ↓      ==&gt;     ↑               ↓      ==&gt;      ↑               ↓</div><div class="line"><span class="string">[ 4 ]</span> ←-------- <span class="string">[ 3 ]</span>          <span class="string">[ 4 ]</span> ←-------- <span class="string">[ 3 ]</span>           <span class="string">[ 4 ]</span> ←-------- <span class="string">[ 3 ]</span></div><div class="line">  ↑</div><div class="line">  p</div></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">                      p                                       q  </div><div class="line">                      ↓                                       ↓</div><div class="line">delete <span class="number">2</span>    [ <span class="number">0</span> ] → [ <span class="number">1</span> ]           [ <span class="number">0</span> ] → [ <span class="number">1</span> ]           [ <span class="number">0</span> ] → [ <span class="number">1</span> ]</div><div class="line">=======&gt;      ↑       ↓      ==&gt;      ↑       ↓      ==&gt;      ↑       ↓</div><div class="line">            [ <span class="number">4</span> ] ← [ <span class="number">3</span> ]           [ <span class="number">4</span> ] ← [ <span class="number">3</span> ]           [ <span class="number">4</span> ] ← [ <span class="number">3</span> ]</div><div class="line">                      ↑               ↑       ↑               ↑</div><div class="line">                      q               q       p               p</div></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">                      <span class="selector-tag">q</span>                      <span class="selector-tag">p</span>                                        <span class="selector-tag">q</span></div><div class="line">                      ↓                      ↓                                        ↓</div><div class="line">delete <span class="number">0</span>            [ <span class="number">1</span> ]                  [ <span class="number">1</span> ]                 [ <span class="number">1</span> ]    delete <span class="number">4</span>  [ <span class="number">1</span> ]</div><div class="line">=======&gt;         ↗   ↓       ==&gt;        ↗   ↓      ==&gt;       ↗   ↓      =======&gt;   ↑ ↓ </div><div class="line">            [ <span class="number">4</span> ] ← [ <span class="number">3</span> ]          [ <span class="number">4</span> ] ← [ <span class="number">3</span> ]          [ <span class="number">4</span> ] ← [ <span class="number">3</span> ]             [ <span class="number">3</span> ]</div><div class="line">              ↑                              ↑              ↑       ↑                 ↑</div><div class="line">              <span class="selector-tag">p</span>                              <span class="selector-tag">q</span>              <span class="selector-tag">q</span>       <span class="selector-tag">p</span>                 p</div></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  <span class="selector-tag">p</span>             <span class="selector-tag">q</span>                   <span class="selector-tag">q</span></div><div class="line">  ↓             ↓                   ↓</div><div class="line">[ <span class="number">1</span> ]         [ <span class="number">1</span> ]    delete <span class="number">1</span></div><div class="line"> ↑ ↓    ==&gt;    ↑ ↓     =======&gt;   [ <span class="number">3</span> ]</div><div class="line">[ <span class="number">3</span> ]         [ <span class="number">3</span> ]</div><div class="line">  ↑             ↑                   ↑</div><div class="line">  <span class="selector-tag">q</span>             <span class="selector-tag">p</span>                   p</div></pre></td></tr></table></figure>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>这种方式避免了重复计算已经移除的数据较高效，但是链表本身自然也会有开销</p>
+<h2 id="巧妙的另辟蹊径"><a href="#巧妙的另辟蹊径" class="headerlink" title="巧妙的另辟蹊径"></a>巧妙的另辟蹊径</h2><p>由于最终结果只是要求出，最终剩下人的编号，是不是可以跳过移除的逻辑，直接求得呢？</p>
+<p>参考<a href="https://blog.csdn.net/wusuopubupt/article/details/18214999" target="_blank" rel="external">约瑟夫环之二(用递归的思想解决Josephus问题)</a></p>
+<h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><ol>
+<li><p>假设我们有一个神奇的函数<code>f(n)</code>，它能最终返回剩下的人的编号</p>
+</li>
+<li><p>首先我们知道，<code>f(1)</code>为0。即只有1个人的时候，剩下的即是第0号</p>
+</li>
+<li><p>怎么得到<code>f(n)</code>和<code>f(n-1)</code>的关系呢？啊哈，在有n个人的时候，把第一个人先T掉，不就只剩下n-1个人了嘛，这样我们就朝目标迈进了一步啦。</p>
+<ul>
+<li><p>我们要知道在有n个人的时候，最先被T的人的编号</p>
+<ul>
+<li>当n比较大m比较小的时候，很容易知道这个编号是<code>m-1</code>。比如10个人报3号的时候，最先走的就是<code>3-1=2</code>号</li>
+<li>那当<code>n&lt;m</code>的时候呢，这时候可以设<code>m=k*n+i (0&lt;i&lt;=n)</code>，则最先走的是<code>i-1</code>号，而<code>(i-1)%n == (m-1)%n</code></li>
+<li>综合两种情况，最先被T的人的编号就是<code>(m-1)%n</code></li>
+</ul>
+</li>
+<li><p>然后我们要知道被T的人的下一个人的编号。它显然是<code>((m-1)%n+1)%n = m%n</code>，设为k</p>
+</li>
+<li><p>然后知道，n-1个人的时候</p>
+<ul>
+<li>如果从第0个人开始报数，最终剩下的人编号即为f(n-1)，这是我们最开始的假设</li>
+<li>如果从第k个人开始报数，最终剩下的人编号即为f(n)。因为这只是我们在求f(n)时，把第一个人T掉的余下的过程。</li>
+<li><p>而从第k个人开始报数的结果，它等于从第0个人开始的结果加上k(要模n防止溢出)。因为相当于每个报数的人”基数”增加了k。第0个相当于第k个，第一个相当于第k+1个…</p>
+<pre><code><figure class="highlight subunit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">X:    0    1    2   ... n-k<span class="string">-1</span>   n-k   n-k<span class="string">+1</span>  ...  n<span class="string">-3</span>    n<span class="string">-2</span> </div><div class="line">      |    |    |         |      |      |          |      |</div><div class="line">Y:    k   k<span class="string">+1</span>  k<span class="string">+2</span>  ...  n<span class="string">-1</span>     0      1    ...  k<span class="string">-3</span>    k<span class="string">-2</span></div><div class="line"></div><div class="line">X数组表示，n<span class="string">-1</span>个人的时候顺序的序号；Y表示n个人T掉第一个人(k<span class="string">-1</span>)的时候的序号。</div><div class="line">注意这里k<span class="string">-1</span>,k<span class="string">-2</span>等是不严谨的，毕竟k可能是0。这里仅是举例</div><div class="line">可以看出X[i]和Y[i]的关系为  Y[i] = (X[i] + k) % n</div></pre></td></tr></table></figure>
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>- 因此`f(n) = (f(n-1) + k) % n = (f(n-1)+m%n)%n = (f(n-1)+m)%n`
+</code></pre><h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">josephus2</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>)</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	<span class="keyword">return</span> (josephus(n<span class="number">-1</span>, m) + m) % n;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="举例-2"><a href="#举例-2" class="headerlink" title="举例"></a>举例</h3><p>我们来n=5,m=3，借助于f(4)来求f(5)的过程。假设我们知道<code>f(4)=3</code>，注意这可能是错的，仅为举例</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">已知</div><div class="line">                    <span class="number">0</span>      删除第<span class="number">2</span>项        <span class="number">0</span></div><div class="line"><span class="number">0</span>  →  <span class="number">1</span>         ↗     ↘    (m<span class="number">-1</span>)      ↗    ↘        重新排序      <span class="number">3</span>(<span class="number">0</span>) → <span class="number">4</span>(<span class="number">1</span>) </div><div class="line">↑     ↓        <span class="number">4</span>        <span class="number">1</span>  ======&gt;    <span class="number">4</span>       <span class="number">1</span>       ======&gt;        ↑       ↓</div><div class="line"><span class="number">3</span>  ←  <span class="number">2</span>         ↖     ↙              ↖   ↙                       <span class="number">1</span>(<span class="number">3</span>) ← <span class="number">0</span>(<span class="number">2</span>)</div><div class="line">↑                 <span class="number">3</span> ← <span class="number">2</span>                  <span class="number">3</span>                           ↑</div><div class="line">f(<span class="number">4</span>)                                     ↑                          f(<span class="number">4</span>)</div><div class="line">                                      新的第<span class="number">0</span>项              外面是f(<span class="number">5</span>)的序号，括号里是f(<span class="number">4</span>)序号</div></pre></td></tr></table></figure>
+<p>因此<code>f(5)=1</code></p>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>这种方式很巧妙，但并不直观</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2020/02/29/约瑟夫问题的N种解法/" data-title="约瑟夫问题的N种解法 | 飞翔的pig" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2019/04/09/无符号整形引发的血案/"  title="无符号整型引发的血案">
+ <strong>下一篇：</strong><br/> 
+ <span>无符号整型引发的血案
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题定义"><span class="toc-number">1.</span> <span class="toc-text">问题定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#各种解法"><span class="toc-number">2.</span> <span class="toc-text">各种解法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#直白的暴力求解"><span class="toc-number">2.1.</span> <span class="toc-text">直白的暴力求解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路"><span class="toc-number">2.1.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">2.1.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例"><span class="toc-number">2.1.3.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">2.1.4.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优雅地利用数据结构"><span class="toc-number">2.2.</span> <span class="toc-text">优雅地利用数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">2.2.4.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#巧妙的另辟蹊径"><span class="toc-number">2.3.</span> <span class="toc-text">巧妙的另辟蹊径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现-2"><span class="toc-number">2.3.2.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#举例-2"><span class="toc-number">2.3.3.</span> <span class="toc-text">举例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-2"><span class="toc-number">2.3.4.</span> <span class="toc-text">分析</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/《算法导论》/" title="《算法导论》">《算法导论》<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/图解排序算法/" title="图解排序算法">图解排序算法<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/备忘/" title="备忘">备忘<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/常见问题/" title="常见问题">常见问题<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/理财/" title="理财">理财<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/经典算法系列/" title="经典算法系列">经典算法系列<sup>4</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/" title="编程">编程<sup>32</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/编程/金融/" title="金融">金融<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/C/" title="C++">C++<sup>21</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Python/" title="Python">Python<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单元测试/" title="单元测试">单元测试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据结构/" title="数据结构">数据结构<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/正则表达式/" title="正则表达式">正则表达式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com" target="_blank" title="一个面向开源及私有软件项目的托管平台">Github</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://hexo.io" target="_blank" title="一个开源的静态博客生成器">Hexo</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m kongdb. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2785742593" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2020 
+		
+		<a href="/about" target="_blank" title="Kongdb">Kongdb</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b7947db15be98e20e7d2ba6c3ef6ca27";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
