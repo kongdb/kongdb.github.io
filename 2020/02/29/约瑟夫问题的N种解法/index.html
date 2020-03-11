@@ -18,7 +18,7 @@
 <meta property="og:url" content="http://yoursite.com/2020/02/29/约瑟夫问题的N种解法/index.html">
 <meta property="og:site_name" content="飞翔的pig">
 <meta property="og:description" content="几种解决约瑟夫问题的思路">
-<meta property="og:updated_time" content="2020-02-29T13:11:41.863Z">
+<meta property="og:updated_time" content="2020-03-11T12:42:35.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="约瑟夫问题的N种解法">
 <meta name="twitter:description" content="几种解决约瑟夫问题的思路">
@@ -101,7 +101,7 @@
 		
 		</div>
 		
-		<h1 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h1><p>有n个人，第0个人从1开始报数，报到m的人出列，然后从下一个人开始报数。求最值剩下人的序号</p>
+		<h1 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h1><p>有n个人，第0个人从1开始报数，报到m的人出列，然后从下一个人开始报数。求最终剩下人的序号</p>
 <h1 id="各种解法"><a href="#各种解法" class="headerlink" title="各种解法"></a>各种解法</h1><h2 id="直白的暴力求解"><a href="#直白的暴力求解" class="headerlink" title="直白的暴力求解"></a>直白的暴力求解</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
 <li>定义一个n长的数组array，初值都为1，表示都还活着</li>
 <li>定义一个索引index<ol>
@@ -174,7 +174,7 @@
 </li>
 </ol>
 <pre><code>- 因此`f(n) = (f(n-1) + k) % n = (f(n-1)+m%n)%n = (f(n-1)+m)%n`
-</code></pre><h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">josephus2</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>)</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	<span class="keyword">return</span> (josephus(n<span class="number">-1</span>, m) + m) % n;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">josephus2</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> (josephus2(n<span class="number">-1</span>, m) + m) % n;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="举例-2"><a href="#举例-2" class="headerlink" title="举例"></a>举例</h3><p>我们来n=5,m=3，借助于f(4)来求f(5)的过程。假设我们知道<code>f(4)=3</code>，注意这可能是错的，仅为举例</p>
 <figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">已知</div><div class="line">                    <span class="number">0</span>      删除第<span class="number">2</span>项        <span class="number">0</span></div><div class="line"><span class="number">0</span>  →  <span class="number">1</span>         ↗     ↘    (m<span class="number">-1</span>)      ↗    ↘        重新排序      <span class="number">3</span>(<span class="number">0</span>) → <span class="number">4</span>(<span class="number">1</span>) </div><div class="line">↑     ↓        <span class="number">4</span>        <span class="number">1</span>  ======&gt;    <span class="number">4</span>       <span class="number">1</span>       ======&gt;        ↑       ↓</div><div class="line"><span class="number">3</span>  ←  <span class="number">2</span>         ↖     ↙              ↖   ↙                       <span class="number">1</span>(<span class="number">3</span>) ← <span class="number">0</span>(<span class="number">2</span>)</div><div class="line">↑                 <span class="number">3</span> ← <span class="number">2</span>                  <span class="number">3</span>                           ↑</div><div class="line">f(<span class="number">4</span>)                                     ↑                          f(<span class="number">4</span>)</div><div class="line">                                      新的第<span class="number">0</span>项              外面是f(<span class="number">5</span>)的序号，括号里是f(<span class="number">4</span>)序号</div></pre></td></tr></table></figure>
 <p>因此<code>f(5)=1</code></p>
@@ -303,7 +303,7 @@
 			
 		
 			
-				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
+				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
 			
 		
 			
@@ -315,11 +315,7 @@
 			
 		
 			
-				<li><a href="/tags/IRR/" title="IRR">IRR<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
+				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
 			
 		
 			
@@ -327,15 +323,11 @@
 			
 		
 			
-				<li><a href="/tags/金融/" title="金融">金融<sup>1</sup></a></li>
+				<li><a href="/tags/C-11/" title="C++11">C++11<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
 			
 		
 			
@@ -343,7 +335,15 @@
 			
 		
 			
-				<li><a href="/tags/Web/" title="Web">Web<sup>1</sup></a></li>
+				<li><a href="/tags/排序算法/" title="排序算法">排序算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/vi/" title="vi">vi<sup>1</sup></a></li>
 			
 		
 		</ul>
